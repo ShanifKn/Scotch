@@ -1,92 +1,127 @@
 <%- include ('navbar.ejs') %>
+
+
       <section class=" bg-gray-100 text-gray-600 min-h-screen p-1">
             <div class="h-full">
+
                   <!-- Pay component -->
                   <div>
                         <!-- Card background -->
-                        <div class="relative sm:px-6 lg:px-8 max-w-lg mx-auto mt-16 text-center ">
+
+                        <div class="relative sm:px-6 lg:px-8 max-w-lg mx-auto mt-16 mb-2 text-center ">
 
                               <a href="">
-                                    <h1 class="text-8xl text-amber-400 heading">Scotch</h1>
+                                    <h1 class="text-6xl font-black text-amber-400 heading">Scotch</h1>
                               </a>
                         </div>
                         <div class="relative px-2 sm:px-6 lg:px-8 pb-2 max-w-lg mx-auto" x-data="{ card: true }">
                               <div class="bg-white px-8 pb-6 rounded-b shadow-lg">
 
-                                    <!-- Card header -->
-                                    <div class="text-center mb-6">
-                                          <div class="p-6">
-                                                <h1 class="text-2xl leading-snug text-gray-800 font-semibold mb-2">
-                                                      Create a
-                                                      Account !
-                                                </h1>
+
+                                    <% if ( expressFlash.length> 0 ) { %>
+                                          <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                                role="alert">
+                                                <span class="font-medium">
+                                                      <%= expressFlash %>
+                                                </span>
                                           </div>
+                                          <% } %>
 
 
-                                    </div>
+                                                <!-- Card header -->
+                                                <div class="text-center mb-6">
+                                                      <div class="p-6">
+                                                            <h1
+                                                                  class="text-2xl leading-snug text-gray-800 font-semibold mb-2">
+                                                                  Create a
+                                                                  Account !
+                                                            </h1>
+                                                      </div>
 
-                                    <!-- Card form -->
-                                    <div x-show="card">
-                                          <div class="space-y-4">
-                                                <!-- Email-->
-                                                <div>
-                                                      <label class="block text-sm font-medium mb-1" for="card-nr">Email
-                                                            <span class="text-red-500">*</span></label>
-                                                      <input id="card-nr"
-                                                            class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                            type="email" placeholder="example@example.com"
-                                                            name="Email" />
+
                                                 </div>
 
-                                                <!-- Name  -->
-                                                <div>
-                                                      <label class="block text-sm font-medium mb-1" for="card-name">Name
-                                                            <span class="text-red-500">*</span></label>
-                                                      <input id="card-name"
-                                                            class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                            type="text" placeholder="John Doe" name="Name" />
-                                                </div>
-                                                <!-- Pasworrd-->
-                                                <div>
-                                                      <label class="block text-sm font-medium mb-1"
-                                                            for="card-email">Password
-                                                            <span class="text-red-500">*</span></label>
-                                                      <input id="card-email"
-                                                            class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                            type="password" placeholder="*******" name="Password" />
-                                                </div>
-                                                <div>
-                                                      <label class="block text-sm font-medium mb-1"
-                                                            for="card-email">Comfrom
-                                                            Password
-                                                            <span class="text-red-500">*</span></label>
-                                                      <input id="card-email"
-                                                            class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                            type="password" placeholder="*******" />
-                                                </div>
-                                                <div>
-                                                      <label class="block text-sm font-medium mb-1"
-                                                            for="card-email">Phone
-                                                            <span class="text-red-500">*</span></label>
-                                                      <input id="card-email"
-                                                            class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                            type="phone" placeholder="" name="Password" />
-                                                </div>
-                                          </div>
-                                    </div>
+                                                <!-- Card form -->
+                                                <div x-show="card">
+                                                      <div class="space-y-4">
+                                                            <!-- Email-->
+                                                            <form method="post" action="./signup" name="Signupform"
+                                                                  onsubmit="return validate()">
+                                                                  <!-- email -->
+                                                                  <div class="input-control">
+                                                                        <label class="block text-sm font-medium mb-1"
+                                                                              for="card-nr">Email
+                                                                              <span
+                                                                                    class="text-red-500">*</span></label>
+                                                                        <input id="email"
+                                                                              class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                                              type="email" name="Email" />
+                                                                        <p id="alert"></p>
 
-                                    <!-- PayPal form -->
-                                    <div x-show="!card" x-cloak>
-                                          <div>
-                                                <div class="mb-4 mt-4">
-                                                      <button
-                                                            class="font-medium text-sm inline-flex items-center justify-center  py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-amber-400 hover:bg-amber-600 text-white focus:outline-none focus-visible:ring-2">Register</button>
+                                                                  </div>
+                                                                  <!-- Name  -->
+                                                                  <div>
+                                                                        <label class="block text-sm font-medium mb-1"
+                                                                              for="name">Name
+                                                                              <span
+                                                                                    class="text-red-500">*</span></label>
+                                                                        <input id="name"
+                                                                              class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                                              type="text" placeholder="John Doe"
+                                                                              name="Name" />
+                                                                  </div>
+                                                                  <!-- Phone -->
+                                                                  <div>
+                                                                        <label class="block text-sm font-medium mb-1"
+                                                                              for="phone">Phone
+                                                                              <span
+                                                                                    class="text-red-500">*</span></label>
+                                                                        <input id="email"
+                                                                              class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                                              type="phone" placeholder="987456230"
+                                                                              name="Phone" />
+                                                                  </div>
+                                                                  <!-- Pasworrd-->
+                                                                  <div>
+                                                                        <label class="block text-sm font-medium mb-1"
+                                                                              for="password">Password
+                                                                              <span
+                                                                                    class="text-red-500">*</span></label>
+                                                                        <input id="password"
+                                                                              class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                                              type="password" placeholder="*******"
+                                                                              name="Password" />
+                                                                  </div>
+                                                                  <div>
+                                                                        <label class="block text-sm font-medium mb-1"
+                                                                              for="password2">Comfrom
+                                                                              Password
+                                                                              <span
+                                                                                    class="text-red-500">*</span></label>
+                                                                        <input id="password2"
+                                                                              class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                                              type="password" placeholder="*******"
+                                                                              name="comfromPassword" />
+                                                                  </div>
+                                                                  <div x-show="!card" x-cloak>
+
+                                                                        <div class="mb-4 mt-4">
+                                                                              <button
+                                                                                    class="font-medium text-sm inline-flex items-center justify-center  py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-amber-400 hover:bg-amber-600 text-white focus:outline-none focus-visible:ring-2"
+                                                                                    type="submit">Register</button>
+                                                                        </div>
+
+
+
+                                                                  </div>
+                                                            </form>
+                                                      </div>
+
                                                 </div>
+
                                                 <div class="text-xs text-gray-500 italic text-center">
-                                                      <a href="#">Already have an account? Login!</a>
+                                                      <a href="./login">Already have an account? Login!</a>
                                                 </div>
-                                          </div>
-                                    </div>
 
                               </div>
                         </div>
@@ -94,4 +129,21 @@
       </section>
 
 
-      <!-- 1111111111111111111111111111111111111111111111111111111111111 -->
+
+      <!-- <script>
+            function validate() {
+                  const email = document.getElementById("email")
+                  const password = document.getElementById("password").value
+                  const passwordConfirm = document.getElementById("password2").value
+                  const name = document.getElementById("name").value
+                  const phone = document.getElementById("phone").value
+                  let formvalidate = true
+
+                  if (document.getElementById("email").value === "") {
+                        formvalidate = false;
+                        document.getElementById("alert").innerHTML = "Please enter your email address";
+                  }
+
+                  return formvalidate;
+            }
+      </script> -->
