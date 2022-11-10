@@ -1,7 +1,7 @@
 dotenv.config();
 import express from "express";
 import logger from "morgan";
-import path, { resolve } from "path";
+import path from "path";
 import expressEjsLayouts from "express-ejs-layouts";
 import * as dotenv from "dotenv";
 import adminRoutes from "../Scotch/routes/adminRoutes.js";
@@ -12,7 +12,6 @@ import session from "express-session";
 import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import { verifyToken } from "./middleware/authVerification.js";
 import cors from "cors";
 
 const app = express();
@@ -24,7 +23,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // morgan: https
-app.use(logger("dev"));
+// app.use(logger("dev"));
 
 // Connect to Mongoose
 connectDB();
@@ -58,7 +57,6 @@ app.use(flash());
 // Routes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
-
 
 // Server configuration
 const port = process.env.PORT;

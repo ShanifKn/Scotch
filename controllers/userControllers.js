@@ -1,17 +1,19 @@
+import { PhoneNo } from "./authControllers.js";
+
 const Signup = (req, res) => {
-  res.render("user/signup", { expressFlash: req.flash("Email") });
+  res.render("user/signup", { expressFlash: req.flash("Msg") });
 };
 
 const login = (req, res) => {
   res.render("user/login", { expressFlash: req.flash("Msg") });
 };
 
-const otpVerfication = (req, res) => {
-  res.render("user/otp");
+const validation = (req, res) => {
+  res.render("user/otp", { PhoneNo, expressFlash: req.flash("Msg") });
 };
 
 const Sample = (req, res) => {
   res.render("user/Smaple");
 };
 
-export { Signup, otpVerfication, Sample, login };
+export { Signup, validation, Sample, login };

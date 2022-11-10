@@ -6,18 +6,22 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     Name: {
       type: String,
       required: true,
+      trim: true,
     },
     Phone: {
       type: Number,
       required: true,
+      trim: true,
     },
     Password: {
       type: String,
       required: true,
+      trim: true,
     },
     Active: {
       type: Boolean,

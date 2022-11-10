@@ -1,7 +1,11 @@
-<%- include ('navbar.ejs') %>
+<!-- Container -->
+<%- include ('layout/navbar.ejs') %>
 
+      <head>
+            <script src="https://cdn.tailwindcss.com"></script>
+      </head>
 
-      <section class=" bg-gray-100 text-gray-600 min-h-screen p-1">
+      <section class=" bg-gray-100 text-gray-600  p-1">
             <div class="h-full">
 
                   <!-- Pay component -->
@@ -19,14 +23,13 @@
 
 
                                     <% if ( expressFlash.length> 0 ) { %>
-                                          <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                          <div class="p-4 mb-4 mt-6 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                                                 role="alert">
                                                 <span class="font-medium">
                                                       <%= expressFlash %>
                                                 </span>
                                           </div>
                                           <% } %>
-
 
                                                 <!-- Card header -->
                                                 <div class="text-center mb-6">
@@ -103,28 +106,32 @@
                                                                               type="password" placeholder="*******"
                                                                               name="comfromPassword" />
                                                                   </div>
-                                                                  <div x-show="!card" x-cloak>
 
-                                                                        <div class="mb-4 mt-4">
-                                                                              <button
-                                                                                    class="font-medium text-sm inline-flex items-center justify-center  py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-amber-400 hover:bg-amber-600 text-white focus:outline-none focus-visible:ring-2"
-                                                                                    type="submit">Register</button>
-                                                                        </div>
-
-
-
+                                                                  <div class="mb-4 mt-4">
+                                                                        <button
+                                                                              class="font-medium text-sm inline-flex items-center justify-center  py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-amber-400 hover:bg-amber-600 text-white focus:outline-none focus-visible:ring-2"
+                                                                              type="submit">Register</button>
                                                                   </div>
                                                             </form>
                                                       </div>
-
                                                 </div>
 
-                                                <div class="text-xs text-gray-500 italic text-center">
-                                                      <a href="./login">Already have an account? Login!</a>
+                                                <div class="text-center">
+                                                      <p class="text-sm font-medium text-slate-900">
+                                                            Already have an account? <a href="./login"
+                                                                  class="font-medium text-slate-600 hover:underline hover:text-amber-400">
+                                                                  Login!</a>
+                                                      </p>
                                                 </div>
 
                               </div>
+
+
+
+
+
                         </div>
+                  </div>
 
       </section>
 

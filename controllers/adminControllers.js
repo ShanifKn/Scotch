@@ -5,27 +5,39 @@ const dashboard = (req, res) => {
 };
 
 const login = (req, res) => {
-  res.render("admin/login");
+  res.render("admin/login", { expressFlash: req.flash("Msg") });
+};
+
+const adminProfile = (req, res) => {
+  res.render("admin/profile");
 };
 
 const userView = async (req, res) => {
-  let user = await UserModel.find({});
-  console.log(user);
-  res.render("admin/userlist", { user });
+  let user = await UserModel.find({})
+    .then((user) => {
+      res.render("admin/userlist", { user });
+    })
+    .catch((err) => {
+      if (err) {
+        console.log(err.message);
+      }
+    });
 };
 
 const userBlock = async (req, res) => {
-  await UserModel.findByIdAndUpdate(req.params.id, {
+  const user = req.params.id;
+  await UserModel.findByIdAndUpdate(user, {
     Active: true,
   });
-  res.redirect("/admin/table");
+  res.redirect("/admin/user");
 };
 
 const unBlock = async (req, res) => {
-  await UserModel.findByIdAndUpdate(req.params.id, {
+  const user = req.params.id;
+  await UserModel.findByIdAndUpdate(user, {
     Active: false,
   });
-  res.redirect("/admin/table");
+  res.redirect("/admin/user");
 };
 
-export { login, dashboard, userView, userBlock, unBlock };
+export { login, dashboard, userView, userBlock, unBlock, adminProfile };

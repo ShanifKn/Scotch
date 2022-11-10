@@ -1,169 +1,240 @@
-<%- include ("navbar.ejs") %>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="
+  https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css
+  
+">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css"> -->
 
+<%- include ('layout/navbar.ejs') %>
 
+      <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+            <!-- Navbar -->
+            <%- include ('layout/header.ejs') %>
 
+                  <div class="w-full px-6 py-6 mx-auto">
+                        <!-- table 1 -->
 
-      <div class="overlay"></div>
-      <!-- ======== sidebar-nav end =========== -->
-
-      <!-- ======== main-wrapper start =========== -->
-      <main class="main-wrapper">
-
-            <!-- ========== header end ========== -->
-
-            <!-- ========== section start ========== -->
-            <section class="section">
-                  <div class="container-fluid">
-                        <!-- ========== title-wrapper start ========== -->
-                        <div class="title-wrapper">
-                              <div class="row align-items-center -ml-6">
-                                    <div class="col-md-12 mt-2 ">
-                                          <div class="breadcrumb-wrapper ">
-                                                <nav aria-label="breadcrumb">
-                                                      <ol class="breadcrumb">
-                                                            <li class="breadcrumb-item">
-                                                                  <a href="/admin/Dashboard">Dashboard</a>
-                                                            </li>
-                                                            <li class="breadcrumb-item active" aria-current="page">
-                                                                  Tables
-                                                            </li>
-                                                      </ol>
-                                                </nav>
+                        <div class="flex flex-wrap -mx-3">
+                              <div class="flex-none w-full max-w-full px-3">
+                                    <div
+                                          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                          <div
+                                                class="p-6 pb-0 mb-2 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                                                <h6 class="dark:text-white">Users Management</h6>
                                           </div>
-                                    </div>
-                                    <!-- end col -->
-                              </div>
-                              <!-- end row -->
-                        </div>
-
-                        <div class="tables-wrapper">
-                              <div class="row">
-                                    <div class="col-lg-12">
-                                          <div class="card-style mb-30">
-                                                <h3 class="mb-10 text-black">User Details</h3>
-                                                <div class="table-wrapper table-responsive">
-                                                      <table id="example" class="table align-middle mb-0 bg-white">
-                                                            <thead class="bg-light">
+                                          <div class="flex-auto px-0 pt-0 pb-2 p-5">
+                                                <div class="p-0 overflow-x-auto">
+                                                      <table id="example"
+                                                            class="items-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500 ">
+                                                            <thead class="align-bottom">
                                                                   <tr>
-                                                                        <th>Name</th>
-                                                                        <th>Email</th>
-                                                                        <th>Phone</th>
-                                                                        <th>Orders</th>
-                                                                        <th>Actions</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                                              User</th>
+                                                                        <th
+                                                                              class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                                              Email</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                                              Phone</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                                              Action</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                                              View</th>
+
                                                                   </tr>
                                                             </thead>
                                                             <tbody>
                                                                   <% for( let i=0; i < user.length; i++ ) { %>
-
-
                                                                         <tr>
-                                                                              <td>
-                                                                                    <div
-                                                                                          class="d-flex align-items-center">
-                                                                                          <img src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                                                                                                alt=""
-                                                                                                style="width: 45px; height: 45px"
-                                                                                                class="rounded-circle" />
-                                                                                          <div class="ms-3">
-                                                                                                <p class="fw-bold mb-1">
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <div class="flex px-2 py-1">
+                                                                                          <div>
+                                                                                                <img src="/admin/assets1/img/team-2.jpg"
+                                                                                                      class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-in-out h-9 w-9 rounded-xl"
+                                                                                                      alt="user1" />
+                                                                                          </div>
+                                                                                          <div
+                                                                                                class="flex flex-col justify-center">
+                                                                                                <h6
+                                                                                                      class="mb-0 text-sm leading-normal dark:text-white">
                                                                                                       <%= user[i].Name
                                                                                                             %>
-                                                                                                </p>
+                                                                                                </h6>
 
                                                                                           </div>
                                                                                     </div>
                                                                               </td>
-                                                                              <td>
-                                                                                    <p class="fw-normal mb-1">
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <p
+                                                                                          class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                                           <%= user[i].Email %>
                                                                                     </p>
 
                                                                               </td>
-                                                                              <td>
-                                                                                    <p class="fw-normal mb-1">
+                                                                              <td
+                                                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <p
+                                                                                          class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 ">
                                                                                           <%= user[i].Phone %>
                                                                                     </p>
                                                                               </td>
-                                                                              <td>1</td>
-                                                                              <td>
-                                                                                    <% if ( user[i].Active== false) { %>
 
+                                                                              <td
+                                                                                    class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <% if ( user[i].Active==false) { %>
                                                                                           <a
-                                                                                                href="/admin/userblock/<%= user[i]._id %> "><button
-                                                                                                      type="button"
-                                                                                                      class="btn btn-danger text-danger btn-sm btn-rounded">
-                                                                                                      Block
-                                                                                                </button></a>
+                                                                                                href="/admin/userblock/<%= user[i]._id %> ">
+                                                                                                <span
+                                                                                                      class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Block</span></a>
+
 
                                                                                           <% } else { %>
-
                                                                                                 <a
-                                                                                                      href="/admin/unblock/<%= user[i]._id %> "><button
-                                                                                                            type="button"
-                                                                                                            class="btn btn-success text-success btn-sm btn-rounded">
-                                                                                                            Unblock
-                                                                                                      </button>
-                                                                                                </a>
+                                                                                                      href="/admin/unblock/<%= user[i]._id %> "><span
+                                                                                                            class="bg-danger px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Unblock</span></a>
+
                                                                                                 <% } %>
 
-
-
-
-                                                                                                      <!-- <button type="button"
-                                                                                          class="btn btn-success text-danger btn-sm btn-rounded">
-                                                                                          Block
-                                                                                    </button> -->
                                                                               </td>
+                                                                              <td
+                                                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <button type="button"
+                                                                                          class="btn  btn-light rounded-full"
+                                                                                          data-bs-toggle="modal"
+                                                                                          data-bs-target="#exampleModal">View</button>
+
+                                                                              </td>
+
                                                                         </tr>
                                                                         <% } %>
+
                                                             </tbody>
                                                       </table>
                                                 </div>
                                           </div>
-                                          <!-- end card -->
                                     </div>
-                                    <!-- end col -->
                               </div>
-                              <!-- end row -->
-
-
-                              <!-- end row -->
                         </div>
-                        <!-- End Col -->
 
-                        <!-- End Col -->
-
-                        <!-- End Col -->
                   </div>
-                  <!-- End Row -->
+                  <% for( let i=0; i < user.length; i++ ) { %>
+                        <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog ">
+                                    <div class="modal-content">
+                                          <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                      aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body  ">
+                                                <section class="">
+                                                      <div class="container ">
+                                                            <div
+                                                                  class="row d-flex justify-content-center align-items-center h-100">
+                                                                  <div class=" ">
+                                                                        <div class="card" style="border-radius: 15px;">
+                                                                              <div class="card-body p-4">
+                                                                                    <div class="d-flex text-black">
+                                                                                          <div class="flex-shrink-0">
+                                                                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                                                                                                      alt="Generic placeholder image"
+                                                                                                      class="img-fluid"
+                                                                                                      style="width: 180px; border-radius: 10px;">
+                                                                                          </div>
+                                                                                          <div class="flex-grow-1 ms-3">
+                                                                                                <h5 class="mb-1">
+                                                                                                      <%= user[i].Name
+                                                                                                            %>
+                                                                                                </h5>
+                                                                                                <p class="mb-2 pb-1"
+                                                                                                      style="color: #2b2a2a;">
+                                                                                                      <%= user[i].Email
+                                                                                                            %>
+                                                                                                </p>
+                                                                                                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                                                                                                      style="background-color: #efefef;">
+                                                                                                      <div>
+                                                                                                            <p
+                                                                                                                  class="small text-muted mb-1">
+                                                                                                                  Orders
+                                                                                                            </p>
+                                                                                                            <p
+                                                                                                                  class="mb-0">
+                                                                                                                  41
+                                                                                                            </p>
+                                                                                                      </div>
+                                                                                                      <div class="px-3">
+                                                                                                            <p
+                                                                                                                  class="small text-muted mb-1">
+                                                                                                                  Review
+                                                                                                            </p>
+                                                                                                            <p
+                                                                                                                  class="mb-0">
+                                                                                                                  976
+                                                                                                            </p>
+                                                                                                      </div>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                      class="d-flex pt-1">
 
-                  <!-- End Row -->
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                </section>
+                                          </div>
 
-                  <!-- End Row -->
+                                          <div class="modal-footer">
+                                                <% if ( user[i].Active==true) { %>
 
-                  <!-- End Row -->
+                                                      <a href="/admin/userblock/<%= user[i]._id %> "><button type="submit" value="Submit"
+                                                                  class="btn btn-outline-primary me-1 flex-grow-1">Block</button></a>
 
-                  <!-- End Row -->
-                  </div>
-                  <!-- end container -->
-            </section>
-            <!-- ========== section end ========== -->
+                                                      <% } else { %>
 
-            <!-- ========== footer start =========== -->
+                                                            <a href="/admin/unblock/<%= user[i]._id %> "> <button type="submit" value="Submit"
+                                                                        class="btn btn-outline-primary me-1 flex-grow-1">Unblock</button></a>
 
-            <!-- ========== footer end =========== -->
+
+                                                            <% } %>
+
+                                          </div>
+
+                                    </div>
+                              </div>
+                        </div>
+                        <% } %>
       </main>
-      <!-- ======== main-wrapper end =========== -->
 
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
 
-      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-      <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+      <script src="
+https://code.jquery.com/jquery-3.5.1.js
+
+"></script>
+      <script src="
+https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js
+"></script>
+      <script src="
+https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js
+"></script>
 
 
 
       <script>
-
             $(document).ready(function () {
                   $('#example').DataTable();
             });
