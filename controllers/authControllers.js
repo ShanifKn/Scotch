@@ -25,6 +25,7 @@ const register = async (req, res) => {
   });
 };
 
+
 const otpVerfication = (req, res) => {
   const otp = req.body.OTP;
   const email = req.session.newUser.Email;
