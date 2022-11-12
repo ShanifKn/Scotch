@@ -17,6 +17,7 @@ const register = async (req, res) => {
     if (user) {
       console.log("user already exists");
       req.flash("Msg", "Email already exist!");
+      res.json("Enter the Email");
       res.redirect("/signup");
     } else {
       sendSms(phone);
@@ -24,7 +25,6 @@ const register = async (req, res) => {
     }
   });
 };
-
 
 const otpVerfication = (req, res) => {
   const otp = req.body.OTP;

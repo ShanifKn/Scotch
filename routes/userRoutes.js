@@ -20,9 +20,6 @@ import {
   productdetail,
 } from "../controllers/userControllers.js";
 
-
-
-
 // get request6;;;;;;;;;;;;;;
 router.get("/", index);
 router.get("/product", product);

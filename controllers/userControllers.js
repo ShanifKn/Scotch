@@ -9,7 +9,7 @@ const product = (req, res) => {
 };
 
 const productdetail = (req, res) => {
-  res.render("user/productdetail");
+  res.render("user/product_detail");
 };
 
 const cart = (req, res) => {

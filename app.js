@@ -13,6 +13,7 @@ import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 
 const app = express();
 const __dirname = path.resolve();
@@ -39,7 +40,7 @@ app.use(
 
 // middleware to handle urlencoded from data
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(fileUpload());
 // express_ejs_layouts
 app.use(expressEjsLayouts);
 app.set("layout", "./layout/layout");

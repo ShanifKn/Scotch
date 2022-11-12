@@ -8,9 +8,14 @@ import {
   adminProfile,
 } from "../controllers/adminControllers.js";
 
-import { viewProduct, addProduct } from "../controllers/productController.js";
+import {
+  viewProduct,
+  addProduct,
+  add_Product,
+} from "../controllers/productController.js";
 import { adminAuth, adminLogout } from "../controllers/authControllers.js";
 import { verifyAdmin } from "../middleware/authVerification.js";
+import { addCategory } from "../controllers/categoryController.js";
 
 const router = express.Router();
 
@@ -25,10 +30,8 @@ router.get("/userblock/:id", userBlock);
 router.get("/unBlock/:id", unBlock);
 router.get("/add-product", addProduct);
 
-
 // post::::::::
 router.post("/Userlogin", adminAuth);
-
-
-
+router.post("/addCategory", addCategory);
+router.post("/add", add_Product);
 export default router;
