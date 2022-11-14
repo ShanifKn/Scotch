@@ -8,9 +8,6 @@ const login = (req, res) => {
   res.render("admin/login", { expressFlash: req.flash("Msg") });
 };
 
-
-
-
 const adminProfile = (req, res) => {
   res.render("admin/profile");
 };

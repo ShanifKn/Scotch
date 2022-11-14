@@ -1,9 +1,10 @@
+import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import logger from "morgan";
+import multer from "multer";
 import path from "path";
 import expressEjsLayouts from "express-ejs-layouts";
-import * as dotenv from "dotenv";
 import adminRoutes from "../Scotch/routes/adminRoutes.js";
 import userRoutes from "../Scotch/routes/userRoutes.js";
 import mongoose from "mongoose";
@@ -13,7 +14,6 @@ import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
-import fileUpload from "express-fileupload";
 
 const app = express();
 const __dirname = path.resolve();
@@ -37,13 +37,8 @@ app.use(
     saveUninitialized: false,
   })
 );
-
 // middleware to handle urlencoded from data
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(fileUpload());
-// express_ejs_layouts
-app.use(expressEjsLayouts);
-app.set("layout", "./layout/layout");
 
 // server static files
 app.use(express.static(path.join(__dirname, "public")));
@@ -51,6 +46,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // view engine configuration
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+// express_ejs_layouts
+app.use(expressEjsLayouts);
+app.set("layout", "./layout/layout");
 
 // flash-message
 app.use(flash());

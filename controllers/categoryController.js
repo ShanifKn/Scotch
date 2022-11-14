@@ -1,23 +1,17 @@
+import { s3Upload } from "../database/multerS3.js";
 import { categoryModel } from "../model/category.js";
 
 const addCategory = async (req, res) => {
-  const categoryName = req.body.Category_name;
-  console.log(categoryName);
-  const image = req.files.Image;
+  const CategoryName = req.body.Category_name;
+  const file = req.file;
+  const result = await s3Upload(file);
   const newCategory = new categoryModel({
-    Name: categoryName,
+    categoryName: CategoryName,
+    categoryImage: result.Location,
   });
   newCategory.save().then((category) => {
-    image.mv("./public/admin/images/" + category._id + ".jpg", (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        // let alert;
-        // res.json({ alert: true });
-        req.flash("Msg", "New Category has been Added");
-        res.redirect("/admin/add-product");
-      }
-    });
+    req.flash("Msg", "New Category has been Added");
+    res.redirect("/admin/add-product");
   });
 };
 

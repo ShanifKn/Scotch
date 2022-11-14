@@ -107,12 +107,22 @@
       function validate() {
             if (!validateEmail() || !validatePass()) {
                   submitError.style.display = "block";
+                  passError.style.display = "block";
+                  submitError.style.display = "block";
+                  passError.innerHTML = "Password is required"
+                  emailError.innerHTML = "Email is required"
                   submitError.innerHTML = "Please enter your details"
                   setTimeout(() => {
                         submitError.style.display = "none";
+                        passError.style.display = "none";
+                        submitError.style.display = "none";
+
                   }, 3000)
+
                   return false;
             }
+
+
       }
 
 </script>

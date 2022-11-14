@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import {
   login,
   dashboard,
@@ -12,10 +12,13 @@ import {
   viewProduct,
   addProduct,
   add_Product,
+  deleteProduct,
+  editProduct,
 } from "../controllers/productController.js";
 import { adminAuth, adminLogout } from "../controllers/authControllers.js";
 import { verifyAdmin } from "../middleware/authVerification.js";
 import { addCategory } from "../controllers/categoryController.js";
+import { upload } from "../middleware/muter.js";
 
 const router = express.Router();
 
@@ -32,6 +35,12 @@ router.get("/add-product", addProduct);
 
 // post::::::::
 router.post("/Userlogin", adminAuth);
+router.post("/addCategory", upload.single("Image"), addCategory);
 router.post("/addCategory", addCategory);
-router.post("/add", add_Product);
+router.post("/add", upload.array("img", 4), add_Product);
+
+// Delete & patch
+router.delete("/deleteproduct", deleteProduct);
+router.patch("/editProduct", editProduct);
+
 export default router;

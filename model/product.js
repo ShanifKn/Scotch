@@ -4,49 +4,52 @@ import mongoose from "mongoose";
 const productSchema = new Schema({
   Product_title: {
     type: String,
-    require: true,
+    // require: true,
   },
   Product_des: {
     type: String,
-    require: true,
+    // require: true,
   },
   Price: {
     Retail_price: {
       type: Number,
-      require: true,
+      // require: true,
     },
     Offer_price: {
       type: Number,
-      require: true,
+      // require: true,
     },
   },
   Product_quantity: {
     type: Number,
-    require: true,
+    // require: true,
   },
   Category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "categoryModel",
+    ref: "Category",
   },
   color: {
     type: String,
-    require: true,
+    // require: true,
   },
   Size: {
     type: String,
-    require: true,
+    // require: true,
   },
   Product_info: {
     type: String,
-    require: true,
+    // require: true,
   },
   Product_material: {
     type: String,
-    require: true,
+    // require: true,
   },
   images: {
-    data: Buffer,
-    contentType: String,
+    type: Array,
+  },
+  ProductDeleted: {
+    type: Boolean,
+    default: false,
   },
 });
 
