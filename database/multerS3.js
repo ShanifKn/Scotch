@@ -30,4 +30,17 @@ const s3UploadMany = async (files) => {
   return await Promise.all(params.map((param) => s3.upload(param).promise()));
 };
 
-export { s3Upload, s3UploadMany };
+const s3DeleteMany = async (files) => {
+  const s3 = new aws.S3();
+  const params = files.map((file) => {
+    return {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: file.Key,
+    };
+  });
+  return await Promise.all(
+    params.map((param) => s3.deleteObject(param).promise())
+  );
+};
+
+export { s3Upload, s3UploadMany, s3DeleteMany };

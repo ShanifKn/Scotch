@@ -19,113 +19,103 @@
                   <div>
                         <!-- Card background -->
 
-                        <div class="relative sm:px-6 lg:px-8 max-w-lg mx-auto mt-16 mb-2 text-center ">
+                        <div class="relative sm:px-6 lg:px-8 max-w-lg mx-auto mt-4 mb-2 text-center ">
 
                               <a href="">
                                     <h1 class="text-6xl font-black text-amber-400 heading">Scotch</h1>
                               </a>
                         </div>
-                        <div class="relative px-2 sm:px-6 lg:px-8 pb-2 max-w-lg mx-auto" x-data="{ card: true }">
+                        <div class="relative px-2 sm:px-6 lg:px-8 pb-2 max-w-lg mx-auto " x-data="{ card: true }">
                               <div class="bg-white px-8 pb-6 rounded-b shadow-lg">
 
 
-                                    <% if ( expressFlash.length> 0 ) { %>
-                                          <div class="p-4 mb-4 mt-6 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                                                role="alert">
-                                                <span class="font-medium">
-                                                      <%= expressFlash %>
-                                                </span>
-                                          </div>
-                                          <% } %>
-
-                                                <!-- Card header -->
-                                                <div class="text-center mb-6">
-                                                      <div class="p-6">
+                                    <!-- Card header -->
+                                    <div class="text-center mb-6">
+                                          <% if ( expressFlash.length> 0 ) { %>
+                                                <div class="p-4 mb-4 mt-5 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                                      role="alert">
+                                                      <span class="font-medium">
+                                                            <%= expressFlash %>
+                                                      </span>
+                                                </div>
+                                                <% } %>
+                                                      <div class="">
                                                             <h1
-                                                                  class="text-2xl leading-snug text-gray-800 font-semibold mb-2">
+                                                                  class="text-2xl  leading-snug text-gray-800  font-semibold pt-6">
                                                                   Create a
                                                                   Account !
                                                             </h1>
                                                       </div>
 
 
-                                                </div>
+                                    </div>
 
-                                                <!-- Card form -->
-                                                <div x-show="card">
-                                                      <div class="space-y-4">
-                                                            <!-- Email-->
-                                                            <form method="post" action="./signup" name="Signupform" ">
+                                    <!-- Card form -->
+                                    <div x-show="card">
+                                          <div class="space-y-4">
+                                                <!-- Email-->
+                                                <form method="post" action="./signup" name="Signupform" ">
                                                                   <!-- email -->
                                                                   <div class=" input-control">
-                                                                  <label class="block text-sm font-medium mb-1"
-                                                                        for="card-nr">Email
-                                                                        <span class="text-red-500">*</span></label>
-                                                                  <input id="email" onkeyup="validateEmail()"
-                                                                        autocomplete="off"
-                                                                        class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                                        type="email" name="Email" placeholder="Email" />
-                                                                  <span class="text-danger" id="emailMsg"></span>
+                                                      <label class="block text-sm font-medium mb-1" for="card-nr">Email
+                                                            <span class="text-red-500">*</span></label>
+                                                      <input id="email" onkeyup="validateEmail()" autocomplete="off"
+                                                            class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                            type="email" name="Email" placeholder="Email" />
+                                                      <span class="text-danger" id="emailMsg"></span>
 
-                                                      </div>
-                                                      <!-- Name  -->
-                                                      <div>
-                                                            <label class="block text-sm font-medium mb-1"
-                                                                  for="name">Name
-                                                                  <span class="text-red-500">*</span></label>
-                                                            <input id="name" onkeyup="validateName()" autocomplete="off"
-                                                                  class=" text-sm text-gray-800 bg-white
+                                          </div>
+                                          <!-- Name  -->
+                                          <div>
+                                                <label class="block text-sm font-medium mb-1" for="name">Name
+                                                      <span class="text-red-500">*</span></label>
+                                                <input id="name" onkeyup="validateName()" autocomplete="off" class=" text-sm text-gray-800 bg-white
                                                                               border rounded leading-5 py-2 px-3
                                                                               border-gray-200 hover:border-gray-300
                                                                               focus:border-indigo-300 shadow-sm
                                                                               placeholder-gray-400 focus:ring-0 w-full"
-                                                                  type="text" placeholder="John Doe" name="Name" />
-                                                            <span class="text-danger " id="nameMsg"></span>
-                                                      </div>
-                                                      <!-- Phone -->
-                                                      <div>
-                                                            <label class="block text-sm font-medium mb-1"
-                                                                  for="phone">Phone
-                                                                  <span class="text-red-500">*</span></label>
-                                                            <input id="phone" onkeypress="return isNum(event)"
-                                                                  onkeyup=" return validatePhone()" autocomplete="off"
-                                                                  class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                                  type="text" placeholder="987456230" name="Phone" />
-                                                            <span class="text-danger " id="phoneMsg"></span>
-                                                      </div>
-                                                      <!-- Pasworrd-->
-                                                      <div>
-                                                            <label class="block text-sm font-medium mb-1"
-                                                                  for="password">Password
-                                                                  <span class="text-red-500">*</span></label>
-                                                            <input id="pass" onkeyup="validatePass()"
-                                                                  class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                                  type="password" placeholder="*******"
-                                                                  name="Password" />
-                                                            <span class="text-danger " id="passMsg"></span>
-                                                      </div>
-                                                      <div>
-                                                            <label class="block text-sm font-medium mb-1"
-                                                                  for="password2">Comfrom
-                                                                  Password
-                                                                  <span class="text-red-500">*</span></label>
-                                                            <input id="pass2" onkeyup="validatePass()"
-                                                                  class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 mb-1 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
-                                                                  type="password" placeholder="*******"
-                                                                  name="comfromPassword" />
-                                                            <span class="text-danger " id="pass2Msg"></span>
-                                                      </div>
-                                                      <span class="text-danger pl-28  " id="submitMsg"></span>
-                                                      <div class="mb-4 mt-4">
-                                                            <button type="submit" onclick="validate()"
-                                                                  class="font-medium text-sm inline-flex items-center justify-center  py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-amber-400 hover:bg-amber-600 text-white focus:outline-none focus-visible:ring-2">Register</button>
+                                                      type="text" placeholder="John Doe" name="Name" />
+                                                <span class="text-danger " id="nameMsg"></span>
+                                          </div>
+                                          <!-- Phone -->
+                                          <div>
+                                                <label class="block text-sm font-medium mb-1" for="phone">Phone
+                                                      <span class="text-red-500">*</span></label>
+                                                <input id="phone" onkeypress="return isNum(event)"
+                                                      onkeyup=" return validatePhone()" autocomplete="off"
+                                                      class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                      type="text" placeholder="987456230" name="Phone" />
+                                                <span class="text-danger " id="phoneMsg"></span>
+                                          </div>
+                                          <!-- Pasworrd-->
+                                          <div>
+                                                <label class="block text-sm font-medium mb-1" for="password">Password
+                                                      <span class="text-red-500">*</span></label>
+                                                <input id="pass" onkeyup="validatePass()"
+                                                      class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                      type="password" placeholder="*******" name="Password" />
+                                                <span class="text-danger " id="passMsg"></span>
+                                          </div>
+                                          <div>
+                                                <label class="block text-sm font-medium mb-1" for="password2">Comfrom
+                                                      Password
+                                                      <span class="text-red-500">*</span></label>
+                                                <input id="pass2" onkeyup="validatePass()"
+                                                      class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 mb-1 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full"
+                                                      type="password" placeholder="*******" name="comfromPassword" />
+                                                <span class="text-danger " id="pass2Msg"></span>
+                                          </div>
+                                          <span class="text-danger pl-28  " id="submitMsg"></span>
+                                          <div class="mb-4 mt-4">
+                                                <button type="submit" onclick="validate()"
+                                                      class="font-medium text-sm inline-flex items-center justify-center  py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-amber-400 hover:bg-amber-600 text-white focus:outline-none focus-visible:ring-2">Register</button>
 
-                                                      </div>
+                                          </div>
 
 
-                                                      </form>
+                                          </form>
 
-                                                </div>
+                                    </div>
                               </div>
 
                               <div class="text-center5">
@@ -176,7 +166,7 @@
             // """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
             function validatePhone() {
                   var phone = document.getElementById("phone").value;
-                  if (phone.value.length > 10) {
+                  if (phone.length > 10) {
                         phoneError.innerHTML = "Enter Your Phone Number"
                         return false;
                   }
@@ -221,15 +211,32 @@
                   let form = event.target.form;
                   var check = true;
 
+
                   if (!validateEmail() || !validatePass() || !validateName() || !validatePhone()) {
+                        nameError.style.display = "block";
+                        phoneError.style.display = "block";
+                        pass2Error.style.display = "block";
+                        passError.style.display = "block";
                         submitError.style.display = "block";
+                        emailError.style.display = "block";
+                        emailError.innerHTML = "Email is required"
+                        nameError.innerHTML = " Username is required!"
+                        phoneError.innerHTML = "Enter Your Phone Number"
+                        pass2Error.innerHTML = "Password does not match"
+                        passError.innerHTML = "Password is required"
                         submitError.innerHTML = "Please enter your details"
                         setTimeout(() => {
+                              emailError.style.display = "none";
+                              submitError.style.display = "none";
+                              nameError.style.display = "none";
+                              phoneError.style.display = "none";
+                              pass2Error.style.display = "none";
+                              passError.style.display = "none";
                               submitError.style.display = "none";
                         }, 3000)
                         check = false;
 
-                  } if (check)form.submit()
-                  
+                  } if (check) form.submit()
+
             }
       </script>

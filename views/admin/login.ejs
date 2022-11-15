@@ -84,7 +84,7 @@
                   emailError.innerHTML = "Email is required"
                   return false;
             }
-            if (!email.match(/^[A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+$/)) {
+            if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
                   emailError.innerHTML = "Email Invalid"
                   return false;
             }
@@ -115,7 +115,7 @@
                   setTimeout(() => {
                         submitError.style.display = "none";
                         passError.style.display = "none";
-                        submitError.style.display = "none";
+                        emailError.style.display = "none";
 
                   }, 3000)
 

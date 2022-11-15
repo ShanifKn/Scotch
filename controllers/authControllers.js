@@ -3,25 +3,21 @@ import { adminModel } from "../model/admin.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { sendSms, verifySms } from "../Verification/twilio.js";
-let PhoneNo;
 const { sign, verify } = Jwt;
 
 // User Authentication
 const register = async (req, res) => {
   const email = req.body.Email;
   const phone = req.body.Phone;
-  // """"""""""""""""""""""""""""""""""""""
   req.session.newUser = req.body;
-  // ''""""""""""""""""""""""""""""""""""""""""
-  UserModel.findOne({ Email: email }).then((user) => {
+  let user = UserModel.findOne({ Email: email }).then((user) => {
     if (user) {
       console.log("user already exists");
       req.flash("Msg", "Email already exist!");
-      res.json("Enter the Email");
       res.redirect("/signup");
     } else {
       sendSms(phone);
-      res.render("user/otp");
+      res.redirect("/otp");
     }
   });
 };
@@ -80,6 +76,9 @@ const Signin = (req, res) => {
       } else if (!bcrypt.compareSync(req.body.Password, UserModel.Password)) {
         req.flash("Msg", "Incorrect Password!");
         res.redirect("/login");
+      } else if (UserModel.Active == true) {
+        req.flash("Msg", "You have been Banned!");
+        res.redirect("/login");
       } else {
         const token = Jwt.sign(
           { userId: UserModel._id },
@@ -89,7 +88,9 @@ const Signin = (req, res) => {
           }
         );
         res.cookie("Jwt", token, { httpOnly: true });
-        res.redirect("/user/dashboard");
+        req.session.user = UserModel;
+        console.log(req.session.user);
+        res.redirect("/");
       }
     })
     .catch((err) => {
@@ -116,6 +117,7 @@ const adminAuth = (req, res) => {
           { expiresIn: "1h" }
         );
         res.cookie("Jwt", token, { httpOnly: true });
+
         res.redirect("/admin/");
       }
     })
@@ -131,11 +133,13 @@ const adminLogout = (req, res) => {
 
 const userLogout = (req, res) => {
   res.cookie("Jwt", "", { maxAge: 1 });
-  res.redirect("/login");
+  req.session.destroy();
+  res.redirect("/");
 };
 
 const Resend = (req, res) => {
-  sendSms(PhoneNo);
+  const phone = req.session.newUser.Phone;
+  sendSms(phone);
   res.redirect("/otp");
 };
 
@@ -147,5 +151,4 @@ export {
   otpVerfication,
   Resend,
   userLogout,
-  PhoneNo,
 };

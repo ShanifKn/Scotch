@@ -24,14 +24,14 @@ import {
 router.get("/", index);
 router.get("/product", product);
 router.get("/productdetail", productdetail);
-router.get("/cart", cart);
+router.get("/cart", verifyToken, cart);
 router.get("/checkout", checkout);
 router.get("/contact", contact);
 router.get("/signup", Signup);
 router.get("/login", login);
-router.get("/otp", verifyToken, validation);
+router.get("/otp", validation);
 router.get("/resendOtp", verifyToken, Resend);
-router.get("/logout", userLogout);
+router.get("/Userlogout", userLogout);
 
 // post request::::::
 router.post("/signup", register);

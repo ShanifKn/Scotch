@@ -24,14 +24,15 @@
                                           <div class="form-group">
                                                 <label for="name" class="col-sm-3 control-label">Product Name</label>
                                                 <div class="col-sm-9">
-                                                      <input required type="text" class="form-control"
-                                                            name="ProductName">
+                                                      <input autocomplete="off" required type="text"
+                                                            class="form-control" name="ProductName" autofocus="off">
                                                 </div>
                                           </div> <!-- form-group // -->
                                           <div class="form-group">
                                                 <label for="name" class="col-sm-3 control-label">Description</label>
                                                 <div class="col-sm-9">
-                                                      <input required type="text" class="form-control" name="ProductDes"
+                                                      <input autocomplete="off" required type="text"
+                                                            class="form-control" name="ProductDes"
                                                             placeholder="Название">
                                                 </div>
                                           </div> <!-- form-group // -->
@@ -41,38 +42,30 @@
                                                 <div class="col-sm-3">
                                                       <label class="control-label small" for="date_start">Retail Price:
                                                       </label>
-                                                      <input required type="text" class="form-control"
-                                                            name="RetailPrice" id="date_start" placeholder="₹">
+                                                      <input autocomplete="off" required type="text"
+                                                            class="form-control" name="RetailPrice" id="date_start"
+                                                            placeholder="₹">
                                                 </div>
                                                 <div class="col-sm-3">
                                                       <label class="control-label small" for="date_finish">Offer
                                                             Price:</label>
-                                                      <input required type="text" class="form-control" name="OfferPrice"
-                                                            id="date_finish" placeholder="₹">
+                                                      <input autocomplete="off" required type="text"
+                                                            class="form-control" name="OfferPrice" id="date_finish"
+                                                            placeholder="₹">
                                                 </div>
                                           </div>
                                           <div class="form-group">
                                                 <div class="col-sm-3">
                                                       <label class=" control-label" for="date_finish">Quantity</label>
-                                                      <input required type="number" class="form-control"
-                                                            name="Product_quantity" id="ProductQunatity"
-                                                            placeholder="1">
+                                                      <input autocomplete="off" required type="number"
+                                                            class="form-control" name="Product_quantity"
+                                                            id="ProductQunatity" placeholder="1">
                                                 </div>
                                           </div>
-
-                                          <div class="flex"> <label for="about"
-                                                      class="col-sm-3 block control-label">Category</label>
-                                                <label for="about" class="col-sm-3 ms-3 control-label">Color</label>
-                                                <label class="form-label">Size</label>
-                                          </div>
-
-                                          <div class="flex">
-                                                <div class=" form-group flex ml-3 w-25">
-
-
-                                                      <select class="form-select" name="ProductCategory"
-                                                            aria-label="Default select example">
-                                                            <option selected>Select Category</option>
+                                          <div class="flex"><label for="about" class=" control-label">Category</label>
+                                                <div class=" form-group flex ml-3">
+                                                      <select name="ProductCategory">
+                                                            <option selected disabled>Select Category</option>
                                                             <% for( let i=0; i < locals.category.length; i++ ) { %>
                                                                   <option value="<%= category[i]._id %>">
                                                                         <%=category[i].categoryName %>
@@ -86,22 +79,21 @@
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal">Add</button>
                                                 </div>
+                                                <label class=" control-label">Color</label>
 
-                                                <div class=" form-group flex ml-3 w-25">
-
-                                                      <select class="form-select " name="ProductColor"
-                                                            aria-label="Default select example">
-                                                            <option selected>Select Color</option>
+                                                <div class=" form-group flex ml-3">
+                                                      <select name="ProductColor">
+                                                            <option selected disabled>Select Color</option>
                                                             <option value="Black">Black</option>
                                                             <option value="Blue">Blue</option>
                                                             <option value="White">white</option>
                                                       </select>
                                                       <a href="#"> <button type="button"
                                                                   class="btn btn-primary bg-cyan-600 ml-2 mr-4">Add</button></a>
-                                                </div>
-                                                <div class="form-group flex"> <select class="form-select w-40"
-                                                            name="ProductSize" aria-label="Default select example">
-                                                            <option selected>Select Size</option>
+                                                </div> <label class="form-label">Size</label>
+                                                <div class="form-group flex ml-3"> <select class=" w-40"
+                                                            name="ProductSize">
+                                                            <option selected disabled>Select Size</option>
                                                             <option value="S">S</option>
                                                             <option value="M">M</option>
                                                             <option value="L">L</option>
@@ -134,8 +126,9 @@
                                                 <div class="col-sm-3">
                                                       <label class="control-label small" for="file_img">Image
                                                             (jpg/png):</label>
-                                                      <input required type="file" id="fileupload" name="img" multiple>
-                                                      <div id="dvPreview" class="flex">
+                                                      <input autocomplete="off" required type="file" id="fileupload"
+                                                            name="img" multiple>
+                                                      <div id="dvPreview" class="flex ">
                                                       </div>
                                                 </div>
 
@@ -166,12 +159,12 @@
                                     <div class="mb-3">
                                           <label for="exampleFormControlInput1" class="form-label">Category
                                                 Name</label>
-                                          <input type="text" class="form-control" id="exampleFormControlInput1"
-                                                name="Category_name">
+                                          <input autocomplete="off" type="text" class="form-control"
+                                                id="exampleFormControlInput1" name="Category_name">
                                     </div>
                                     <div class="input-group mt-3 px-5">
-                                          <input required type="file" class="form-control" aria-label="Upload"
-                                                name="Image" onchange="loadFile(event)" id="image">
+                                          <input autocomplete="off" required type="file" class="form-control"
+                                                aria-label="Upload" name="Image" onchange="loadFile(event)" id="image">
 
                                     </div>
                                     <div clas="" style="width: 100%; display: flex;justify-content: space-evenly;"> <img
@@ -225,7 +218,7 @@
                                                       var reader = new FileReader();
                                                       reader.onload = function (e) {
                                                             var img = $("<img />");
-                                                            img.attr("style", "height:100px;width: 100px");
+                                                            img.attr("style", "height:100px;width: 100px;padding-left:15px;margin-top:15px");
                                                             img.attr("src", e.target.result);
                                                             dvPreview.append(img);
                                                       };

@@ -1,16 +1,16 @@
 import { categoryModel } from "../model/category.js";
 import { productModel } from "../model/product.js";
-import { s3UploadMany } from "../database/multerS3.js";
+import { s3DeleteMany, s3UploadMany } from "../database/multerS3.js";
 
 const viewProduct = async (req, res) => {
   let product = await productModel
     .find({
-      // ProductDeleted: false,
+      ProductDeleted: false,
     })
     .populate("Category")
     .lean()
     .then((product) => {
-      res.render("admin/product", { product });
+      res.render("admin/product", { product, expressFlash: req.flash("Msg") });
     })
     .catch((err) => {
       console.log(err);
@@ -48,9 +48,16 @@ const add_Product = async (req, res) => {
       Product_material: req.body.ProductMaterial,
       images: result,
     });
-    newProduct.save().then(() => {
-      res.redirect("/admin/Product");
-    });
+    newProduct
+      .save()
+      .then(() => {
+        req.flash("Msg", " New Product has Added");
+        res.redirect("/admin/Product");
+      })
+      .catch((err) => {
+        req.flash("Msg", `${err}`);
+        res.redirect("/admin/add-product");
+      });
   } catch (err) {
     res.status(500).json({
       status: "error",
@@ -75,12 +82,52 @@ const deleteProduct = async (req, res) => {
 
 const editProduct = async (req, res) => {
   try {
-    const id = req.body.id;
-    const product = await productModel.findById(id);
-    res.render("admin/edit-product", { product });
+    const id = req.params.id;
+    const category = await categoryModel.find({});
+    productModel
+      .findById(id)
+      .populate("Category")
+      .then((product) => {
+        res.render("admin/edit-product", {
+          product,
+          category,
+          expressFlash: req.flash("Msg"),
+        });
+      });
   } catch (err) {
     console.log(err);
   }
 };
 
-export { viewProduct, addProduct, add_Product, deleteProduct, editProduct };
+const updateProduct = async (req, res) => {
+  const id = req.params.id;
+  const product = req.body;
+  const newImg = req.files;
+  if (req.files.length) {
+    productModel.findById(id).then((product) => {
+      const img = product.images;
+      // s3DeleteMany(img);
+    });
+    const result = await s3UploadMany(newImg);
+    product.images = result;
+  }
+  productModel
+    .findByIdAndUpdate(id, product)
+    .then(() => {
+      req.flash("Msg", "Product update");
+      res.redirect("/admin/product");
+    })
+    .catch((err) => {
+      req.flash("Msg", "Unable to update product!");
+      res.redirect("admin/product");
+    });
+};
+
+export {
+  viewProduct,
+  addProduct,
+  add_Product,
+  deleteProduct,
+  editProduct,
+  updateProduct,
+};

@@ -7,7 +7,7 @@
 
       <section class=" bg-gray-100 text-gray-600  p-4">
             <div class="container  ">
-                  <div class="flex justify-center px-10 mt-20 ">
+                  <div class="flex justify-center px-10 mt-8 ">
                         <!-- Row -->
                         <div class="w-60 xl:w-3/4 lg:w-10/12 flex justify-center   ">
                               <div
@@ -23,7 +23,7 @@
                                           </div>
                                           <% } %>
 
-                                                <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="./Signin"
+                                                <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="./Userlogin"
                                                       method="post">
                                                       <div class="mb-4">
                                                             <label class="block mb-2 text-sm font-bold text-gray-700"
@@ -31,8 +31,10 @@
                                                                   Email
                                                             </label>
                                                             <input class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                                  id="username" type="text" placeholder="Email"
-                                                                  name="Email" />
+                                                                  id="emailU" type="text" placeholder="Email"
+                                                                  autocomplete="off" onkeyup="validateEmail()"
+                                                                  name="Email" /> <span class="text-danger"
+                                                                  id="emailMsg"></span>
                                                       </div>
                                                       <div class="mb-4">
                                                             <label class="block mb-2 text-sm font-bold text-gray-700"
@@ -41,7 +43,9 @@
                                                             </label>
                                                             <input class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                                                   id="password" type="password"
-                                                                  placeholder="******************" name="Password" />
+                                                                  placeholder="******************" name="Password"
+                                                                  onkeyup="validatePass()" />
+                                                            <span class="text-danger" id="passMsg"></span>
 
                                                       </div>
                                                       <div class="flex items-center justify-between mb-4">
@@ -63,9 +67,10 @@
                                                                   password?</a>
                                                       </div>
                                                       <div class="mb-6 text-center">
-                                                            <button type="submit"
+                                                            <button type="submit" onclick=" return validate() "
                                                                   class="w-full text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
                                                                   in</button>
+                                                            <span class="text-danger " id="submitMsg"></span>
                                                       </div>
                                                 </form>
                                                 <hr class="mb-6 border-t" />
@@ -82,3 +87,60 @@
                         </div>
                   </div>
       </section>
+
+
+
+
+      <script>
+            const emailError = document.getElementById("emailMsg")
+            const passError = document.getElementById("passMsg")
+            const submitError = document.getElementById("submitMsg")
+
+            function validateEmail() {
+                  var email = document.getElementById("emailU").value;
+                  if (email.length == 0) {
+                        emailError.innerHTML = "Email is required"
+                        return false;
+                  }
+                  if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+                        emailError.innerHTML = "Email Invalid"
+                        return false;
+                  }
+                  emailError.innerHTML = " "
+                  return true;
+
+
+            }
+            function validatePass() {
+                  var pass = document.getElementById("password").value
+                  if (pass.length == 0) {
+                        passError.innerHTML = "Password is required"
+                        return false;
+                  }
+                  passError.innerHTML = " "
+                  return true;
+            }
+
+
+            function validate() {
+                  if (!validateEmail() || !validatePass()) {
+                        submitError.style.display = "block";
+                        passError.style.display = "block";
+                        submitError.style.display = "block";
+                        passError.innerHTML = "Password is required"
+                        emailError.innerHTML = "Email is required"
+                        submitError.innerHTML = "Please enter your details"
+                        setTimeout(() => {
+                              submitError.style.display = "none";
+                              passError.style.display = "none";
+                              emailError.style.display = "none";
+
+                        }, 3000)
+
+                        return false;
+                  }
+
+
+            }
+
+      </script>

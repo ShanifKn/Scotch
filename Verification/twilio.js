@@ -1,6 +1,7 @@
-import { default as Twilio } from "twilio";
 import * as dotenv from "dotenv";
 dotenv.config();
+import { default as Twilio } from "twilio";
+
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const sessionID = process.env.TWILIO_SESSION_SID;

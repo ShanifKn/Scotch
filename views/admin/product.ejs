@@ -130,9 +130,11 @@
                                                                               </td>
                                                                               <td
                                                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                                                    <button
-                                                                                          onclick="editProduct('<%= product[i]._id %>')"
-                                                                                          class="btn btn-primary btn-sm">edit</button>
+                                                                                    <a
+                                                                                          href="/admin/editProduct/<%= product[i]._id %>">
+                                                                                          <button type="submit"
+                                                                                                class="btn btn-primary btn-sm">edit</button>
+                                                                                    </a>
 
 
                                                                                     <button
@@ -162,47 +164,64 @@
       </script>
 
 
+      <% if ( expressFlash.length> 0 ) { %>
+            <script> Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `<%= expressFlash %>`,
+                        showConfirmButton: false,
+                        timer: 1500
+                  })</script>
 
-      <script language="javascript" type="text/javascript"">
-            // ?????????????????????????????????axios
-            deleteProduct = async (id) => {
-                  Swal.fire({
-                        title: 'Are you sure?',
-                        text: " You won't be able to revert this!", icon: 'warning', showCancelButton: true,
-                        confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Yes, delete it!'
-                  }).then((result) => {
-                        if (result.isConfirmed) {
-                              axios.delete("/admin/deleteproduct", { data: { id: id } }).then((e) => {
-                                    if (e.data.response) {
-                                          Swal.fire(
-                                                {
-                                                      icon: 'success',
-                                                      title: 'Your file has been deleted.',
-                                                      showConfirmButton: false,
-                                                      timer: 3500
+            <% } %>
+
+
+
+
+                  <script language="javascript" type="text/javascript"">
+                        // ?????????????????????????????????axios
+                        deleteProduct = async (id) => {
+                              Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: " You won't be able to revert this!", icon: 'warning', showCancelButton:
+                                          true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!'
+                              }).then((result) => {
+                                    if (result.isConfirmed) {
+                                          axios.delete("/admin/deleteproduct", { data: { id: id } }).then((e) => {
+                                                if (e.data.response) {
+                                                      Swal.fire(
+                                                            {
+                                                                  icon: 'success',
+                                                                  title: 'Your file has been deleted.',
+                                                                  showConfirmButton: false,
+                                                                  timer: 3500
+                                                            }
+                                                      )
+                                                      location.href = '/admin/Product';
+                                                } else {
+                                                      Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: 'The category is already in use !'
+                                                      })
                                                 }
-                                          )
-                                          location.href = '/admin/Product';
-                                    } else {
-                                          Swal.fire({
-                                                icon: 'error',
-                                                title: 'Oops...',
-                                                text: 'The category is already in use !'
                                           })
                                     }
+                              }).catch((err) => {
+                                    console.log(err.message);
                               })
-                        }
-                  }).catch((err) => {
-                        console.log(err.message);
-                  })
-            }
-            editProduct = (id) => {
-                  axios.patch("/admin/editProduct", { id: id })
-            }
+                        };
+
+            // editProduct = (id) => {
+            //       axios.patch("/admin/editProduct", { id: id }).then((res)=>{
+            //             let pro = res.data
+            //       })
+            // }
 
 
 
 
 
 
-      </script>
+                  </script>
