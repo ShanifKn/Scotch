@@ -1,7 +1,8 @@
 import { UserModel } from "../model/User.js";
+let style = "bg-blue-500/13";
 
 const dashboard = (req, res) => {
-  res.render("admin/dashboard");
+  res.render("admin/dashboard", { Dashboard: style });
 };
 
 const login = (req, res) => {
@@ -15,7 +16,7 @@ const adminProfile = (req, res) => {
 const userView = async (req, res) => {
   let user = await UserModel.find({})
     .then((user) => {
-      res.render("admin/userlist", { user });
+      res.render("admin/userlist", { user, User: style });
     })
     .catch((err) => {
       if (err) {

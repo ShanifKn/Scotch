@@ -18,7 +18,11 @@ import {
 } from "../controllers/productController.js";
 import { adminAuth, adminLogout } from "../controllers/authControllers.js";
 import { verifyAdmin } from "../middleware/authVerification.js";
-import { addCategory } from "../controllers/categoryController.js";
+import {
+  addCategory,
+  Category,
+  editCategory,
+} from "../controllers/categoryController.js";
 import { upload } from "../middleware/muter.js";
 
 const router = express.Router();
@@ -34,6 +38,9 @@ router.get("/userblock/:id", verifyAdmin, userBlock);
 router.get("/unBlock/:id", verifyAdmin, unBlock);
 router.get("/add-product", verifyAdmin, addProduct);
 router.get("/editProduct/:id", verifyAdmin, editProduct);
+router.get("/category", Category);
+
+router.post("/editcategory/:id", upload.single("img"), editCategory);
 
 // post::::::::
 router.post("/Userlogin", adminAuth);

@@ -30,10 +30,12 @@ const otpVerfication = (req, res) => {
   const phone = req.session.newUser.Phone;
   verifySms(phone, otp).then((verification_check) => {
     if (verification_check.status === "approved") {
-      userRegistration(email, name, phone, password).then((token) => {
-        res.cookie("Jwt", token, { httpOnly: true });
-        res.redirect("/login");
-      });
+      userRegistration(email, name, phone, password)
+        .then((token) => {
+          res.cookie("Jwt", token, { httpOnly: true });
+          res.redirect("/login");
+        })
+        .catch((err) => {});
     } else {
       req.flash("Msg", "Invalid OTP!");
       res.redirect("/otp");
@@ -57,11 +59,13 @@ const userRegistration = async (email, name, phone, password) => {
           {
             expiresIn: "10h",
           }
-        );
+        ).catch((err) => {
+          console.log(err);
+        });
         resolve(token);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
   });
 };

@@ -1,6 +1,7 @@
 import { categoryModel } from "../model/category.js";
 import { productModel } from "../model/product.js";
 import { s3DeleteMany, s3UploadMany } from "../database/multerS3.js";
+let style = "bg-blue-500/13";
 
 const viewProduct = async (req, res) => {
   let product = await productModel
@@ -10,7 +11,11 @@ const viewProduct = async (req, res) => {
     .populate("Category")
     .lean()
     .then((product) => {
-      res.render("admin/product", { product, expressFlash: req.flash("Msg") });
+      res.render("admin/product", {
+        product,
+        Product: style,
+        expressFlash: req.flash("Msg"),
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -101,18 +106,33 @@ const editProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const id = req.params.id;
-  const product = req.body;
+  const UpdatedProduct = {
+    Product_title: req.body.ProductName,
+    Product_des: req.body.ProductDes,
+    Price: {
+      Retail_price: req.body.RetailPrice,
+      Offer_price: req.body.OfferPrice,
+    },
+    Product_quantity: req.body.Product_quantity,
+    Category: req.body.ProductCategory,
+    color: req.body.ProductColor,
+    Size: req.body.ProductSize,
+    Product_info: req.body.ProductInfo,
+    Product_material: req.body.ProductMaterial,
+  };
   const newImg = req.files;
   if (req.files.length) {
-    productModel.findById(id).then((product) => {
-      const img = product.images;
-      // s3DeleteMany(img);
-    });
-    const result = await s3UploadMany(newImg);
-    product.images = result;
+    const result = await s3UploadMany(newImg)
+      .then((result) => {
+        UpdatedProduct.images = result;
+      })
+      .catch((err) => {
+        req.flash("Msg", `${err.message}`);
+        res.redirect("/admin/edit-product");
+      });
   }
   productModel
-    .findByIdAndUpdate(id, product)
+    .findByIdAndUpdate(id, UpdatedProduct)
     .then(() => {
       req.flash("Msg", "Product update");
       res.redirect("/admin/product");

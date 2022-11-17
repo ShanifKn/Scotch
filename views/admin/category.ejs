@@ -1,0 +1,169 @@
+<%- include ('layout/navbar.ejs') %>
+      <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+
+            <!-- Navbar -->
+            <%- include ('layout/header.ejs') %>
+                  <div class="w-full px-6 py-6 mx-auto">
+                        <div class="flex flex-wrap -mx-3">
+                              <div class="flex-none w-full max-w-full px-3">
+                                    <div
+                                          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                          <div
+                                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                                                <h6 class="dark:text-white">Projects table</h6>
+                                          </div>
+                                          <div class="justify-items-end p-6 ml-auto">
+                                                <a class="inline-block w-20 px-8 py-2  text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px"
+                                                      href="/admin/add-product">Add Product</a>
+                                          </div>
+
+                                          <div class="flex-auto px-0 pt-0 pb-2 ">
+                                                <div class="p-0 overflow-x-auto px-5">
+                                                      <table id="example"
+                                                            class="items-center justify-center  mb-0 align-top border-collapse  text-slate-500"
+                                                            style=" width: 55%;">
+                                                            <thead class="align-bottom">
+                                                                  <tr class="border  solid ">
+                                                                        <th
+                                                                              class=" py-3 font-semibold text-black capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Category Name</th>
+                                                                        <th
+                                                                              class=" font-semibold text-black capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Action</th>
+
+                                                                  </tr>
+                                                            </thead>
+                                                            <tbody class="">
+                                                                  <% for( let i=0; i < category.length; i++ ) { %>
+                                                                        <tr>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <div class="flex px-2 py-1">
+                                                                                          <div> <img src="<%= category[i].categoryImage %> "
+                                                                                                      class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-in-out h-9 w-9 rounded-xl"
+                                                                                                      alt="user1" />
+                                                                                          </div>
+                                                                                          <div
+                                                                                                class="flex flex-col justify-center">
+                                                                                                <h6
+                                                                                                      class="mb-0 text-sm leading-normal dark:text-white">
+                                                                                                      <%= category[i].categoryName
+                                                                                                            %>
+                                                                                                </h6>
+
+                                                                                          </div>
+
+
+                                                                                    </div>
+
+                                                                              </td>
+
+
+                                                                              <td
+                                                                                    class=" bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <button
+                                                                                          class="btn btn-primary  btn-sm px-3"
+                                                                                          data-bs-toggle="modal"
+                                                                                          data-bs-target="#exampleModal<%= category[i].categoryName
+                                                                                          %>">edit</button>
+
+
+                                                                                    <button onclick=""
+                                                                                          class="btn btn-danger btn-sm">Delete</button>
+
+                                                                              </td>
+                                                                        </tr>
+
+                                                                        <div class="modal fade" id="exampleModal<%= category[i].categoryName
+                                                                        %>" tabindex="-1"
+                                                                              aria-labelledby="exampleModalLabel"
+                                                                              aria-hidden="true">
+                                                                              <div class="modal-dialog">
+                                                                                    <div class="modal-content">
+                                                                                          <div class="modal-header">
+                                                                                                <h5 class="modal-title"
+                                                                                                      id="exampleModalLabel">
+                                                                                                      Edit Category
+                                                                                                </h5>
+                                                                                                <button type="button"
+                                                                                                      class="btn-close"
+                                                                                                      data-bs-dismiss="modal"
+                                                                                                      aria-label="Close"></button>
+                                                                                          </div>
+                                                                                          <div class="modal-body">
+                                                                                                <form action="/admin/editcategory/<%= category[i]._id %>"
+                                                                                                      method="post"
+                                                                                                      enctype="multipart/form-data">
+                                                                                                      <div class="mb-3">
+                                                                                                            <label
+                                                                                                                  class="col-form-label">Category
+                                                                                                                  Name</label>
+                                                                                                            <input type="text"
+                                                                                                                  class="form-control"
+                                                                                                                  name="CategoryName"
+                                                                                                                  value="<%= category[i].categoryName
+                                                                                                                  %>" />
+                                                                                                      </div>
+
+                                                                                                      <div
+                                                                                                            class="input-group mt-3 px-5">
+                                                                                                            <input type="file"
+                                                                                                                  class="form-control"
+                                                                                                                  aria-label="Upload"
+                                                                                                                  onchange="loadFile(event, `<%= category[i]._id %>`)"
+                                                                                                                  name="img">
+                                                                                                            <div
+                                                                                                                  style="width: 100%; display: flex;justify-content: space-evenly;">
+                                                                                                                  <img id="output<%= category[i]._id %>"
+                                                                                                                        src="<%= category[i].categoryImage %>"
+                                                                                                                        style="width: 25%; height:auto; margin-top: 10px;" />
+                                                                                                            </div>
+
+                                                                                                      </div>
+
+
+
+
+
+                                                                                          </div>
+
+
+                                                                                          <div class="modal-footer">
+                                                                                                <button type="button"
+                                                                                                      class="btn btn-secondary"
+                                                                                                      data-bs-dismiss="modal">Close</button>
+
+                                                                                                <button type="submit"
+                                                                                                      class="btn btn-primary">Send
+                                                                                                      message</button>
+                                                                                          </div>
+                                                                                          </form>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+                                                                        <% } %>
+                                                            </tbody>
+                                                      </table>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                        <div>
+                        </div>
+
+
+
+
+                  </div>
+      </main>
+
+      <script language="javascript" type="text/javascript">
+
+            var loadFile = function (event ,id) {
+                  var output = document.getElementById('output'+ id);
+                  output.src = URL.createObjectURL(event.target.files[0]);
+
+            };
+
+      </script>

@@ -84,8 +84,9 @@
                                                 <div class=" form-group flex ml-3 ">
                                                       <select class=" " name="ProductColor"
                                                             aria-label="Default select example">
-                                                            <option selected disabled value="<%= product.color %> ">
-                                                            </option>>Select Color</option>
+                                                            <option selected disabled value="">
+                                                                  <%= product.color %>
+                                                            </option>
                                                             <option value="Black">Black</option>
                                                             <option value="Blue">Blue</option>
                                                             <option value="White">white</option>
@@ -95,8 +96,9 @@
                                                 </div> <label class="form-label">Size</label>
                                                 <div class="form-group flex  ml-3 "> <select class="" name="ProductSize"
                                                             aria-label="Default select example">
-                                                            <option selected disabled value="<%= product.Size %> ">
-                                                            </option>>Select Size</option>
+                                                            <option selected disabled value=" ">
+                                                                  <%= product.Size %>
+                                                            </option>
                                                             <option value="S">S</option>
                                                             <option value="M">M</option>
                                                             <option value="L">L</option>

@@ -2,7 +2,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import logger from "morgan";
-import multer from "multer";
 import path from "path";
 import expressEjsLayouts from "express-ejs-layouts";
 import adminRoutes from "../Scotch/routes/adminRoutes.js";

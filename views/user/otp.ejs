@@ -10,8 +10,9 @@
                         mobile phone <b class="text-danger">
                               <%= phone %>
                         </b></span>
-                  <form method="post" action="./otp">
-                        <div class="d-flex flex-row mt-5 mx-10"><input type="text" class="form-control" name="OTP">
+                  <form method="post" action="./otp" onsubmit=" return validate()">
+                        <div class="d-flex flex-row mt-5 mx-10"><input type="text" class="form-control" id="otp"
+                                    name="OTP">
                         </div> <button type="submit"
                               class="btn btn-success bg-green-700 text-black mx-auto mt-4 d-flex justify-content-center  align-items-center">Success</button>
                   </form>
@@ -23,3 +24,19 @@
             </div>
       </div>
 </div>
+
+<script>
+      function validate() {
+            const otp = document.getElementById("otp").value;
+            if (otp == "") {
+                  Swal.fire('Please enter the opt!')
+                  return false;
+            } else {
+                  return true;
+            }
+      }
+
+      function resend() {
+            axios.put("/resendotp",)
+      }
+</script>
