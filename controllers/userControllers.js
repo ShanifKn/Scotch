@@ -3,16 +3,6 @@ const index = (req, res) => {
   res.render("user/index");
 };
 
-const product = (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/shop");
-};
-
-const productdetail = (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/product_detail");
-};
-
 const cart = (req, res) => {
   res.locals.user = req.session.user;
   res.render("user/cart");
@@ -45,15 +35,4 @@ const Sample = (req, res) => {
   res.render("user/Smaple");
 };
 
-export {
-  Signup,
-  validation,
-  Sample,
-  login,
-  index,
-  product,
-  productdetail,
-  cart,
-  checkout,
-  contact,
-};
+export { Signup, validation, Sample, login, index, cart, checkout, contact };

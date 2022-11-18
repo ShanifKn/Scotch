@@ -93,7 +93,6 @@ const Signin = (req, res) => {
         );
         res.cookie("Jwt", token, { httpOnly: true });
         req.session.user = UserModel;
-        console.log(req.session.user);
         res.redirect("/");
       }
     })

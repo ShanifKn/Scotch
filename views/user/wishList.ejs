@@ -1,22 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include ('layout/navbar.ejs') %>
 
-<head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Tailwind Ecommerce</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-            integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-            crossorigin="anonymous" />
-      <link rel="stylesheet" href="style.css">
-      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 
       <style>
             .cart-wrap {
                   padding: 40px 0;
+                  padding-left: 20%;
+                  padding-right: 20%;
                   font-family: 'Open Sans', sans-serif;
             }
 
@@ -189,94 +180,55 @@
       </style>
 
 
-</head>
 
-<body>
+      <body>
 
-      <div class="cart-wrap">
-            <div class="container">
-                  <div class="row">
-                        <div class="col-md-12">
-                              <div class="main-heading mb-10">My wishlist</div>
-                              <div class="table-wishlist">
-                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                          <thead>
-                                                <tr>
-                                                      <th width="45%">Product Name</th>
-                                                      <th width="15%">Unit Price</th>
-                                                      <th width="15%">Stock Status</th>
-                                                      <th width="15%"></th>
-                                                      <th width="10%"></th>
-                                                </tr>
-                                          </thead>
-                                          <tbody>
-                                                <tr>
-                                                      <td width="45%">
-                                                            <div class="display-flex align-center">
-                                                                  <div class="img-product">
-                                                                        <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
-                                                                              alt="" class="mCS_img_loaded">
+            <div class="cart-wrap ">
+                  <div class="container">
+                        <div class="row">
+                              <div class="col-md-12">
+                                    <div class="main-heading mb-10">My wishlist</div>
+                                    <div class="table-wishlist">
+                                          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <thead>
+                                                      <tr>
+                                                            <th width="45%">Product Name</th>
+                                                            <th width="15%">Unit Price</th>
+                                                            <th width="15%">Stock Status</th>
+                                                            <th width="15%"></th>
+                                                            <th width="10%"></th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody>
+                                                      <tr>
+                                                            <td width="45%">
+                                                                  <div class="display-flex align-center">
+                                                                        <div class="img-product">
+                                                                              <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
+                                                                                    alt="" class="mCS_img_loaded">
+                                                                        </div>
+                                                                        <div class="name-product">
+                                                                              Apple iPad Mini
+                                                                        </div>
                                                                   </div>
-                                                                  <div class="name-product">
-                                                                        Apple iPad Mini
-                                                                  </div>
-                                                            </div>
-                                                      </td>
-                                                      <td width="15%" class="price">$110.00</td>
-                                                      <td width="15%"><span class="in-stock-box">In Stock</span></td>
-                                                      <td width="15%"><button class="round-black-btn small-btn">Add to
-                                                                  Cart</button></td>
-                                                      <td width="10%" class="text-center"><a href="#"
-                                                                  class="trash-icon"><i
-                                                                        class="far fa-trash-alt"></i></a></td>
-                                                </tr>
-                                                <tr>
-                                                      <td width="45%">
-                                                            <div class="display-flex align-center">
-                                                                  <div class="img-product">
-                                                                        <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
-                                                                              alt="" class="mCS_img_loaded">
-                                                                  </div>
-                                                                  <div class="name-product">
-                                                                        Apple iPad Mini
-                                                                  </div>
-                                                            </div>
-                                                      </td>
-                                                      <td width="15%" class="price">$110.00</td>
-                                                      <td width="15%"><span class="in-stock-box">In Stock</span></td>
-                                                      <td width="15%"><button class="round-black-btn small-btn">Add to
-                                                                  Cart</button></td>
-                                                      <td width="10%" class="text-center"><a href="#"
-                                                                  class="trash-icon"><i
-                                                                        class="far fa-trash-alt"></i></a></td>
-                                                </tr>
-                                                <tr>
-                                                      <td width="45%">
-                                                            <div class="display-flex align-center">
-                                                                  <div class="img-product">
-                                                                        <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
-                                                                              alt="" class="mCS_img_loaded">
-                                                                  </div>
-                                                                  <div class="name-product">
-                                                                        Apple iPad Mini
-                                                                  </div>
-                                                            </div>
-                                                      </td>
-                                                      <td width="15%" class="price">$110.00</td>
-                                                      <td width="15%"><span class="in-stock-box">In Stock</span></td>
-                                                      <td width="15%"><button class="round-black-btn small-btn">Add to
-                                                                  Cart</button></td>
-                                                      <td width="10%" class="text-center"><a href="#"
-                                                                  class="trash-icon"><i
-                                                                        class="far fa-trash-alt"></i></a></td>
-                                                </tr>
-                                          </tbody>
-                                    </table>
+                                                            </td>
+                                                            <td width="15%" class="price">$110.00</td>
+                                                            <td width="15%"><span class="in-stock-box">In Stock</span>
+                                                            </td>
+                                                            <td width="15%"><button
+                                                                        class="round-black-btn small-btn">Add to
+                                                                        Cart</button></td>
+                                                            <td width="10%" class="text-center"><a href="#"
+                                                                        class="trash-icon"><i
+                                                                              class="bi bi-trash"></i></a></td>
+                                                      </tr>
+                                                </tbody>
+                                          </table>
+                                    </div>
                               </div>
                         </div>
                   </div>
             </div>
-      </div>
-</body>
+      </body>
 
-</html>
+      </html>

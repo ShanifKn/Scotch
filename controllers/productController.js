@@ -60,7 +60,7 @@ const add_Product = async (req, res) => {
         res.redirect("/admin/Product");
       })
       .catch((err) => {
-        req.flash("Msg", `${err}`);
+        req.flash("Msg", `${err.message}`);
         res.redirect("/admin/add-product");
       });
   } catch (err) {
@@ -122,6 +122,13 @@ const updateProduct = async (req, res) => {
   };
   const newImg = req.files;
   if (req.files.length) {
+    // delete from buget
+    // productModel.findById(id).then((product) => {
+    //   const image = product.images;
+    //   s3DeleteMany(image, (error) => {
+    //     console.log(error.message);
+    //   });
+    // });
     const result = await s3UploadMany(newImg)
       .then((result) => {
         UpdatedProduct.images = result;
@@ -143,6 +150,31 @@ const updateProduct = async (req, res) => {
     });
 };
 
+const product = (req, res) => {
+  res.locals.user = req.session.user;
+  let product = productModel.find({}).then((product) => {
+    res.render("user/shop", { product });
+  });
+};
+
+const productdetail = async (req, res) => {
+  res.locals.user = req.session.user;
+  const id = req.params.id;
+  let product = await productModel
+    .findById(id)
+    .then((product) => {
+      productModel
+        .find({})
+        .limit(4)
+        .then((allProducts) => {
+          res.render("user/product_detail", { product, allProducts });
+        });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 export {
   viewProduct,
   addProduct,
@@ -150,4 +182,6 @@ export {
   deleteProduct,
   editProduct,
   updateProduct,
+  product,
+  productdetail,
 };

@@ -12,11 +12,11 @@ const productSchema = new Schema({
   },
   Price: {
     Retail_price: {
-      type: Number,
+      type: String,
       // require: true,
     },
     Offer_price: {
-      type: Number,
+      type: String,
       // require: true,
     },
   },
