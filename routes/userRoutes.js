@@ -18,6 +18,8 @@ import {
   cart,
 } from "../controllers/userControllers.js";
 import { product, productdetail } from "../controllers/productController.js";
+import { categoryMap } from "../controllers/categoryController.js";
+import { addToCart, wishlist } from "../controllers/cartControllers.js";
 
 // get request6;;;;;;;;;;;;;;
 router.get("/", index);
@@ -32,14 +34,13 @@ router.get("/login", login);
 router.get("/otp", verifyToken, validation);
 router.get("/resendOtp", verifyToken, Resend);
 router.get("/Userlogout", userLogout);
-router.get("/wishlist", (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/wishList");
-});
+router.get("/userCategory", categoryMap);
+router.get("/wishlist", wishlist);
 
 // post request::::::
 router.post("/signup", register);
 router.post("/Userlogin", Signin);
 router.post("/otp", otpVerfication);
+router.post("/addToCart", addToCart);
 
 export default router;

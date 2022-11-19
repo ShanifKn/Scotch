@@ -1,5 +1,6 @@
 import { s3Upload } from "../database/multerS3.js";
 import { categoryModel } from "../model/category.js";
+import { productModel } from "../model/product.js";
 
 let style = "bg-blue-500/13";
 
@@ -52,4 +53,13 @@ const editCategory = async (req, res) => {
     });
 };
 
-export { addCategory, Category, editCategory };
+const categoryMap = (req, res) => {
+  const id = req.query.id;
+  let categoryProduct = productModel
+    .find({ Category: id })
+    .then((categoryProduct) => { 
+      res.json({ product: categoryProduct });
+    });
+};
+
+export { addCategory, Category, editCategory, categoryMap };

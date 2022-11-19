@@ -153,7 +153,10 @@ const updateProduct = async (req, res) => {
 const product = (req, res) => {
   res.locals.user = req.session.user;
   let product = productModel.find({}).then((product) => {
-    res.render("user/shop", { product });
+    categoryModel.find({}).then((category) => {
+      res.locals.product = product;
+      res.render("user/shop", {  category });
+    });
   });
 };
 

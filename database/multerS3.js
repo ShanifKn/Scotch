@@ -2,7 +2,7 @@ import path from "path";
 import aws from "aws-sdk";
 import * as dotenv from "dotenv";
 dotenv.config();
-
+// Single file
 const s3Upload = async (file) => {
   const s3 = new aws.S3();
   const param = {
@@ -15,6 +15,8 @@ const s3Upload = async (file) => {
   return await s3.upload(param).promise();
 };
 
+
+// Multi file
 const s3UploadMany = async (files) => {
   let count = 0;
   const s3 = new aws.S3();
@@ -30,6 +32,8 @@ const s3UploadMany = async (files) => {
   return await Promise.all(params.map((param) => s3.upload(param).promise()));
 };
 
+
+// Delte file
 const s3DeleteMany = async (files) => {
   const s3 = new aws.S3({ region: process.env.AWS_REGIION });
 
