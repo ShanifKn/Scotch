@@ -1046,7 +1046,7 @@ ol {
   z-index: -1;
 }
 
-.product__item__pic .product__hover li img {
+.product__item__pic .product__hover li i {
   background: #ffffff;
   padding: 10px;
   display: inline-block;

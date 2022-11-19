@@ -7,17 +7,35 @@ const wishlist = (req, res) => {
 
 const addToCart = async (req, res) => {
   const productId = req.body.id;
-  console.log(productId);
   const userId = req.session.user;
   try {
     let user = await wishlistModel.findOne({ userId });
-    if (!user) {
-      req.flash("Msg", "you need to LogIn");
-      res.redirect("/login");
+    if (user == null) {
+      const newWishList = new wishlistModel({
+        user: userId,
+        wishlist: [{ product: productId }],
+      });
+      newWishList.save().then(() => {
+        console.log("you have successfully");
+      });
     } else {
-      let wishlist = await wishlistModel.findOne({ userId, productId });
+      console.log(productId);
+      let wishlist = await wishlistModel.findOne({
+        user: userId,
+        "wishlist.product": productId,
+      });
       if (!wishlist) {
-        console.log("hello");
+        let productArray = { product: productId };
+        await wishlistModel
+          .findOneAndUpdate(
+            { user: userId },
+            { $push: { wishlist: productArray } }
+          )
+          .then(() => {
+            res.json({ response: true });
+          });
+      } else {
+        console.log("item already exists!");
       }
     }
   } catch (err) {

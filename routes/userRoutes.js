@@ -25,7 +25,6 @@ import { addToCart, wishlist } from "../controllers/cartControllers.js";
 router.get("/", index);
 router.get("/product", product);
 router.get("/productdetail/:id", productdetail);
-
 router.get("/cart", cart);
 router.get("/checkout", checkout);
 router.get("/contact", contact);

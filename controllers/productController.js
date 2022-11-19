@@ -1,6 +1,7 @@
 import { categoryModel } from "../model/category.js";
 import { productModel } from "../model/product.js";
 import { s3DeleteMany, s3UploadMany } from "../database/multerS3.js";
+import { wishlistModel } from "../model/wishlist.js";
 let style = "bg-blue-500/13";
 
 const viewProduct = async (req, res) => {
@@ -150,12 +151,14 @@ const updateProduct = async (req, res) => {
     });
 };
 
+// User Side::::::::::::::::::::::::::::::::
 const product = (req, res) => {
   res.locals.user = req.session.user;
+  const user = req.session.user;
   let product = productModel.find({}).then((product) => {
     categoryModel.find({}).then((category) => {
       res.locals.product = product;
-      res.render("user/shop", {  category });
+      res.render("user/shop", { category, user });
     });
   });
 };
