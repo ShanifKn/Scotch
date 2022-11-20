@@ -6,6 +6,11 @@ import {
   userBlock,
   unBlock,
   adminProfile,
+  banner,
+  addBanner,
+  bannerList,
+  editBanner,
+  deleteBanner,
 } from "../controllers/adminControllers.js";
 
 import {
@@ -39,17 +44,20 @@ router.get("/unBlock/:id", verifyAdmin, unBlock);
 router.get("/add-product", verifyAdmin, addProduct);
 router.get("/editProduct/:id", verifyAdmin, editProduct);
 router.get("/category", Category);
-
-router.post("/editcategory/:id", upload.single("img"), editCategory);
-
+router.get("/banner", banner);
+router.get("/bannerlist", bannerList);
 // post::::::::
 router.post("/Userlogin", adminAuth);
 router.post("/addCategory", upload.single("Image"), addCategory);
 router.post("/addCategory", addCategory);
 router.post("/add", upload.array("img", 4), add_Product);
 router.post("/edit/:id", upload.array("img", 4), updateProduct);
+router.post("/editcategory/:id", upload.single("img"), editCategory);
+router.post("/addBannar", upload.single("Image"), addBanner);
+router.post("/editBanner/:id", upload.single("Image"), editBanner);
 
 // Delete & patch
 router.delete("/deleteproduct", deleteProduct);
+router.delete("/deleteBanner", deleteBanner);
 
 export default router;

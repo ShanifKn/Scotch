@@ -1,0 +1,87 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<%- include ('layout/navbar.ejs') %>
+      <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+            <%- include ('layout/header.ejs') %>
+                  <div class="flex items-center mt-64 ml-10">
+                        <div class=" w-full max-w-[550px]">
+                              <form action="./addBannar" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-3">
+
+                                          <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                                                Category
+                                          </label>
+                                          <input type="text" name="Category" id="name"
+                                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    </div>
+                                    <div class="mb-3">
+                                          <label for="text" class="mb-3 block text-base font-medium text-[#07074D]">
+                                                Title
+                                          </label>
+                                          <input type="text" name="Title" id="name"
+                                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    </div>
+                                    <div class="mb-3">
+                                          <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
+                                                Message
+                                          </label>
+                                          <textarea rows="4" name="Message" id="message"
+                                                class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
+                                    </div>
+                                    <div class="mb-3 w-96">
+                                          <label for="formFile"
+                                                class="form-label inline-block mb-2 text-gray-700">Image</label>
+                                          <input class="form-control 
+                                          block
+                                          w-full
+                                          px-3
+                                          py-1.5
+                                          text-base
+                                          font-normal
+                                          text-gray-700
+                                          bg-white bg-clip-padding
+                                          border border-solid border-gray-300
+                                          rounded
+                                          transition
+                                          ease-in-out
+                                          m-0
+                                          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                type="file" id="formFile" name="Image">
+                                    </div>
+                                    <div>
+                                          <button type="submit"
+                                                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                                                Submit
+                                          </button>
+                                    </div>
+                              </form>
+                        </div>
+
+                  </div>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                              <div class="modal-content">
+                                    <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                          ...
+                                    </div>
+                                    <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+
+      </main>

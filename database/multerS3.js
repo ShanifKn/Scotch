@@ -15,7 +15,6 @@ const s3Upload = async (file) => {
   return await s3.upload(param).promise();
 };
 
-
 // Multi file
 const s3UploadMany = async (files) => {
   let count = 0;
@@ -31,7 +30,6 @@ const s3UploadMany = async (files) => {
   });
   return await Promise.all(params.map((param) => s3.upload(param).promise()));
 };
-
 
 // Delte file
 const s3DeleteMany = async (files) => {

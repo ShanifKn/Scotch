@@ -1,13 +1,17 @@
 import { wishlistModel } from "../model/wishlist.js";
 
-const wishlist = (req, res) => {
+const wishlist = async (req, res) => {
   res.locals.user = req.session.user;
-  res.render("user/wishList");
+  const userId = req.session.user._id;
+  const wishlist = await wishlistModel
+    .findOne({ user: userId })
+    .populate("wishlist.product");
+  res.render("user/wishList", wishlist);
 };
 
 const addToCart = async (req, res) => {
   const productId = req.body.id;
-  const userId = req.session.user;
+  const userId = req.session.user._id;
   try {
     let user = await wishlistModel.findOne({ userId });
     if (user == null) {
@@ -19,7 +23,6 @@ const addToCart = async (req, res) => {
         console.log("you have successfully");
       });
     } else {
-      console.log(productId);
       let wishlist = await wishlistModel.findOne({
         user: userId,
         "wishlist.product": productId,

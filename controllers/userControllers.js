@@ -1,6 +1,32 @@
-const index = (req, res) => {
+import { bannerModel } from "../model/banner.js";
+import { productModel } from "../model/product.js";
+
+const index = async (req, res) => {
   res.locals.user = req.session.user;
-  res.render("user/index");
+  let user = req.session.user;
+  let banner = bannerModel
+    .find()
+    .then((banner) => {
+      let product = productModel
+        .find()
+        .limit(4)
+        .then((product) => {
+          let secondProduct = productModel
+            .find()
+            .skip(4)
+            .then((secondProduct) => {
+              res.render("user/index", {
+                banner,
+                product,
+                secondProduct,
+                user,
+              });
+            });
+        });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 const cart = (req, res) => {

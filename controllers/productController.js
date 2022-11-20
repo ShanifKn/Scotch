@@ -1,7 +1,7 @@
 import { categoryModel } from "../model/category.js";
 import { productModel } from "../model/product.js";
 import { s3DeleteMany, s3UploadMany } from "../database/multerS3.js";
-import { wishlistModel } from "../model/wishlist.js";
+
 let style = "bg-blue-500/13";
 
 const viewProduct = async (req, res) => {
@@ -125,7 +125,7 @@ const updateProduct = async (req, res) => {
   if (req.files.length) {
     // delete from buget
     // productModel.findById(id).then((product) => {
-    //   const image = product.images;
+    //   const image = product.images.Location;
     //   s3DeleteMany(image, (error) => {
     //     console.log(error.message);
     //   });

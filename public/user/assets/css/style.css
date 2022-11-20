@@ -969,6 +969,7 @@ ol {
 }
 
 .product__item:hover .product__item__text h6 {
+  margin-top: 15px;
 }
 
 .product__item:hover .product__item__text .product__color__select {
