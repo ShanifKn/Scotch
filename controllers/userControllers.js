@@ -1,4 +1,5 @@
 import { bannerModel } from "../model/banner.js";
+import { cartModel } from "../model/cart.js";
 import { productModel } from "../model/product.js";
 
 const index = async (req, res) => {
@@ -29,10 +30,19 @@ const index = async (req, res) => {
     });
 };
 
-const cart = (req, res) => {
+const cart = async (req, res) => {
   res.locals.user = req.session.user;
-  res.render("user/cart");
+  try {
+    const userId = req.session.user._id;
+    const cartProduct = await cartModel
+      .findOne({ user: userId })
+      .populate("cart.product");
+    res.render("user/cart", { cartProduct });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
+
 const checkout = (req, res) => {
   res.locals.user = req.session.user;
   res.render("user/checkout");

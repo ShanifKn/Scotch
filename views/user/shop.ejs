@@ -37,21 +37,17 @@
 
                                                                         <ul class="nice-scroll">
 
-                                                                              <% for( let i=0; i<
-                                                                                    category.length;i++){%>
+                                                                              <% for( let i=0; i<category.length;i++){%>
                                                                                     <li><a onclick="CategoryMap('<%= category[i]._id %>')"
                                                                                                 href="#">
                                                                                                 <%=category[i].categoryName%>
                                                                                           </a>
                                                                                     </li>
                                                                                     <% } %>
-
                                                                         </ul>
                                                                   </div>
-
                                                             </div>
                                                       </div>
-
                                                 </div>
                                           </div>
                                     </div>
@@ -91,7 +87,7 @@
                                                                               <li
                                                                                     id="wishlistButton<%= product[i]._id %>">
                                                                                     <a
-                                                                                          onclick="addToCart('<%= product[i]._id %>')">
+                                                                                          onclick="addToWishlist('<%= product[i]._id %>')">
                                                                                           <i class="bi bi-heart"></i>
                                                                                     </a>
                                                                               </li>
@@ -132,7 +128,6 @@
                                                             </div>
 
                                                       </div>
-                                                      <a href="/cart" class="add-cart">+ Add To Cart</a>
                                                 </div>
                                           </div>
                                           <% } %>
@@ -230,7 +225,7 @@
                   }
 
 
-                  const addToCart = (id) => {
+                  const addToWishlist = (id) => {
                         axios.post("/addToCart", { id }).then((e) => {
                               if (e.data.response == true) {
                                     Swal.fire({

@@ -9,7 +9,7 @@
 .filter__controls {
   text-align: center;
   margin-bottom: 45px;
-  
+
   li {
     color: #b7b7b7;
     font-size: 24px;
@@ -34,9 +34,7 @@
   margin-bottom: 40px;
 
   &.sale {
-
     .product__item__pic {
-
       .label {
         color: $white-color;
         background: $heading-color;
@@ -44,9 +42,7 @@
     }
 
     .product__item__text {
-
       .rating {
-
         i {
           color: #f7941d;
 
@@ -59,9 +55,7 @@
   }
 
   &:hover {
-
     .product__item__pic {
-
       .product__hover {
         right: 20px;
         opacity: 1;
@@ -69,7 +63,6 @@
     }
 
     .product__item__text {
-
       a {
         top: 22px;
         opacity: 1;
@@ -88,77 +81,76 @@
 }
 
 .product__item__pic {
-    height: 260px;
-    position: relative;
-    background-position: center center;
+  height: 260px;
+  position: relative;
+  background-position: center center;
 
-    .label {
-      color: $heading-color;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      display: inline-block;
-      padding: 4px 15px 2px;
-      background: $white-color;
-      position: absolute;
-      left: 0;
-      top: 20px;
-    }
+  .label {
+    color: $heading-color;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 4px 15px 2px;
+    background: $white-color;
+    position: absolute;
+    left: 0;
+    top: 20px;
+  }
 
-    .product__hover {
-      position: absolute;
-      right: -200px;
-      top: 20px;
-      @include transition(all, .8s);
+  .product__hover {
+    position: absolute;
+    right: -200px;
+    top: 20px;
+    @include transition(all, 0.8s);
 
-      li {
-        list-style: none;
-        margin-bottom: 10px;
-        position: relative;
-        
-        &:hover {
-          
-          span {
-            opacity: 1;
-            visibility: visible;
-          }
-        }
+    li {
+      list-style: none;
+      margin-bottom: 10px;
+      position: relative;
 
+      &:hover {
         span {
-          color: $white-color;
-          background: $heading-color;
-          display: inline-block;
-          padding: 4px 10px;
-          font-size: 12px;
-          position: absolute;
-          left: -78px;
-          top: 5px;
-          z-index: 1;
-          opacity: 0;
-          visibility: hidden;
-          @include transition(all, .3s);
-
-          &:after {
-            position: absolute;
-            right: -2px;
-            top: 5px;
-            height: 15px;
-            width: 15px;
-            background: $heading-color;
-            content: "";
-            transform: rotate(45deg);
-            z-index: -1;
-          }
-        }
-        
-        img {
-          background: $white-color;
-          padding: 10px;
-          display: inline-block;
+          opacity: 1;
+          visibility: visible;
         }
       }
+
+      span {
+        color: $white-color;
+        background: $heading-color;
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 12px;
+        position: absolute;
+        left: -78px;
+        top: 5px;
+        z-index: 1;
+        opacity: 0;
+        visibility: hidden;
+        @include transition(all, 0.3s);
+
+        &:after {
+          position: absolute;
+          right: -2px;
+          top: 5px;
+          height: 15px;
+          width: 15px;
+          background: $heading-color;
+          content: "";
+          transform: rotate(45deg);
+          z-index: -1;
+        }
+      }
+
+      img {
+        background: $white-color;
+        padding: 10px;
+        display: inline-block;
+      }
     }
+  }
 }
 
 .product__item__text {
@@ -174,7 +166,7 @@
     top: 0;
     opacity: 0;
     visibility: hidden;
-    @include transition(all, .3s);
+    @include transition(all, 0.3s);
   }
 
   h6 {
@@ -182,7 +174,7 @@
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 5px;
-    @include transition(all, .3s);
+    @include transition(all, 0.3s);
   }
 
   .rating {
@@ -205,7 +197,7 @@
     right: 0;
     bottom: 0;
     opacity: 0;
-    @include transition(all, .5s);
+    @include transition(all, 0.5s);
 
     label {
       display: inline-block;
@@ -217,17 +209,16 @@
       margin-right: 5px;
       position: relative;
       cursor: pointer;
-      
+
       &.black {
         background: #404a47;
       }
-      
+
       &.grey {
         background: #d5a667;
       }
 
       &.active {
-
         &:after {
           opacity: 1;
         }
