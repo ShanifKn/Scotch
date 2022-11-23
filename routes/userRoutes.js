@@ -22,6 +22,9 @@ import { categoryMap } from "../controllers/categoryController.js";
 import {
   addtoCart,
   addToWishlist,
+  deleteCartProduct,
+  quantityDec,
+  quantityInc,
   wishlist,
 } from "../controllers/cartControllers.js";
 
@@ -47,4 +50,14 @@ router.post("/otp", otpVerfication);
 router.post("/addToCart", addToWishlist);
 router.post("/addCart", addtoCart);
 
+// delete request::::::::::::
+
+router.delete("/deleteCartProduct", deleteCartProduct);
+router.patch("/quantityDec", quantityDec);
+router.patch("/quantityInc", quantityInc);
+
+// error
+router.get("/error", (req, res) => {
+  res.render("admin/404");
+});
 export default router;

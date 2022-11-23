@@ -7,11 +7,11 @@ const dashboard = (req, res) => {
   res.render("admin/dashboard", {
     Dashboard: style,
     expressFlash: req.flash("Msg"),
-  });
+  }); 
 };
 
 const login = (req, res) => {
-  res.render("admin/login", { expressFlash: req.flash("Msg") });
+  res.render("admin/login", { expressFlash: req.flash("Msg") }); 
 };
 
 const adminProfile = (req, res) => {

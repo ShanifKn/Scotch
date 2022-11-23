@@ -914,6 +914,7 @@ ol {
 .product {
   padding-top: 0;
   padding-bottom: 60px;
+  cursor: pointer;
 }
 
 .filter__controls {
@@ -942,6 +943,7 @@ ol {
 .product__item {
   overflow: hidden;
   margin-bottom: 40px;
+  cursor: pointer;
 }
 
 .product__item.sale .product__item__pic .label {
@@ -1620,6 +1622,7 @@ ol {
   color: #111111;
   font-weight: 700;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .product__details__text .rating {
@@ -1758,6 +1761,7 @@ ol {
 
 .product__details__cart__option .quantity {
   display: inline-block;
+  width: 70px;
   margin-right: 20px;
 }
 
@@ -1796,6 +1800,7 @@ ol {
 
 .product__details__btns__option {
   margin-bottom: 40px;
+  cursor: pointer;
 }
 
 .product__details__btns__option a {

@@ -166,19 +166,18 @@ const product = (req, res) => {
 const productdetail = async (req, res) => {
   res.locals.user = req.session.user;
   const id = req.params.id;
-  let product = await productModel
-    .findById(id)
-    .then((product) => {
+  try {
+    let product = await productModel.findById(id).then((product) => {
       productModel
         .find({})
         .limit(4)
         .then((allProducts) => {
           res.render("user/product_detail", { product, allProducts });
         });
-    })
-    .catch((err) => {
-      console.log(err.message);
     });
+  } catch (err) {
+    res.redirect("/error");
+  }
 };
 
 export {

@@ -39,7 +39,8 @@ const cart = async (req, res) => {
       .populate("cart.product");
     res.render("user/cart", { cartProduct });
   } catch (err) {
-    console.log(err.message);
+    req.flash("Msg", " login for access");
+    res.redirect("/login");
   }
 };
 

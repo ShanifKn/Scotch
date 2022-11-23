@@ -1,4 +1,5 @@
 <%- include ('layout/navbar.ejs') %>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
       <section class="breadcrumb-option">
             <div class="container">
@@ -47,24 +48,30 @@
                                                                               <%= cartProduct.cart[i].product.Product_title
                                                                                     %>
                                                                         </h6>
-                                                                        <h5>₹ <%= cartProduct.cart[i].product.Price.Retail_price
+                                                                        <h5>₹ <%= cartProduct.cart[i].product.Price.Offer_price
                                                                                     %>
                                                                         </h5>
                                                                   </div>
                                                             </td>
                                                             <td class="quantity__item">
                                                                   <div class="quantity">
-                                                                        <div class="pro-qty-2">
-                                                                              <input type="text"
+                                                                        <div class="pro-qty-2 d-flex">
+                                                                              <i class="bi bi-caret-left"
+                                                                                    onclick="incQuantity(`<%= cartProduct.cart[i].product._id
+                                                                              %>`,`<%= cartProduct.cart[i].quantity %>`)"></i>
+                                                                              <input type="text" id="quantityBox"
                                                                                     value=" <%= cartProduct.cart[i].quantity %>">
+                                                                              <i class="bi bi-caret-right"
+                                                                                    onclick="decQuantity(`<%= cartProduct.cart[i].product._id
+                                                                              %>`,`<%= cartProduct.cart[i].quantity %>`)"></i>
                                                                         </div>
                                                                   </div>
                                                             </td>
                                                             <td class="cart__price">₹
-                                                                  <%=cartProduct.cart[i].product.Price.Retail_price *
-                                                                        cartProduct.cart[i].quantity %>
+                                                                  <%=cartProduct.cart[i].total %>
                                                             </td>
-                                                            <td class="cart__close"><i class="fa fa-close"></i>
+                                                            <td class="cart__close"><i onclick="deleteProduct(`<%= cartProduct.cart[i].product._id
+                                                                  %>`)" class="fa fa-close" style="cursor:pointer"></i>
                                                             </td>
                                                       </tr>
                                                       <% } %>
@@ -90,8 +97,12 @@
                               <div class="cart__total">
                                     <h6>Cart total</h6>
                                     <ul>
-                                          <li>Subtotal <span>$ 169.50</span></li>
-                                          <li>Total <span>$ 169.50</span></li>
+                                          <li>Subtotal <span>₹
+                                                      <%= cartProduct.subtotal %>
+                                                </span></li>
+                                          <li>Total <span>₹
+                                                      <%= cartProduct.subtotal %>
+                                                </span></li>
                                     </ul>
                                     <a href="#" class="primary-btn">Proceed to checkout</a>
                               </div>
@@ -100,3 +111,63 @@
             </div>
       </section>
       <%- include ('layout/footer.ejs') %>
+
+
+            <script>
+                  const deleteProduct = (id) => {
+                        axios.delete("/deleteCartProduct", { data: { id: id } }).then((e) => {
+                              if (e.data.response) {
+                                    Swal.fire({
+                                          icon: 'success',
+                                          title: 'Removed from cart',
+                                          showConfirmButton: false,
+                                          timer: 1500
+                                    })
+                                    location.href = "/cart"
+                              }
+                        })
+                  }
+
+                  const decQuantity = (id, quantity) => {
+                        if (quantity > 1) {
+                              axios.patch("/quantityDec", { id: id }).then((e) => {
+                                    if (e.data.response) {
+                                          location.href = "/cart"
+
+                                    }
+                              })
+                        } else {
+                              axios.delete("/deleteCartProduct", { data: { id: id } }).then((e) => {
+                                    if (e.data.response) {
+                                          Swal.fire({
+                                                icon: 'success',
+                                                title: 'Removed from cart',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                          })
+                                          location.href = "/cart"
+                                    }
+                              })
+                        }
+                  }
+                  const incQuantity = (id, quantity) => {
+                        if (quantity < 10) {
+                              axios.patch("/quantityInc", { id: id }).then((e) => {
+                                    console.log(e.data);
+                                    if (e.data.updateQuantity) {
+                                          location.href = "/cart"
+                                    }
+                              })
+                        } else {
+                              Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Limit',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                              })
+                        }
+                  }
+
+
+            </script>

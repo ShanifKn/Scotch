@@ -121,14 +121,13 @@
                                                       <ul class="product__hover">
                                                             <% if (user) { %>
                                                                   <li id="wishlistButton<%= product[i]._id %>">
-                                                                        <a onclick="addToCart('<%= product[i]._id %>')">
+                                                                        <a
+                                                                              onclick="addToWishlist('<%= product[i]._id %>')">
                                                                               <i class="bi bi-heart"></i>
                                                                         </a>
                                                                   </li>
                                                                   <% } %>
-
                                                       </ul>
-
                                                 </div>
                                           </a>
 
@@ -163,7 +162,12 @@
                                                 </div>
 
                                           </div>
-                                          <a href="/cart" class="add-cart">+ Add To Cart</a>
+                                          <% if (user) { %>
+                                                <a onclick="addCart(`<%= product[i]._id %>`)"
+                                                      class="add-cart text-danger">+
+                                                      Add To
+                                                      Cart</a>
+                                                <% } %>
                                     </div>
                               </div>
                               <% } %>
@@ -181,14 +185,12 @@
                                                                               <li
                                                                                     id="wishlistButton<%= secondProduct[i]._id %>">
                                                                                     <a
-                                                                                          onclick="addToCart('<%= secondProduct[i]._id %>')">
+                                                                                          onclick="addToWishlist('<%= secondProduct[i]._id %>')">
                                                                                           <i class="bi bi-heart"></i>
                                                                                     </a>
                                                                               </li>
                                                                               <% } %>
-
                                                                   </ul>
-
                                                             </div>
                                                       </a>
 
@@ -224,13 +226,16 @@
                                                                         <input type="radio" id="pc-6">
                                                                   </label>
                                                             </div>
-
                                                       </div>
-                                                      <a href="/cart" class="add-cart">+ Add To Cart</a>
+                                                      <% if (user) { %>
+                                                            <a onclick="addCart(`<%= product[i]._id %>`)"
+                                                                  class="add-cart text-danger">+
+                                                                  Add To
+                                                                  Cart</a>
+                                                            <% } %>
                                                 </div>
                                           </div>
                                           <% } %>
-
                   </div>
             </div>
       </section>
@@ -279,7 +284,7 @@
                   </div>
             </div>
       </section>
-      <section class="instagram spad">
+      <section class="instagram spad mb-5">
             <div class="container">
                   <div class="row">
                         <div class="col-lg-8">
@@ -317,121 +322,74 @@
             </div>
       </section>
       <!-- Instagram Section End -->
-      <section class="latest spad">
-            <div class="container">
-                  <div class="row">
-                        <div class="col-lg-12">
-                              <div class="section-title">
-                                    <span>Latest News</span>
-                                    <h2>Fashion New Trends</h2>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="blog__item">
-                                    <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
-                                    <div class="blog__item__text">
-                                          <span><img src="/user/assets/img/icon/calendar.png" alt=""> 16 February
-                                                2020</span>
-                                          <h5>What Curling Irons Are The Best Ones</h5>
-                                          <a href="#">Read More</a>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="blog__item">
-                                    <div class="blog__item__pic set-bg" data-setbg="/user/assets/img/blog/blog-2.jpg">
-                                    </div>
-                                    <div class="blog__item__text">
-                                          <span><img src="/user/assets/img/icon/calendar.png" alt=""> 21 February
-                                                2020</span>
-                                          <h5>Eternity Bands Do Last Forever</h5>
-                                          <a href="#">Read More</a>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="blog__item">
-                                    <div class="blog__item__pic set-bg" data-setbg="/user/assets/img/blog/blog-3.jpg">
-                                    </div>
-                                    <div class="blog__item__text">
-                                          <span><img src="/user/assets/img/icon/calendar.png" alt=""> 28 February
-                                                2020</span>
-                                          <h5>The Health Benefits Of Sunglasses</h5>
-                                          <a href="#">Read More</a>
-                                    </div>
-                              </div>
-                        </div>
-                  </div>
-            </div>
-      </section>
 
 
       <%- include ('layout/footer.ejs') %>
 
             <script>
-                  const addToCart = (id) => {
+                  const addToWishlist = (id) => {
                         axios.post("/addToCart", { id }).then((e) => {
                               if (e.data.response == true) {
-                                    Swal.fire({
-                                          icon: 'success',
-                                          title: 'Your work has been saved',
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
                                           showConfirmButton: false,
-                                          timer: 1500
+                                          timer: 1000,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
+                                    Toast.fire({
+                                          icon: 'success',
+                                          title: 'Add to Wishlist',
                                     })
                                     document.getElementById("wishlistButton" + id).innerHTML = ` <a>
                                                                                           <i class="bi bi-heart-fill"></i>
-                                                                                    </a>`}
+                                                                                    </a>`
+                              } else {
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
+                                          showConfirmButton: false,
+                                          timer: 1500,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
+
+                                    Toast.fire({
+                                          icon: 'info',
+                                          title: 'Item Already Exist!',
+                                    })
+                              }
+
                         })
                   }
+                  const addCart = (id) => {
+                        axios.post("/addCart", { id: id }).then((e) => {
+                              if (e.data.response) {
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
+                                          showConfirmButton: false,
+                                          timer: 1500,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
+
+                                    Toast.fire({
+                                          icon: 'success',
+                                          title: 'Item Added to cart',
+                                    })
+                              }
+                        })
+
+                  }
             </script>
-            <div class="container">
-                  <div class="row">
-                        <div class="col-lg-12">
-                              <div class="section-title">
-                                    <span>Latest News</span>
-                                    <h2>Fashion New Trends</h2>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="blog__item">
-                                    <div class="blog__item__pic set-bg" data-setbg="/user/assets/img/blog/blog-1.jpg">
-                                    </div>
-                                    <div class="blog__item__text">
-                                          <span><img src="/user/assets/img/icon/calendar.png" alt=""> 16 February
-                                                2020</span>
-                                          <h5>What Curling Irons Are The Best Ones</h5>
-                                          <a href="#">Read More</a>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="blog__item">
-                                    <div class="blog__item__pic set-bg" data-setbg="/user/assets/img/blog/blog-2.jpg">
-                                    </div>
-                                    <div class="blog__item__text">
-                                          <span><img src="/user/assets/img/icon/calendar.png" alt=""> 21 February
-                                                2020</span>
-                                          <h5>Eternity Bands Do Last Forever</h5>
-                                          <a href="#">Read More</a>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                              <div class="blog__item">
-                                    <div class="blog__item__pic set-bg" data-setbg="/user/assets/img/blog/blog-3.jpg">
-                                    </div>
-                                    <div class="blog__item__text">
-                                          <span><img src="/user/assets/img/icon/calendar.png" alt=""> 28 February
-                                                2020</span>
-                                          <h5>The Health Benefits Of Sunglasses</h5>
-                                          <a href="#">Read More</a>
-                                    </div>
-                              </div>
-                        </div>
-                  </div>
-            </div>
-            </section> -->

@@ -128,6 +128,12 @@
                                                             </div>
 
                                                       </div>
+                                                      <% if (user) { %>
+                                                            <a onclick="addCart(`<%= product[i]._id %>`)"
+                                                                  class="add-cart text-danger">+
+                                                                  Add To
+                                                                  Cart</a>
+                                                            <% } %>
                                                 </div>
                                           </div>
                                           <% } %>
@@ -228,17 +234,67 @@
                   const addToWishlist = (id) => {
                         axios.post("/addToCart", { id }).then((e) => {
                               if (e.data.response == true) {
-                                    Swal.fire({
-                                          icon: 'success',
-                                          title: 'Your work has been saved',
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
                                           showConfirmButton: false,
-                                          timer: 1500
+                                          timer: 1000,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
+
+                                    Toast.fire({
+                                          icon: 'success',
+                                          title: 'Add to Wishlist',
                                     })
                                     document.getElementById("wishlistButton" + id).innerHTML = ` <a>
                                                                                           <i class="bi bi-heart-fill"></i>
                                                                                     </a>`}
+                              else {
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
+                                          showConfirmButton: false,
+                                          timer: 1500,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
+
+                                    Toast.fire({
+                                          icon: 'info',
+                                          title: 'Item Already Exist!',
+                                    })
+                              }
                         })
                   }
+                  const addCart = (id) => {
+                        axios.post("/addCart", { id: id }).then((e) => {
+                              if (e.data.response) {
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
+                                          showConfirmButton: false,
+                                          timer: 1000,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
 
+                                    Toast.fire({
+                                          icon: 'success',
+                                          title: 'Item Added to cart',
+                                    })
+                              }
+                        })
+
+                  }
 
             </script>
