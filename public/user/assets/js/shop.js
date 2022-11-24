@@ -2,11 +2,7 @@
 let product;
 const CategoryMap = (id) => {
       axios.get("/userCategory", { params: { id: id } }).then((product) => {
-            document.getElementById("MapProduct").innerHTML = ""
-
             let html = ``
-            console.log(product.data.product)
-
             for (let i = 0; i < product.data.product.length; i++) {
                   html += ` 
                     <div class="col-lg-4 col-md-6 col-sm-6">

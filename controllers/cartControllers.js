@@ -159,69 +159,114 @@ const deleteCartProduct = async (req, res) => {
 };
 
 const quantityDec = async (req, res) => {
-  const productId = req.body.id;
-  const userId = req.session.user._id;
-  const product = await productModel.findOne({ _id: productId });
-  const productPrice = product.Price.Offer_price;
-  let updateQuantity = await cartModel
-    .findOneAndUpdate(
-      { user: userId, "cart.product": productId },
-      {
-        $inc: {
-          "cart.$.quantity": -1,
-          "cart.$.total": -productPrice,
-          subtotal: -productPrice,
-        },
-      }
-    )
-    .then((updateQuantity) => {
-      res.json({ response: true });
-    });
+  try {
+    const productId = req.body.id;
+    const userId = req.session.user._id;
+    const quantityLimit = req.body.quantity;
+      const product = await productModel.findOne({ _id: productId });
+      const productPrice = product.Price.Offer_price;
+      let updateQuantity = await cartModel.findOneAndUpdate(
+        { user: userId, "cart.product": productId },
+        {
+          $inc: {
+            "cart.$.quantity": -1,
+            "cart.$.total": -productPrice,
+            subtotal: -productPrice,
+          },
+        }
+      );
+      const quantity = await cartModel
+        .aggregate([
+          {
+            $match: {
+              user: mongoose.Types.ObjectId(userId),
+            },
+          },
+          {
+            $project: {
+              subtotal: 1,
+              cart: {
+                $filter: {
+                  input: "$cart",
+                  cond: {
+                    $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+                  },
+                },
+              },
+            },
+          },
+        ])
+        .then((quantity) => {
+          const total = quantity[0].cart[0].total;
+          const subtotal = quantity[0].subtotal;
+          const quan = quantity[0].cart[0].quantity;
+          res.json({
+            response: true,
+            total: total,
+            subtotal: subtotal,
+            quantity: quan,
+          });
+        });
+    
+    
+  } catch (err) {
+    console.error(err);
+    res.redirect("/error");
+  }
 };
 
 const quantityInc = async (req, res) => {
-  const productId = req.body.id;
-  const userId = req.session.user._id;
-  const QuantityVannu = {};
-  const product = await productModel.findOne({ _id: productId });
-  const productPrice = product.Price.Offer_price;
-  await cartModel.findOneAndUpdate(
-    { user: userId, "cart.product": productId },
-    {
-      $inc: {
-        "cart.$.quantity": 1,
-        "cart.$.total": productPrice,
-        subtotal: productPrice,
-      },
-    }
-  );
-  const quantity = await cartModel
-    .aggregate([
+  try {
+    const productId = req.body.id;
+    const userId = req.session.user._id;
+
+    const product = await productModel.findOne({ _id: productId });
+    const productPrice = product.Price.Offer_price;
+    await cartModel.findOneAndUpdate(
+      { user: userId, "cart.product": productId },
       {
-        $match: {
-          user: mongoose.Types.ObjectId(userId),
+        $inc: {
+          "cart.$.quantity": 1,
+          "cart.$.total": productPrice,
+          subtotal: productPrice,
         },
-      },
-      {
-        $project: {
-          subtotal: 1,
-          cart: {
-            $filter: {
-              input: "$cart",
-              cond: {
-                $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+      }
+    );
+    const quantity = await cartModel
+      .aggregate([
+        {
+          $match: {
+            user: mongoose.Types.ObjectId(userId),
+          },
+        },
+        {
+          $project: {
+            subtotal: 1,
+            cart: {
+              $filter: {
+                input: "$cart",
+                cond: {
+                  $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+                },
               },
             },
           },
         },
-      },
-    ])
-    .then((quantity) => {
-      const total = quantity[0].cart[0].total;
-      const subtotal = quantity.subtotal;
-      const quan = quantity[0].cart[0].quantity;
-      res.json({ total: total, subtotal: subtotal, quantity: quan });
-    });
+      ])
+      .then((quantity) => {
+        const total = quantity[0].cart[0].total;
+        const subtotal = quantity[0].subtotal;
+        const quan = quantity[0].cart[0].quantity;
+        res.json({
+          response: true,
+          total: total,
+          subtotal: subtotal,
+          quantity: quan,
+        });
+      });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export {

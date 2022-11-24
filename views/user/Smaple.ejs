@@ -1,31 +1,84 @@
-<!-- 
+else {
+      Swal.fire({
+            title: "Do you want to add to your wishlist ?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Save",
+            denyButtonText: `Don't save`,
+      }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                  axios.post("/addToCart", { id }).then((e) => {
+                        if (e.data.response == true) {
+                              axios
+                                    .delete("/deleteCartProduct", { data: { id: id } })
+                                    .then((e) => {
+                                          if (e.data.response) {
+                                                const Toast = Swal.mixin({
+                                                      toast: true,
+                                                      position: "top-end",
+                                                      showConfirmButton: false,
+                                                      timer: 3000,
+                                                      timerProgressBar: true,
+                                                      didOpen: (toast) => {
+                                                            toast.addEventListener("mouseenter", Swal.stopTimer);
+                                                            toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                                      },
+                                                });
+                                                Toast.fire({
+                                                      icon: "success",
+                                                      title: "Saved to wishlist",
+                                                });
+                                                location.href = "/cart";
+                                          }
+                                    });
+                        } else {
+                              axios
+                                    .delete("/deleteCartProduct", { data: { id: id } })
+                                    .then((e) => {
+                                          if (e.data.response) {
+                                                const Toast = Swal.mixin({
+                                                      toast: true,
+                                                      position: "top-end",
+                                                      showConfirmButton: false,
+                                                      timer: 3000,
+                                                      timerProgressBar: true,
+                                                      didOpen: (toast) => {
+                                                            toast.addEventListener("mouseenter", Swal.stopTimer);
+                                                            toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                                      },
+                                                });
+                                                Toast.fire({
+                                                      icon: "success",
+                                                      title: "Saved to wishlist",
+                                                });
+                                                location.href = "/cart";
+                                          }
+                                    });
+                        }
+                  });
+            } else if (result.isDenied) {
+                  axios.delete("/deleteCartProduct", { data: { id: id } }).then((e) => {
+                        if (e.data.response) {
+                              const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                          toast.addEventListener("mouseenter", Swal.stopTimer);
+                                          toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                    },
+                              });
 
-<form id="my_form">
-      <div>
-            <label class="block text-sm font-medium mb-1" for="card-nr">Email
-                  <input octavalidate="R,EMAIL" id="inp_email" name="email" type="email">
-                  <input octavalidate="R,DIGITS" id="inp_age" name="age" length="2" type="number">
-      </div>
-
-
-      <button type="submit">submit</button>
-</form>
-
-
-
-<script>
-      //create new instance of the function
-      const myForm = new octaValidate('my_form');
-      //listen for submit event
-      document.querySelector('#my_form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            //invoke the method
-            if (myForm.validate() === true) {
-                  //validation successful, process form data here
-            } else {
-                  //validation failed
+                              Toast.fire({
+                                    icon: "success",
+                                    title: "Saved to wishlist",
+                              });
+                              location.href = "/cart";
+                        }
+                  });
             }
-
-
-      })
-</script> -->
+      });
+}
