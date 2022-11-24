@@ -23,12 +23,13 @@ import {
   addtoCart,
   addToWishlist,
   deleteCartProduct,
+  deleteProductwishlist,
   quantityDec,
   quantityInc,
   wishlist,
 } from "../controllers/cartControllers.js";
 
-// get request6;;;;;;;;;;;;;;
+// get request;;;;;;;;;;;;;;
 router.get("/", index);
 router.get("/product", product);
 router.get("/productdetail/:id", productdetail);
@@ -53,6 +54,7 @@ router.post("/addCart", addtoCart);
 // delete request::::::::::::
 
 router.delete("/deleteCartProduct", deleteCartProduct);
+router.delete("/deletewishlist", deleteProductwishlist);
 router.patch("/quantityDec", quantityDec);
 router.patch("/quantityInc", quantityInc);
 

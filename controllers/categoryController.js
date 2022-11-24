@@ -1,3 +1,4 @@
+import { response } from "express";
 import { s3Upload } from "../database/multerS3.js";
 import { categoryModel } from "../model/category.js";
 import { productModel } from "../model/product.js";
@@ -57,8 +58,8 @@ const categoryMap = (req, res) => {
   const id = req.query.id;
   let categoryProduct = productModel
     .find({ Category: id })
-    .then((categoryProduct) => { 
-      res.json({ product: categoryProduct });
+    .then((categoryProduct) => {
+      res.json({ product: categoryProduct, user: req.session.user });
     });
 };
 

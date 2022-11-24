@@ -178,7 +178,6 @@
                                                             <div class="product__item__pic set-bg" data-setbg=" ">
                                                                   <img src="<%= secondProduct[i].images[0].Location %>"
                                                                         alt="">
-                                                                  <span class="label">New</span>
 
                                                                   <ul class="product__hover">
                                                                         <% if (user) { %>
@@ -362,7 +361,7 @@
                                     })
 
                                     Toast.fire({
-                                          icon: 'info',
+                                          icon: 'warning',
                                           title: 'Item Already Exist!',
                                     })
                               }

@@ -1,4 +1,5 @@
 <%- include ('layout/navbar.ejs') %>
+      <script src="/user/assets/js/wishlist.js"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
       <style>
             .cart-wrap {
@@ -226,6 +227,7 @@
                                                                               Cart</button></td>
                                                                   <td width="10%" class="text-center"><a href="#"
                                                                               class="trash-icon"><i
+                                                                                    onclick="deleteProduct(`<%= wishlist[i].product._id %>`)"
                                                                                     class="bi bi-trash"></i></a>
                                                                   </td>
                                                             </tr>
@@ -239,21 +241,3 @@
                   </div>
             </div>
       </body>
-      <script>
-            const addtoCart = (id) => {
-                  axios.post("/addCart", { id: id }).then((e) => {
-                        if (e.data.response) {
-                              Swal.fire({
-                                    icon: 'success',
-                                    title: 'Add to Cart',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                              })
-                              location.href = "/wishlist"
-                        }
-                  })
-
-            }
-
-
-      </script>

@@ -1,6 +1,8 @@
 import { cartModel } from "../model/cart.js";
 import { wishlistModel } from "../model/wishlist.js";
 import { productModel } from "../model/product.js";
+import { login } from "./adminControllers.js";
+import mongoose from "mongoose";
 
 const wishlist = async (req, res) => {
   try {
@@ -50,6 +52,27 @@ const addToWishlist = async (req, res) => {
     console.log(err.message);
   }
 };
+// delete from wishlist
+const deleteProductwishlist = async (req, res) => {
+  try {
+    const productId = req.body.id;
+    const userId = req.session.user._id;
+    const wishlistDelete = await wishlistModel
+      .updateOne(
+        {
+          user: userId,
+        },
+        { $pull: { wishlist: { product: productId } } }
+      )
+      .then(() => {
+        res.json({ response: true });
+      });
+  } catch (err) {
+    res.redirect("/error");
+    console.log(err.message);
+  }
+};
+
 // cart::::::::::::::::::::::::
 const addtoCart = async (req, res) => {
   const productId = req.body.id;
@@ -159,21 +182,45 @@ const quantityDec = async (req, res) => {
 const quantityInc = async (req, res) => {
   const productId = req.body.id;
   const userId = req.session.user._id;
+  const QuantityVannu = {};
   const product = await productModel.findOne({ _id: productId });
   const productPrice = product.Price.Offer_price;
-  let updateQuantity = await cartModel
-    .findOneAndUpdate(
-      { user: userId, "cart.product": productId },
+  await cartModel.findOneAndUpdate(
+    { user: userId, "cart.product": productId },
+    {
+      $inc: {
+        "cart.$.quantity": 1,
+        "cart.$.total": productPrice,
+        subtotal: productPrice,
+      },
+    }
+  );
+  const quantity = await cartModel
+    .aggregate([
       {
-        $inc: {
-          "cart.$.quantity": 1,
-          "cart.$.total": productPrice,
-          subtotal: productPrice,
+        $match: {
+          user: mongoose.Types.ObjectId(userId),
         },
-      }
-    )
-    .then((updateQuantity) => {
-      res.json({ updateQuantity: updateQuantity });
+      },
+      {
+        $project: {
+          subtotal: 1,
+          cart: {
+            $filter: {
+              input: "$cart",
+              cond: {
+                $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+              },
+            },
+          },
+        },
+      },
+    ])
+    .then((quantity) => {
+      const total = quantity[0].cart[0].total;
+      const subtotal = quantity.subtotal;
+      const quan = quantity[0].cart[0].quantity;
+      res.json({ total: total, subtotal: subtotal, quantity: quan });
     });
 };
 
@@ -184,4 +231,5 @@ export {
   deleteCartProduct,
   quantityDec,
   quantityInc,
+  deleteProductwishlist,
 };
