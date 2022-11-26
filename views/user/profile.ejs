@@ -1,0 +1,242 @@
+<%- include ('layout/navbar.ejs') %>
+
+      <div
+            class="m-0 font-sans antialiased font-normal dark:bg-slate-900 text-base leading-default bg-gray-50 text-slate-500">
+
+            <div class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68">
+
+                  <div class="w-full p-6 mx-auto">
+                        <div class="flex flex-wrap -mx-3">
+                              <div class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0">
+                                    <div
+                                          class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                          <div class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0">
+                                                <div class="flex items-center">
+                                                      <p class="mb-0 dark:text-white/80">Edit Profile</p>
+
+                                                </div>
+                                          </div>
+                                          <form method="post" action="/updateProfile">
+
+                                                <div class="flex-auto p-6">
+                                                      <p
+                                                            class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">
+                                                            User Information</p>
+
+                                                      <div class="flex flex-wrap -mx-3">
+
+
+                                                            <div
+                                                                  class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                                                  <div class="mb-4">
+                                                                        <label for="firstname"
+                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">First
+                                                                              name</label>
+                                                                        <input type="text" name="first name"
+                                                                              value="Jesse"
+                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                                  </div>
+                                                            </div>
+                                                            <div
+                                                                  class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                                                  <div class="mb-4">
+                                                                        <label for="lastname"
+                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Last
+                                                                              name</label>
+                                                                        <input type="text" name="lastname" value="Lucky"
+                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                      <hr
+                                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent " />
+
+                                                      <p
+                                                            class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">
+                                                            Contact Information</p>
+                                                      <div class="flex flex-wrap -mx-3">
+                                                            <div
+                                                                  class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
+                                                                  <div class="mb-4">
+                                                                        <label for="address"
+                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Address</label>
+                                                                        <input type="text" name="address"
+                                                                              value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                                  </div>
+                                                            </div>
+                                                            <div
+                                                                  class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                                                  <div class="mb-4">
+                                                                        <label for="city"
+                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">City</label>
+                                                                        <input type="text" name="city" value="New York"
+                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                                  </div>
+                                                            </div>
+                                                            <div
+                                                                  class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                                                  <div class="mb-4">
+                                                                        <label for="state"
+                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">State</label>
+                                                                        <input type="text" name="country"
+                                                                              value="United States"
+                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                                  </div>
+                                                            </div>
+                                                            <div
+                                                                  class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                                                  <div class="mb-4">
+                                                                        <label for="postal code"
+                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Postal
+                                                                              code</label>
+                                                                        <input type="text" name="pincode" value="437300"
+                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                      <hr
+                                                            class="h-px mx-0 my-3 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent " />
+
+
+                                                      <button type="submit"
+                                                            class="inline-block px-8 py-2 mb-4 ml-auto font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md cursor-pointer text-xs tracking-tight-rem hover:shadow-xs hover:-translate-y-px active:opacity-85">Update</button>
+                                                </div>
+                                          </form>
+
+                                    </div>
+                              </div>
+                              <div class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0 ">
+                                    <div
+                                          class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                          <div class="flex-auto p-6 pt-0">
+
+                                                <div class="mt-6 ">
+                                                      <h5 class="dark:text-white mb-2 ">
+                                                            Mark Davis
+
+                                                      </h5>
+                                                      <div
+                                                            class="mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
+                                                            <i class="mr-2 dark:text-white ni ni-email-83"></i>
+                                                            shanif@gmail.Com
+                                                      </div>
+                                                      <div
+                                                            class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
+                                                            <i class="mr-2 dark:text-white ni ni-pin-3"></i>
+                                                            Solution Manager - Creative Tim Officer
+                                                      </div>
+                                                      <div
+                                                            class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
+                                                            <i class="mr-2 dark:text-white ni ni-pin-3"></i>
+                                                            State
+                                                      </div>
+
+                                                      <div
+                                                            class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
+                                                            <i class="mr-2 dark:text-white ni ni-tablet-button"></i>
+                                                            Phone
+                                                      </div>
+                                                      <!-- <div class="dark:text-white/80">
+                                                            <i class="mr-2 dark:text-white ni ni-hat-3"></i>
+                                                            State
+                                                      </div>
+                                                      <div class="dark:text-white/80">
+                                                            <i class="mr-2 dark:text-white ni ni-hat-3"></i>
+                                                            City
+                                                      </div>
+                                                      <div class="dark:text-white/80">
+                                                            <i class="mr-2 dark:text-white ni ni-hat-3"></i>
+                                                            Phone
+                                                      </div> -->
+                                                </div>
+                                                <button
+                                                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-2"
+                                                      data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                      Change Password
+                                                </button>
+                                                <br>
+                                                <button
+                                                      class="bg-danger hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full mt-2">
+                                                      Orders
+                                                </button>
+
+                                          </div>
+                                    </div>
+
+                              </div>
+
+                        </div>
+
+                  </div>
+
+            </div>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                              <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Change Password</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                    <div class="mb-3">
+                                          <label for="exampleInputPassword1" class="form-label">Password</label>
+                                          <input type="password" class="form-control" id="Password"
+                                                onkeyup="validatePass()">
+                                          <span class="text-danger " id="passMsg"></span>
+
+                                    </div>
+
+                                    <div class="mb-3">
+                                          <label for="exampleInputPassword1" class="form-label">Comfirm
+                                                Password</label>
+                                          <input type="password" class="form-control" id="Password2"
+                                                onkeyup="validatePass()">
+                                          <span class="text-danger " id="pass2Msg"></span>
+
+                                    </div>
+                              </div>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                          data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary"
+                                          onclick="changePassword()">Save</button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <%- include ('layout/footer.ejs') %>
+
+
+            <script>
+                  const pass1 = document.getElementById("Password").value;
+                  const pass2 = document.getElementById("Password2").value;
+                  const pass2Error = document.getElementById("pass2Msg")
+                  const passError = document.getElementById("passMsg")
+
+
+                  function validatePass() {
+                        if (pass !== pass2) {
+                              pass2Error.innerHTML = "Password does not match"
+                              return false;
+                        } if (pass == "" && pass2 == "") {
+                              passError.innerHTML = "Password is required"
+                              pass2Error.innerHTML = "Password is required"
+                              return false;
+                        }
+                        passError.innerHTML = " ";
+                        pass2Error.innerHTML = " ";
+                        return true;
+                  }
+
+
+
+                  const changePassword = () => {
+
+
+
+                  }
+            </script>

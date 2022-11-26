@@ -27,6 +27,31 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    Firstname: {
+      type: String,
+      trim: true,
+    },
+    Lastname: {
+      type: String,
+      trim: true,
+    },
+    Address: [
+      {
+        address: {
+          type: String,
+        },
+        city: {
+          type: String,
+        },
+        state: {
+          type: String,
+        },
+        pincode: {
+          type: Number,
+        },
+      },
+    ],
+
     refreshToken: String,
   },
   { collection: "users", timestamps: true }

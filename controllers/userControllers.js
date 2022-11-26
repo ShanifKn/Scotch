@@ -44,6 +44,11 @@ const cart = async (req, res) => {
   }
 };
 
+const userProfile = (req, res) => {
+  res.locals.user = req.session.user;
+  res.render("user/profile");
+};
+
 const checkout = (req, res) => {
   res.locals.user = req.session.user;
   res.render("user/checkout");
@@ -72,4 +77,4 @@ const Sample = (req, res) => {
   res.render("user/Smaple");
 };
 
-export { Signup, validation, Sample, login, index, cart, checkout, contact };
+export { Signup, validation, Sample, login, index, cart, checkout, contact ,userProfile };

@@ -16,6 +16,7 @@ import {
   contact,
   checkout,
   cart,
+  userProfile,
 } from "../controllers/userControllers.js";
 import { product, productdetail } from "../controllers/productController.js";
 import { categoryMap } from "../controllers/categoryController.js";
@@ -28,6 +29,7 @@ import {
   quantityInc,
   wishlist,
 } from "../controllers/cartControllers.js";
+import { updateProfile } from "../controllers/userProfile.js";
 
 // get request;;;;;;;;;;;;;;
 router.get("/", index);
@@ -43,6 +45,12 @@ router.get("/resendOtp", verifyToken, Resend);
 router.get("/Userlogout", userLogout);
 router.get("/userCategory", categoryMap);
 router.get("/wishlist", verifyToken, wishlist);
+router.get("/profile", userProfile);
+
+router.get("/orders", (req, res) => {
+  res.locals.user = req.session.user;
+  res.render("user/orders");
+});
 
 // post request::::::
 router.post("/signup", register);
@@ -50,7 +58,7 @@ router.post("/Userlogin", Signin);
 router.post("/otp", otpVerfication);
 router.post("/addToCart", addToWishlist);
 router.post("/addCart", addtoCart);
-
+router.post("/updateprofile", updateProfile);
 // delete request::::::::::::
 
 router.delete("/deleteCartProduct", deleteCartProduct);

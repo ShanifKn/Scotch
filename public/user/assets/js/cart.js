@@ -81,10 +81,13 @@ const deleteProduct = (id) => {
 
 // quantity decresement
 const decQuantity = (id, quantity) => {
-  if (quantity > 1) {
-    axios.patch("/quantityDec", { id: id }).then((e) => {
+  if (document.getElementById("quantityBox" + id).value > 1) {
+    axios.patch("/quantityDec", { id: id, quantity: quantity }).then((e) => {
       if (e.data.response) {
-        location.href = "/cart";
+        document.getElementById("quantityBox" + id).value = e.data.quantity;
+        document.getElementById("totalBox" + id).innerHTML = e.data.total;
+        document.getElementById("subtotal1").innerHTML = e.data.subtotal;
+        document.getElementById("discount").innerHTML = e.data.subtotal;
       }
     });
   } else {
@@ -175,21 +178,15 @@ const decQuantity = (id, quantity) => {
 
 // quantity increment
 
-const incQuantity = (id, quantity) => {
-  if (quantity < 10) {
+const incQuantity = (id, quantitys) => {
+  if (document.getElementById("quantityBox" + id).value < 10) {
     axios.patch("/quantityInc", { id: id }).then((e) => {
-      console.log(e.data.updateQuantity.cart);
-      if (e.data.updateQuantity) {
-        location.href = "/cart";
+      if (e.data.response) {
+        document.getElementById("quantityBox" + id).value = e.data.quantity;
+        document.getElementById("totalBox" + id).innerHTML = e.data.total;
+        document.getElementById("subtotal1").innerHTML = e.data.subtotal;
+        document.getElementById("discount").innerHTML = e.data.subtotal;
       }
-    });
-  } else {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Limit",
-      showConfirmButton: false,
-      timer: 1500,
     });
   }
 };
