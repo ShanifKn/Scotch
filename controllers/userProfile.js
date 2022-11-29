@@ -13,8 +13,9 @@ const updateProfile = async (req, res) => {
       { _id: userId },
       {
         $set: {
-          Firstname: firstname,
-          Lastname: lastname,
+          "Address.Default": false,
+          "Address.Firstname": firstname,
+          "Address.Lastname": lastname,
           "Address.address": address,
           "Address.city": city,
           "Address.state": state,
@@ -28,4 +29,23 @@ const updateProfile = async (req, res) => {
   }
 };
 
-export { updateProfile };
+const deliveryAddress = async (req, res) => {
+  try {
+    const userId = req.session.user._id;
+    // const { firstname, lastname, address, city, state, pincode } = req.body;
+    const updateUser = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      {
+        $push: {
+          DeliveryAddress: req.body,
+        },
+      }
+    );
+    console.log("sucessfully");
+    res.redirect("/checkout");
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export { updateProfile, deliveryAddress };

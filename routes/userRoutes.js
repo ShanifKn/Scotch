@@ -14,7 +14,6 @@ import {
   login,
   index,
   contact,
-  checkout,
   cart,
   userProfile,
 } from "../controllers/userControllers.js";
@@ -29,7 +28,16 @@ import {
   quantityInc,
   wishlist,
 } from "../controllers/cartControllers.js";
-import { updateProfile } from "../controllers/userProfile.js";
+import { deliveryAddress, updateProfile } from "../controllers/userProfile.js";
+import {
+  billingAddress,
+  checkout,
+  editAddress,
+  shippingAddress,
+  updateDefault,
+  updateEditAddress,
+  updateNil,
+} from "../controllers/checkout.js";
 
 // get request;;;;;;;;;;;;;;
 router.get("/", index);
@@ -46,6 +54,7 @@ router.get("/Userlogout", userLogout);
 router.get("/userCategory", categoryMap);
 router.get("/wishlist", verifyToken, wishlist);
 router.get("/profile", userProfile);
+router.get("/editAddress", editAddress);
 
 router.get("/orders", (req, res) => {
   res.locals.user = req.session.user;
@@ -59,13 +68,20 @@ router.post("/otp", otpVerfication);
 router.post("/addToCart", addToWishlist);
 router.post("/addCart", addtoCart);
 router.post("/updateprofile", updateProfile);
+router.post("/deliveryAddress", deliveryAddress);
+router.post("/updateEditAddress", updateEditAddress);
 // delete request::::::::::::
 
 router.delete("/deleteCartProduct", deleteCartProduct);
 router.delete("/deletewishlist", deleteProductwishlist);
+// patch request::::::::::::
+
 router.patch("/quantityDec", quantityDec);
 router.patch("/quantityInc", quantityInc);
-
+router.patch("/updateDefault", updateDefault);
+router.patch("/updateAdd", updateNil);
+router.patch("/billingAddress", billingAddress);
+router.patch("/shippingAddress", shippingAddress);
 // error
 router.get("/error", (req, res) => {
   res.render("admin/404");

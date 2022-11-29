@@ -27,16 +27,21 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    Firstname: {
-      type: String,
-      trim: true,
-    },
-    Lastname: {
-      type: String,
-      trim: true,
-    },
+
     Address: [
       {
+        Default: {
+          type: Boolean,
+          default: false,
+        },
+        Firstname: {
+          type: String,
+          trim: true,
+        },
+        Lastname: {
+          type: String,
+          trim: true,
+        },
         address: {
           type: String,
         },
@@ -48,6 +53,42 @@ const UserSchema = new Schema(
         },
         pincode: {
           type: Number,
+        },
+      },
+    ],
+    DeliveryAddress: [
+      {
+        Default: {
+          type: Boolean,
+          default: false,
+        },
+        Firstname: {
+          type: String,
+          trim: true,
+        },
+        Lastname: {
+          type: String,
+          trim: true,
+        },
+        address: {
+          type: String,
+        },
+        city: {
+          type: String,
+        },
+        state: {
+          type: String,
+        },
+        pincode: {
+          type: Number,
+        },
+        email: {
+          type: String,
+          trim: true,
+        },
+        phone: {
+          type: Number,
+          trim: true,
         },
       },
     ],

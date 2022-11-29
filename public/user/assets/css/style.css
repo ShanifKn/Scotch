@@ -2583,17 +2583,18 @@ ol {
   font-weight: 700;
   text-transform: uppercase;
   border-bottom: 1px solid #e1e1e1;
-  padding-bottom: 25px;
-  margin-bottom: 30px;
+  padding-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 .checkout__input {
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+  autofocus: false;
 }
 
 .checkout__input p {
   color: #111111;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .checkout__input p span {
@@ -2607,7 +2608,7 @@ ol {
   font-size: 14px;
   color: #b7b7b7;
   padding-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .checkout__input input::-webkit-input-placeholder {

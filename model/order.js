@@ -2,16 +2,16 @@ import { Schema, model } from "mongoose";
 import mongoose from "mongoose";
 
 const orderSchema = new Schema({
-  Firstname: {
-    type: String,
-    trim: true,
-  },
-  Lastname: {
-    type: String,
-    trim: true,
-  },
   Address: [
     {
+      Firstname: {
+        type: String,
+        trim: true,
+      },
+      Lastname: {
+        type: String,
+        trim: true,
+      },
       address: {
         type: String,
       },

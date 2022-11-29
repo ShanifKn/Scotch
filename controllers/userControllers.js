@@ -49,10 +49,6 @@ const userProfile = (req, res) => {
   res.render("user/profile");
 };
 
-const checkout = (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/checkout");
-};
 const contact = (req, res) => {
   res.locals.user = req.session.user;
   res.render("user/contact");
@@ -77,4 +73,4 @@ const Sample = (req, res) => {
   res.render("user/Smaple");
 };
 
-export { Signup, validation, Sample, login, index, cart, checkout, contact ,userProfile };
+export { Signup, validation, Sample, login, index, cart, contact, userProfile };
