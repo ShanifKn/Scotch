@@ -42,6 +42,10 @@ const updateDefault = async (req, res) => {
   try {
     const userId = req.session.user._id;
     const id = req.body.id;
+    await UserModel.updateOne(
+      { _id: userId },
+      { $set: { "Address.Default": false } }
+    );
     await UserModel.updateMany(
       { _id: userId, "DeliveryAddress.Default": true },
       {
@@ -58,7 +62,6 @@ const updateDefault = async (req, res) => {
         $set: { "DeliveryAddress.$.Default": true },
       }
     );
-    console.log("vannu");
     res.json({ response: true });
   } catch (err) {}
 };
@@ -82,6 +85,15 @@ const updateNil = async (req, res) => {
 const billingAddress = async (req, res) => {
   try {
     const userId = req.session.user._id;
+    await UserModel.updateMany(
+      { _id: userId, "DeliveryAddress.Default": true },
+      {
+        $set: {
+          "DeliveryAddress.$[elem].Default": false,
+        },
+      },
+      { arrayFilters: [{ "elem.Default": true }], multi: true }
+    );
     await UserModel.updateOne(
       { _id: userId },
       { $set: { "Address.Default": true } }
