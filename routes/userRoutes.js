@@ -48,7 +48,7 @@ router.get("/checkout", checkout);
 router.get("/contact", contact);
 router.get("/signup", Signup);
 router.get("/login", login);
-router.get("/otp", verifyToken, validation);
+router.get("/otp", validation);
 router.get("/resendOtp", verifyToken, Resend);
 router.get("/Userlogout", userLogout);
 router.get("/userCategory", categoryMap);

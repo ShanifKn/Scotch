@@ -42,14 +42,23 @@ const updateDefault = async (req, res) => {
   try {
     const userId = req.session.user._id;
     const id = req.body.id;
-    console.log(id);
-    console.log(userId);
+    await UserModel.updateMany(
+      { _id: userId, "DeliveryAddress.Default": true },
+      {
+        $set: {
+          "DeliveryAddress.$[elem].Default": false,
+        },
+      },
+      { arrayFilters: [{ "elem.Default": true }], multi: true }
+    );
+
     const user = await UserModel.updateOne(
       { _id: userId, "DeliveryAddress._id": id },
       {
         $set: { "DeliveryAddress.$.Default": true },
       }
     );
+    console.log("vannu");
     res.json({ response: true });
   } catch (err) {}
 };
