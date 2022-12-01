@@ -24,15 +24,19 @@ const viewProduct = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const category = await categoryModel
-    .find({})
-    .then((category) => {
-      res.render("admin/add-product", {
-        category,
-        expressFlash: req.flash("Msg"),
-      });
-    })
-    .catch((err) => console.log(err));
+  try {
+    const category = await categoryModel
+      .find({})
+      .then((category) => {
+        res.render("admin/add-product", {
+          category,
+          expressFlash: req.flash("Msg"),
+        });
+      })
+      .catch((err) => console.log(err));
+  } catch (err) {
+    res.redirect("/error");
+  }
 };
 
 const add_Product = async (req, res) => {

@@ -146,23 +146,40 @@
                                                 <li>Subtotal <span>₹ <%= cartSaved.subtotal %></span></li>
                                                 <li>Total <span>₹ <%= cartSaved.subtotal %></span></li>
                                           </ul>
+                                          <!-- <form onsubmit=" return validate()"> -->
+                                          <div class="form-check checkout__input__checkbox"">
+                                                <input class=" form-check-input" type="radio" name="Payment"
+                                                value="COD" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                      Cash on Delivery
+                                                </label>
+                                          </div>
+                                          <div class="form-check checkout__input__checkbox"">
+                                                <input class=" form-check-input" type="radio" id="flexRadioOnline"
+                                                value="oNline" name="Payment">
+                                                <label class="form-check-label" for="flexRadioOnline">
+                                                      RazerPay
+                                                </label>
+                                          </div>
 
-
-                                          <div class="checkout__input__checkbox">
+                                          <!-- <div class="checkout__input__checkbox">
                                                 <label for="payment">
                                                       Cash on delivery
-                                                      <input type="checkbox" id="payment">
+                                                      <input type="radio" id="payment">
+                                                      <input type="radio" id="payment">
                                                       <span class="checkmark"></span>
                                                 </label>
                                           </div>
                                           <div class="checkout__input__checkbox">
                                                 <label for="paypal">
-                                                      Paypal
-                                                      <input type="checkbox" id="paypal">
-                                                      <span class="checkmark"></span>
+                                                      RazerPay
+                                                      <input type="radio" id="paypal">
+                                                      <input type="radio">
                                                 </label>
-                                          </div>
-                                          <button type="submit" class="site-btn">PLACE ORDER</button>
+                                          </div> -->
+                                          <button type="button" class="site-btn" onclick="validate()">PLACE
+                                                ORDER</button>
+                                          <!-- </form> -->
                                     </div>
                               </div>
                         </div>
@@ -274,41 +291,45 @@
                                                                   <div class="col-lg-6">
                                                                         <div class="checkout__input">
                                                                               <p>Last Name<span>*</span></p>
-                                                                              <input type="text" name="lastname" class="text-black"
-                                                                                    id="Lastname">
+                                                                              <input type="text" name="lastname"
+                                                                                    class="text-black" id="Lastname">
                                                                         </div>
                                                                   </div>
                                                             </div>
                                                             <div class="checkout__input">
                                                                   <p>Address<span>*</span></p>
 
-                                                                  <input type="text" name="address" id="address" class="text-black">
+                                                                  <input type="text" name="address" id="address"
+                                                                        class="text-black">
                                                             </div>
                                                             <div class="checkout__input">
                                                                   <p>Town/City<span>*</span></p>
-                                                                  <input type="text" id="city" name="city" class="text-black">
+                                                                  <input type="text" id="city" name="city"
+                                                                        class="text-black">
                                                             </div>
                                                             <div class="checkout__input">
                                                                   <p>Country/State<span>*</span></p>
-                                                                  <input type="text" id="state" name="state" class="text-black">
+                                                                  <input type="text" id="state" name="state"
+                                                                        class="text-black">
                                                             </div>
                                                             <div class="checkout__input">
                                                                   <p>Postcode / ZIP<span>*</span></p>
-                                                                  <input type="text" id="pincode" name="pincode" class="text-black">
+                                                                  <input type="text" id="pincode" name="pincode"
+                                                                        class="text-black">
                                                             </div>
                                                             <div class="row">
                                                                   <div class="col-lg-6">
                                                                         <div class="checkout__input">
                                                                               <p>Email<span>*</span></p>
-                                                                              <input type="text" id="email" class="text-black"
-                                                                                    name="email">
+                                                                              <input type="text" id="email"
+                                                                                    class="text-black" name="email">
                                                                         </div>
                                                                   </div>
                                                                   <div class="col-lg-6">
                                                                         <div class="checkout__input">
                                                                               <p>Phone<span>*</span></p>
-                                                                              <input type="text" id="phone"class="text-black"
-                                                                                    name="phone">
+                                                                              <input type="text" id="phone"
+                                                                                    class="text-black" name="phone">
                                                                         </div>
                                                                   </div>
                                                                   <input class="form-control" type="text" name="id"
@@ -321,7 +342,6 @@
                                                       <button type="submit" data-bs-dismiss="modal"
                                                             class="btn btn-primary">Upated</button>
                                                 </div>
-                                                </form>
                                           </div>
                                     </div>
                               </div>
@@ -329,6 +349,10 @@
                   </div>
             </div>
       </div>
+      </div>
+
+
+
       <%- include ('layout/footer.ejs') %>
             <% if ( expressFlash.length> 0 ) { %>
                   <script>
@@ -443,6 +467,22 @@
                                           }
                                     })
                               }
+                              const validate = () => {
+
+                                    const payment = document.getElementsByName("Payment");
+                                    // const Online = document.getElementById("flexRadioOnline");
+                                    for (i = 0; i < payment.length; i++) {
+                                          if (payment[i].checked)
+                                                if (payment[i].value == "COD") {
+                                                      axios.post("/order", {}).then((e) => {
+                                                            console.log("cash on delivery");
+                                                      })
+
+                                                } else {
+                                                      alert("Online  Mone!")
+                                                }
+                                    }
 
 
+                              } 
                         </script>

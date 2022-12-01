@@ -33,6 +33,7 @@ import {
   billingAddress,
   checkout,
   editAddress,
+  orderPlaced,
   shippingAddress,
   updateDefault,
   updateEditAddress,
@@ -70,8 +71,9 @@ router.post("/addCart", addtoCart);
 router.post("/updateprofile", updateProfile);
 router.post("/deliveryAddress", deliveryAddress);
 router.post("/updateEditAddress", updateEditAddress);
-// delete request::::::::::::
+router.post("/order", orderPlaced);
 
+// delete request::::::::::::
 router.delete("/deleteCartProduct", deleteCartProduct);
 router.delete("/deletewishlist", deleteProductwishlist);
 // patch request::::::::::::

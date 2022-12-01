@@ -5,7 +5,7 @@ import Jwt from "jsonwebtoken";
 const verifyToken = async (req, res, next) => {
   try {
     const token = req.cookies.Jwt;
-    if (!token && !req.session.user) {
+    if (!token) {
       req.flash("Msg", "LogIn with  Credential");
       res.redirect("/login");
     } else {

@@ -2,32 +2,33 @@ import { Schema, model } from "mongoose";
 import mongoose from "mongoose";
 
 const orderSchema = new Schema({
-  Address: [
-    {
-      Firstname: {
-        type: String,
-        trim: true,
-      },
-      Lastname: {
-        type: String,
-        trim: true,
-      },
-      address: {
-        type: String,
-      },
-      city: {
-        type: String,
-      },
-      state: {
-        type: String,
-      },
-      pincode: {
-        type: Number,
-      },
-    },
-  ],
-  Status: {
+  User: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
+  orderItems: {
+    type: Array,
+    require: true,
+  },
+  totalPrice: {
+    type: Number,
+    require: true,
+  },
+  billingAddress: [],
+  deliveryAddress: {
+    type: Array,
+  },
+  paymentDetails: {
     type: String,
-    required: true,
+  },
+  orderStatus: {
+    type: Boolean,
+  },
+  deliveryStatus: {
+    type: String,
   },
 });
+
+const OrderModel = model("orders", orderSchema);
+
+export { OrderModel };

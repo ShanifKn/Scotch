@@ -1,6 +1,7 @@
 import { bannerModel } from "../model/banner.js";
 import { cartModel } from "../model/cart.js";
 import { productModel } from "../model/product.js";
+import Jwt from "jsonwebtoken";
 
 const index = async (req, res) => {
   res.locals.user = req.session.user;
@@ -33,11 +34,17 @@ const index = async (req, res) => {
 const cart = async (req, res) => {
   res.locals.user = req.session.user;
   try {
-    const userId = req.session.user._id;
-    const cartProduct = await cartModel
-      .findOne({ user: userId })
-      .populate("cart.product");
-    res.render("user/cart", { cartProduct });
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      const cartProduct = await cartModel
+        .findOne({ user: userId })
+        .populate("cart.product");
+      res.render("user/cart", { cartProduct });
+    } else {
+      res.redirect("/login");
+    }
   } catch (err) {
     req.flash("Msg", " login for access");
     res.redirect("/login");
