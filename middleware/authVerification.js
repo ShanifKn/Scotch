@@ -12,6 +12,7 @@ const verifyToken = async (req, res, next) => {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
       const user = await UserModel.findById(userId);
+      req.session.user = user;
       next();
     }
   } catch (err) {

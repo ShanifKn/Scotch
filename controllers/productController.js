@@ -1,6 +1,7 @@
 import { categoryModel } from "../model/category.js";
 import { productModel } from "../model/product.js";
 import { s3DeleteMany, s3UploadMany } from "../database/multerS3.js";
+import Jwt from "jsonwebtoken";
 
 let style = "bg-blue-500/13";
 
@@ -157,20 +158,36 @@ const updateProduct = async (req, res) => {
 
 // User Side::::::::::::::::::::::::::::::::
 const product = (req, res) => {
-  res.locals.user = req.session.user;
-  const user = req.session.user;
-  let product = productModel.find({}).then((product) => {
-    categoryModel.find({}).then((category) => {
-      res.locals.product = product;
-      res.render("user/shop", { category, user });
-    });
-  });
+  try {
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      res.locals.user = userId;
+      let product = productModel.find({}).then((product) => {
+        categoryModel.find({}).then((category) => {
+          res.locals.product = product;
+          res.render("user/shop", { category });
+        });
+      });
+    } else {
+      res.locals.user = req.session.user;
+      let product = productModel.find({}).then((product) => {
+        categoryModel.find({}).then((category) => {
+          res.locals.product = product;
+          res.render("user/shop", { category });
+        });
+      });
+    }
+  } catch (err) {
+    res.redirect("/error");
+  }
 };
 
 const productdetail = async (req, res) => {
-  res.locals.user = req.session.user;
   const id = req.params.id;
   try {
+    res.locals.user = req.session.user;
     let product = await productModel.findById(id).then((product) => {
       productModel
         .find({})

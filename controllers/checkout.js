@@ -6,11 +6,11 @@ import Jwt from "jsonwebtoken";
 
 const checkout = async (req, res) => {
   try {
-    res.locals.user = req.session.user;
     const token = req.cookies.Jwt;
     if (token) {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
+      res.locals.user = userId;
       const Address = await UserModel.aggregate([
         {
           $match: {
@@ -91,8 +91,9 @@ const updateNil = async (req, res) => {
         {
           $set: { "DeliveryAddress.$.Default": false },
         }
-      );
-      res.json({ response: true });
+      ).then(() => {
+        res.json({ response: true });
+      });
     } else {
       res.redirect("/login");
     }
@@ -226,10 +227,13 @@ const orderPlaced = async (req, res) => {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
 
-      const billingAddress = await UserModel.findOne({
-        _id: userId,
-        "Address.Default": true,
-      });
+      const billingAddress = await UserModel.findOne(
+        {
+          _id: userId,
+          "Address.Default": true,
+        },
+        { DeliveryAddress: 0 }
+      );
       if (!billingAddress) {
         const deliveryAddress = await UserModel.aggregate([
           {
@@ -273,9 +277,28 @@ const orderPlaced = async (req, res) => {
           orderStatus: true,
           deliveryStatus: "Pending",
         });
-        await newOrder.save();
+        await newOrder.save().then(() => {
+          res.json({ response: true });
+        });
       } else {
-        console.log(billingAddress);
+        const cart = await cartModel.findOne(
+          { user: userId },
+          { cart: 1, subtotal: 1 }
+        );
+        const newOrder = new OrderModel({
+          User: userId,
+          orderItems: cart.cart,
+          totalPrice: cart.subtotal,
+          billingAddress: billingAddress.Address,
+          deliveryAddress: billingAddress.Address,
+          paymentDetails: "COD",
+          orderStatus: true,
+          deliveryStatus: "Pending",
+        });
+        await newOrder.save().then(() => {
+          const removeCart = cartModel.findByIdAndDelete({ user: userId });
+          res.json({ response: true });
+        });
       }
     } else {
       res.redirect("/login");

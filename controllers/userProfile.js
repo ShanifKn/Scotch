@@ -1,4 +1,5 @@
 import { UserModel } from "../model/User.js";
+import Jwt from "jsonwebtoken";
 
 const updateProfile = async (req, res) => {
   try {
@@ -7,9 +8,9 @@ const updateProfile = async (req, res) => {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
       const user = await UserModel.findOne({ _id: userId });
-      //     const Email = user.Email;
+      const Email = user.Email;
       //     const Name = user.Name;
-      //     const Phone = user.Phone;
+      const Phone = user.Phone;
       const { firstname, lastname, address, city, state, pincode } = req.body;
 
       const updateUser = await UserModel.findOneAndUpdate(
@@ -23,6 +24,8 @@ const updateProfile = async (req, res) => {
             "Address.city": city,
             "Address.state": state,
             "Address.pincode": pincode,
+            "Address.email": Email,
+            "Address.phone": Phone,
           },
         }
       );

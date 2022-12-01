@@ -4,40 +4,62 @@ import { productModel } from "../model/product.js";
 import Jwt from "jsonwebtoken";
 
 const index = async (req, res) => {
-  res.locals.user = req.session.user;
-  let user = req.session.user;
-  let banner = bannerModel
-    .find()
-    .then((banner) => {
-      let product = productModel
-        .find()
-        .limit(4)
-        .then((product) => {
-          let secondProduct = productModel
-            .find()
-            .skip(4)
-            .then((secondProduct) => {
-              res.render("user/index", {
-                banner,
-                product,
-                secondProduct,
-                user,
-              });
-            });
-        });
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-
-const cart = async (req, res) => {
-  res.locals.user = req.session.user;
   try {
     const token = req.cookies.Jwt;
     if (token) {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
+      res.locals.user = userId;
+      let banner = bannerModel.find().then((banner) => {
+        let product = productModel
+          .find()
+          .limit(4)
+          .then((product) => {
+            let secondProduct = productModel
+              .find()
+              .skip(4)
+              .then((secondProduct) => {
+                res.render("user/index", {
+                  banner,
+                  product,
+                  secondProduct,
+                });
+              });
+          });
+      });
+    } else {
+      res.locals.user = req.session.user;
+      let banner = bannerModel.find().then((banner) => {
+        let product = productModel
+          .find()
+          .limit(4)
+          .then((product) => {
+            let secondProduct = productModel
+              .find()
+              .skip(4)
+              .then((secondProduct) => {
+                res.render("user/index", {
+                  banner,
+                  product,
+                  secondProduct,
+                });
+              });
+          });
+      });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.redirect("/login");
+  }
+};
+
+const cart = async (req, res) => {
+  try {
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      res.locals.user = userId;
       const cartProduct = await cartModel
         .findOne({ user: userId })
         .populate("cart.product");
@@ -58,7 +80,6 @@ const userProfile = (req, res) => {
 
 const contact = (req, res) => {
   res.locals.user = req.session.user;
-  res.render("user/contact");
 };
 
 const Signup = (req, res) => {

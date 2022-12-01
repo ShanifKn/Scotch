@@ -54,6 +54,12 @@ const UserSchema = new Schema(
         pincode: {
           type: Number,
         },
+        email: {
+          type: String,
+        },
+        phone: {
+          type: Number,
+        },
       },
     ],
     DeliveryAddress: [

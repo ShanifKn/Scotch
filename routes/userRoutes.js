@@ -57,6 +57,11 @@ router.get("/wishlist", verifyToken, wishlist);
 router.get("/profile", userProfile);
 router.get("/editAddress", editAddress);
 
+router.get("/orderPlaced", (req, res, next) => {
+  res.locals.user = req.session.user;
+  res.render("user/orderComfrom");
+});
+
 router.get("/orders", (req, res) => {
   res.locals.user = req.session.user;
   res.render("user/orders");
