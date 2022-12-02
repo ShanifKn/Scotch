@@ -160,23 +160,10 @@
                                                 <label class="form-check-label" for="flexRadioOnline">
                                                       RazerPay
                                                 </label>
+
                                           </div>
 
-                                          <!-- <div class="checkout__input__checkbox">
-                                                <label for="payment">
-                                                      Cash on delivery
-                                                      <input type="radio" id="payment">
-                                                      <input type="radio" id="payment">
-                                                      <span class="checkmark"></span>
-                                                </label>
-                                          </div>
-                                          <div class="checkout__input__checkbox">
-                                                <label for="paypal">
-                                                      RazerPay
-                                                      <input type="radio" id="paypal">
-                                                      <input type="radio">
-                                                </label>
-                                          </div> -->
+
                                           <button type="button" class="site-btn" onclick="validate()">PLACE
                                                 ORDER</button>
                                           <!-- </form> -->
@@ -351,7 +338,7 @@
       </div>
       </div>
 
-
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
       <%- include ('layout/footer.ejs') %>
             <% if ( expressFlash.length> 0 ) { %>
@@ -376,7 +363,7 @@
                         })
                   </script>
                   <% } %>
-
+                        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                         <script>
                               const textbox = document.getElementById("shipping")
 
@@ -497,10 +484,60 @@
                                                       })
 
                                                 } else {
-                                                      alert("Online  Mone!")
+                                                      axios.post("/onlineOrder", {}).then((e) => {
+                                                            if (e.data.response) {
+                                                                  var options = {
+                                                                        "key": "rzp_test_JHwOhttKdZtCnK", // Enter the Key ID generated from the Dashboard
+                                                                        "amount": e.data.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                                                                        "currency": "INR",
+                                                                        "name": "Scotch",
+                                                                        "image": "data:image/png;base64,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",
+                                                                        "order_id": e.data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 
+                                                                        "handler": function (response) {
+                                                                              verfiyPayment(response, e.data.order)
+                                                                        },
+                                                                        "prefill": {
+                                                                              "name": "Jack",
+                                                                              "email": "Jack@gmail.com",
+                                                                              "contact": "9999999999"
+                                                                        },
+                                                                        "theme": {
+                                                                              "color": "#3399cc"
+                                                                        }
+                                                                  };
+                                                                  var rzp1 = new Razorpay(options);
+                                                                  rzp1.open();
+                                                            }
+                                                      })
                                                 }
                                     }
+                              }
+
+                              const verfiyPayment = (response, order) => {
+                                    axios.post("/verfiyPayment", { response, order }).then((e) => {
+                                          if (e.data.response) {
+                                                const Toast = Swal.mixin({
+                                                      toast: true,
+                                                      position: 'top-end',
+                                                      showConfirmButton: false,
+                                                      timer: 3000,
+                                                      timerProgressBar: true,
+                                                      didOpen: (toast) => {
+                                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                      }
+                                                })
+
+                                                Toast.fire({
+                                                      icon: 'success',
+                                                      title: 'Order was successfully'
+                                                })
+                                                location.href = "/orderPlaced"
+                                          }
+                                    })
+                              }
 
 
-                              } 
+
+
                         </script>

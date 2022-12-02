@@ -33,12 +33,15 @@ import {
   billingAddress,
   checkout,
   editAddress,
+  onlinePayment,
   orderPlaced,
   shippingAddress,
   updateDefault,
   updateEditAddress,
   updateNil,
+  verfiyPayment,
 } from "../controllers/checkout.js";
+import { myOrders } from "../controllers/orders.js";
 
 // get request;;;;;;;;;;;;;;
 router.get("/", index);
@@ -56,7 +59,7 @@ router.get("/userCategory", categoryMap);
 router.get("/wishlist", verifyToken, wishlist);
 router.get("/profile", userProfile);
 router.get("/editAddress", editAddress);
-
+router.get("/myorders", myOrders);
 router.get("/orderPlaced", (req, res, next) => {
   res.locals.user = req.session.user;
   res.render("user/orderComfrom");
@@ -77,6 +80,8 @@ router.post("/updateprofile", updateProfile);
 router.post("/deliveryAddress", deliveryAddress);
 router.post("/updateEditAddress", updateEditAddress);
 router.post("/order", orderPlaced);
+router.post("/onlineOrder", onlinePayment);
+router.post("/verfiyPayment", verfiyPayment);
 
 // delete request::::::::::::
 router.delete("/deleteCartProduct", deleteCartProduct);

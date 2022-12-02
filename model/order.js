@@ -1,20 +1,33 @@
 import { Schema, model } from "mongoose";
 import mongoose from "mongoose";
+import moment from "moment";
 
 const orderSchema = new Schema({
   User: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  orderItems: {
-    type: Array,
-    require: true,
-  },
+  orderItems: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "product",
+      },
+      quantity: {
+        type: Number,
+      },
+      total: {
+        type: Number,
+      },
+    },
+  ],
   totalPrice: {
     type: Number,
     require: true,
   },
-  billingAddress: [],
+  billingAddress: {
+    type: Array,
+  },
   deliveryAddress: {
     type: Array,
   },
@@ -26,6 +39,10 @@ const orderSchema = new Schema({
   },
   deliveryStatus: {
     type: String,
+  },
+  order_date: {
+    type: String,
+    default: moment(Date.now()).format("YYYY-MM-DD"),
   },
 });
 

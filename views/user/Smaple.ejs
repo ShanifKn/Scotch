@@ -1,375 +1,753 @@
+<style>
+	:root {
+		--h1size: 50px;
+		--h2size: 40px;
+		--h3size: 24px;
+		--h4size: 20px;
+		--h5size: 18px;
+		--h6size: 16px;
+		--bodysize: 16px;
+		--h1height: 58px;
+		--h2height: 48px;
+		--h3height: 32px;
+		--h4height: 28px;
+		--h5height: 26px;
+		--h6height: 26px;
+		--bodyheight: 26px;
+		--pfamily: 'Rubik', sans-serif;
+		--red: #ff3838;
+		--gray: #777777;
+		--text: #555555;
+		--blue: #1494a9;
+		--white: #ffffff;
+		--chalk: #f5f5f5;
+		--green: #11b76b;
+		--purple: #b12fad;
+		--orange: #e86121;
+		--yellow: #ffab10;
+		--body: #f5f6f7;
+		--border: #e8e8e8;
+		--heading: #39404a;
+		--primary: #119744;
+		--sub-heading: #565765;
+		--green-chalk: #ddffd5;
+		--green-dark: #072f17;
+		--gray-chalk: #cccccc;
+		--intro-bg: #f8fffa;
+		--facebook: #3b5998;
+		--linkedin: #0e76a8;
+		--twitter: #00acee;
+		--google: #E60023;
+		--instagram: #F77737;
+		--primary-bshadow: 0px 15px 35px 0px rgba(0, 0, 0, 0.1);
+		--primary-tshadow: 2px 3px 8px rgba(0, 0, 0, 0.1)
+	}
+
+
+	.orderlist-filter {
+		padding: 20px 25px;
+		margin-bottom: 30px;
+		border-radius: 8px;
+		background: var(--white);
+		border: 1px solid var(--border);
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between
+	}
+
+	.orderlist-filter h5 {
+		text-transform: capitalize
+	}
+
+	.filter-short {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center
+	}
+
+	.filter-short .form-label {
+		font-size: 18px;
+		margin: 0px 8px 0px 0px;
+		color: var(--heading)
+	}
+
+	.filter-short .form-select {
+		width: 150px;
+		background: var(--chalk)
+	}
+
+	.orderlist {
+		padding: 0px 30px;
+		border-radius: 8px;
+		margin-bottom: 30px;
+		background: var(--white);
+		border: 1px solid var(--border);
+		transition: all linear .3s;
+		-webkit-transition: all linear .3s;
+		-moz-transition: all linear .3s;
+		-ms-transition: all linear .3s;
+		-o-transition: all linear .3s
+	}
+
+	.orderlist-head {
+		padding: 25px 0px;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
+		cursor: pointer
+	}
+
+	.orderlist-head h5 {
+		color: var(--blue);
+		text-transform: capitalize
+	}
+
+	.orderlist-details {
+		padding: 25px;
+		border-radius: 8px;
+		background: var(--chalk);
+		margin-bottom: 25px
+	}
+
+	.orderlist-details li {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: start;
+		-ms-flex-align: start;
+		align-items: flex-start;
+		-webkit-box-pack: start;
+		-ms-flex-pack: start;
+		justify-content: flex-start;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
+		margin-bottom: 20px
+	}
+
+	.orderlist-details li:last-child {
+		margin-bottom: 0px
+	}
+
+	.orderlist-details li h6 {
+		line-height: 26px;
+		white-space: nowrap;
+		text-transform: capitalize
+	}
+
+	.orderlist-details li h6 small {
+		font-size: 14px;
+		font-weight: 400;
+		margin-left: 3px
+	}
+
+	.orderlist-details li p {
+		width: 250px;
+		text-align: right
+	}
+
+	.orderlist-deliver {
+		height: 215px;
+		padding: 25px;
+		border-radius: 8px;
+		margin-bottom: 25px;
+		background: var(--chalk)
+	}
+
+	.orderlist-deliver h6 {
+		margin-bottom: 15px;
+		white-space: nowrap;
+		text-transform: capitalize
+	}
+
+	.orderlist-deliver p {
+		text-transform: capitalize
+	}
+
+	.table-list {
+		overflow: hidden;
+		border-radius: 8px;
+		margin-bottom: 30px;
+		background: var(--chalk)
+	}
+
+	@media (max-width: 575px) {
+		.orderlist-filter {
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center
+		}
+
+		.orderlist-filter h5 {
+			margin-bottom: 15px
+		}
+
+		.orderlist {
+			padding: 0px 15px
+		}
+
+		.orderlist-head {
+			padding: 15px 0px
+		}
+	}
+
+	.order-track {
+		margin-bottom: 25px
+	}
+
+	.order-track-list {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		padding: 25px 25px;
+		border-radius: 8px;
+		background: var(--chalk)
+	}
+
+	.order-track-item {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		position: relative;
+		text-align: center;
+		width: 100%;
+		z-index: 1
+	}
+
+	.order-track-item::before {
+		position: absolute;
+		content: "";
+		top: 20px;
+		left: 0px;
+		width: 100%;
+		height: 5px;
+		z-index: -1;
+		background: var(--white)
+	}
+
+	.order-track-item:first-child::before {
+		border-radius: 50px 0px 0px 50px
+	}
+
+	.order-track-item:last-child::before {
+		border-radius: 0px 50px 50px 0px
+	}
+
+	.order-track-item i {
+		width: 45px;
+		height: 45px;
+		font-size: 20px;
+		line-height: 42px;
+		border-radius: 50%;
+		margin-bottom: 10px;
+		text-align: center;
+		display: inline-block;
+		color: var(--blue);
+		background: var(--white);
+		border: 2px dotted var(--blue)
+	}
+
+	.order-track-item span {
+		font-weight: 500;
+		line-height: 20px;
+		white-space: nowrap;
+		color: var(--heading);
+		text-transform: capitalize
+	}
+
+	.order-track-item.active::before {
+		background: var(--blue)
+	}
+
+	.order-track-item.active i {
+		color: var(--white);
+		background: var(--blue)
+	}
+
+	.order-track-item.active span {
+		color: var(--blue)
+	}
+
+	@media (max-width: 575px) {
+		.order-track {
+			overflow-x: scroll
+		}
+
+		.order-track-list {
+			width: 575px
+		}
+	}
+
+	@media (min-width: 576px) and (max-width: 767px) {
+		.order-track-item span {
+			white-space: inherit
+		}
+	}
+
+	.table-list {
+		width: 100%
+	}
+
+	thead tr {
+		background: var(--blue)
+	}
+
+	thead tr th {
+		font-size: 17px;
+		font-weight: 500;
+		white-space: nowrap;
+		text-align: center;
+		text-transform: capitalize;
+		padding: 12px 20px;
+		color: var(--white);
+		border-right: 1px solid var(--border)
+	}
+
+	thead tr th:first-child {
+		border-radius: 6px 0px 0px 6px
+	}
+
+	thead tr th:last-child {
+		border-right: none;
+		border-radius: 0px 6px 6px 0px
+	}
+
+	tbody tr {
+		border-bottom: 1px solid var(--border)
+	}
+
+	tbody tr td {
+		padding: 12px 20px;
+		text-align: center;
+		border-right: 1px solid var(--border)
+	}
+
+	tbody tr td:last-child {
+		border-right: none
+	}
+
+	.table-name {
+		white-space: nowrap;
+		text-transform: capitalize
+	}
+
+	.table-image img {
+		width: auto;
+		height: 100px
+	}
+
+	.table-price h6 {
+		white-space: nowrap
+	}
+
+	.table-price h6 small {
+		font-size: 13px;
+		margin-left: 3px;
+		color: var(--gray);
+		font-family: sans-serif
+	}
+
+	.table-desc p {
+		width: 150px;
+		font-size: 15px;
+		text-align: left
+	}
+
+	.table-desc p a {
+		text-transform: capitalize
+	}
+
+	.table-desc p a:hover {
+		text-decoration: underline
+	}
+
+	.table-vendor a {
+		font-weight: 500;
+		color: var(--heading);
+		text-transform: capitalize;
+		transition: all linear .3s;
+		-webkit-transition: all linear .3s;
+		-moz-transition: all linear .3s;
+		-ms-transition: all linear .3s;
+		-o-transition: all linear .3s
+	}
+
+	.table-vendor a:hover {
+		color: var(--primary)
+	}
+
+	.table-status h6 {
+		text-transform: capitalize
+	}
+
+	.table-status .stock-in {
+		color: var(--purple)
+	}
+
+	.table-status .stock-out {
+		color: var(--orange)
+	}
+
+	.table-shop {
+		width: 180px
+	}
+
+	.table-shop .product-add {
+		color: var(--white);
+		background: var(--primary)
+	}
+
+	.table-shop .action-plus i,
+	.table-shop .action-minus i {
+		background: var(--white)
+	}
+
+	.table-action a i {
+		width: 35px;
+		height: 35px;
+		font-size: 16px;
+		line-height: 35px;
+		text-align: center;
+		display: inline-block;
+		border-radius: 5px;
+		margin: 3px;
+		transition: all linear .3s;
+		-webkit-transition: all linear .3s;
+		-moz-transition: all linear .3s;
+		-ms-transition: all linear .3s;
+		-o-transition: all linear .3s
+	}
+
+	.table-action .view i {
+		color: var(--green);
+		background: var(--white)
+	}
+
+	.table-action .view i:hover {
+		color: var(--white);
+		background: var(--green)
+	}
+
+	.table-action .wish i {
+		color: var(--green);
+		background: var(--white)
+	}
+
+	.table-action .wish.active i {
+		color: var(--white);
+		background: var(--green)
+	}
+
+	.table-action .trash i {
+		color: var(--red);
+		background: var(--white)
+	}
+
+	.table-action .trash i:hover {
+		color: var(--white);
+		background: var(--red)
+	}
+
+	@media (max-width: 1199px) {
+		.table-scroll {
+			overflow-x: scroll
+		}
+	}
+</style>
 <%- include ('layout/navbar.ejs') %>
 
-      <div
-            class="m-0 font-sans antialiased font-normal dark:bg-slate-900 text-base leading-default bg-gray-50 text-slate-500">
-
-            <div class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68">
-
-                  <div class="w-full p-6 mx-auto">
-                        <div class="flex flex-wrap -mx-3">
-                              <div class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0">
-                                    <div
-                                          class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                          <div class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0">
-                                                <div class="flex items-center">
-                                                      <p class="mb-0 dark:text-white/80">Orders</p>
-
-                                                </div>
-                                          </div>
-                                          <div
-                                                class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68">
-
-                                                <div
-                                                      class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-
-                                                      <div class="flex flex-wrap justify-center -mx-3">
-                                                            <div class="w-4/12 max-w-full px-3 flex-0 ">
-                                                                  <div class="mb-6 -mt-6 lg:mb-0 lg:-mt-16">
-                                                                        <a href="javascript:;">
-                                                                              <img class="h-auto max-w-full border-2 border-white border-solid rounded-circle"
-                                                                                    src="/admin/assets1/img/team-2.jpg"
-                                                                                    alt="profile image">
-                                                                        </a>
-                                                                  </div>
-                                                            </div>
-                                                      </div>
-
-
-                                                      <div class="flex-auto p-6 pt-0">
-                                                            <div class="flex flex-wrap -mx-3">
-                                                                  <div class="w-full max-w-full px-3 flex-1-0">
-                                                                        <div class="flex justify-center">
-                                                                              <div class="grid mx-6 text-center">
-                                                                                    <span
-                                                                                          class="font-bold dark:text-white text-lg">10</span>
-                                                                                    <span
-                                                                                          class="leading-normal dark:text-white text-sm opacity-80">Orders</span>
-                                                                              </div>
-                                                                              <div class="grid text-center">
-                                                                                    <span
-                                                                                          class="font-bold dark:text-white text-lg">89</span>
-                                                                                    <span
-                                                                                          class="leading-normal dark:text-white text-sm opacity-80">Comments</span>
-                                                                              </div>
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                            <div class="mt-6 ">
-                                                                  <h5 class="dark:text-white ">
-                                                                        Mark Davis
-                                                                  </h5>
-                                                                  <div
-                                                                        class="mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
-
-                                                                        Email Address
-                                                                  </div>
-                                                                  <div
-                                                                        class="mt-6 mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
-                                                                        <i
-                                                                              class="mr-2 dark:text-white ni ni-briefcase-24"></i>
-                                                                        Solution Manager - Creative Tim Officer
-                                                                  </div>
-                                                                  <!-- Button trigger modal -->
-                                                                  <button type="button" class="btn btn-primary"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#staticBackdrop">
-                                                                        Launch static backdrop modal
-                                                                  </button>
-
-
-                                                                  <div class="modal fade" id="staticBackdrop"
-                                                                        data-bs-backdrop="static"
-                                                                        data-bs-keyboard="false" tabindex="-1"
-                                                                        aria-labelledby="staticBackdropLabel"
-                                                                        aria-hidden="true">
-                                                                        <div
-                                                                              class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                                              <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                          <h1 class="modal-title fs-5"
-                                                                                                id="staticBackdropLabel">
-                                                                                                Modal title
-                                                                                          </h1>
-                                                                                          <button type="button"
-                                                                                                class="btn-close"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                          <form method="post"
-                                                                                                action="/updateprofile">
-                                                                                                <div
-                                                                                                      class="flex-auto p-6">
-                                                                                                      <p
-                                                                                                            class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">
-                                                                                                            User
-                                                                                                            Information
-                                                                                                      </p>
-                                                                                                      <div
-                                                                                                            class="flex flex-wrap -mx-3">
-                                                                                                            <div
-                                                                                                                  class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
-                                                                                                                  <div
-                                                                                                                        class="mb-4">
-                                                                                                                        <label for="first name"
-                                                                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">First
-                                                                                                                              name</label>
-                                                                                                                        <input type="text"
-                                                                                                                              name="firstname"
-                                                                                                                              value="Jesse"
-                                                                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-                                                                                                                  </div>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                  class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
-                                                                                                                  <div
-                                                                                                                        class="mb-4">
-                                                                                                                        <label for="last name"
-                                                                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Last
-                                                                                                                              name</label>
-                                                                                                                        <input type="text"
-                                                                                                                              name="lastname"
-                                                                                                                              value="Lucky"
-                                                                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-                                                                                                                  </div>
-
-                                                                                                            </div>
+	<div class="col-md-10 col-lg-12">
+		<div class="tab-content">
+			<section class="inner-section orderlist-part">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-10">
+							<div class="orderlist-filter">
 
 
 
-                                                                                                      </div>
-                                                                                                      <hr
-                                                                                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent " />
-
-                                                                                                      <p
-                                                                                                            class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">
-                                                                                                            Contact
-                                                                                                            Information
-                                                                                                      </p>
-                                                                                                      <div
-                                                                                                            class="flex flex-wrap -mx-2">
-                                                                                                            <div
-                                                                                                                  class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
-                                                                                                                  <div
-                                                                                                                        class="mb-4">
-                                                                                                                        <label for="address"
-                                                                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Address</label>
-                                                                                                                        <input type="text"
-                                                                                                                              name="address"
-                                                                                                                              value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                                                                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-                                                                                                                  </div>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                  class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
-                                                                                                                  <div
-                                                                                                                        class="mb-4">
-                                                                                                                        <label for="city"
-                                                                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">City</label>
-                                                                                                                        <input type="text"
-                                                                                                                              name="city"
-                                                                                                                              value="New York"
-                                                                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-                                                                                                                  </div>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                  class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
-                                                                                                                  <div
-                                                                                                                        class="mb-4">
-                                                                                                                        <label for="country"
-                                                                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">State</label>
-                                                                                                                        <input type="text"
-                                                                                                                              name="state"
-                                                                                                                              value="United States"
-                                                                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-                                                                                                                  </div>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                  class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
-                                                                                                                  <div
-                                                                                                                        class="mb-4">
-                                                                                                                        <label for="postal code"
-                                                                                                                              class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Postal
-                                                                                                                              code</label>
-                                                                                                                        <input type="text"
-                                                                                                                              name="pincode"
-                                                                                                                              value="437300"
-                                                                                                                              class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-                                                                                                                  </div>
-                                                                                                            </div>
 
 
-                                                                                                      </div>
-                                                                                                      <button
-                                                                                                            type="submit"
-                                                                                                            class="bg-blue-500 hover:bg-blue-400 text-white  font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
-                                                                                                            Update
-                                                                                                      </button>
-                                                                                                </div>
-                                                                                          </form>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                          <button type="button"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">Close</button>
-                                                                                          <button type="button"
-                                                                                                class="btn btn-primary">Understood</button>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </div>
-                                                                  </div>
+								<h5>total order <span>-)</span></h5>
+								<div class="filter-short"><label class="form-label">short
+										by:</label><select class="form-select">
+										<option value="all" selected>all order</option>
+										<option value="recieved">recieved order</option>
+										<option value="processed">processed order</option>
+										<option value="shipped">shipped order</option>
+										<option value="delivered">delivered order</option>
+									</select></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-10">
 
-
-                                                            </div>
-                                                      </div>
-                                                </div>
-
-                                          </div>
-
-                                    </div>
-                              </div>
-                              <div class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0">
-
-                              </div>
-
-                        </div>
-
-                  </div>
-            </div>
-
-      </div>
-
-      <!-- modal -->
-
-
-      <%- include ('layout/footer.ejs') %>
+							<!-- loop by order -->
 
 
 
 
 
 
-           <!-- End .header -->
+							<div class="orderlist">
+								<div class="orderlist-head">
+									<h5>
+									</h5><span>
+
+									</span>
+									<h5>order recieved</h5>
+								</div>
+								<div class="orderlist-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="order-track">
+												<ul class="order-track-list">
+													<li class="order-track-item active">
+														<i class="icofont-check"></i><span>order
+															recieved</span>
+													</li>
+													<li class="order-track-item active">
+														<i class="icofont-check"></i><span>order
+															processed</span>
+													</li>
+													<li class="order-track-item"><i
+															class="icofont-close"></i><span>order
+															shipped</span></li>
+													<li class="order-track-item"><i
+															class="icofont-close"></i><span>order
+															delivered</span></li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<ul class="orderlist-details">
+												<li>
+													<h6>order id</h6>
+													<p>
+
+													</p>
+												</li>
+												<li>
+													<h6>Total Item</h6>
+													<p>
+
+														Items
+													</p>
+												</li>
+												<li>
+													<h6>Order Time</h6>
+													<p>7
+													</p>
+												</li>
+												<li>
+													<h6>Delivery Time</h6>
+													<p>12th February 2021</p>
+												</li>
+											</ul>
+										</div>
+										<div class="col-lg-4">
+											<ul class="orderlist-details">
+												<li>
+													<h6>Sub Total</h6>
+													<p>$ </p>
+												</li>
+												<li>
+													<h6>discount</h6>
+													<p>$ </p>
+												</li>
+												<li>
+													<h6>delivery fee</h6>
+													<p>free(0)</p>
+												</li>
+												<li>
+													<h6>Total<small>(Incl. VAT)</small>
+													</h6>
+													<p>$.00
+													</p>
+												</li>
+											</ul>
+										</div>
+										<div class="col-lg-4 ">
+											<div class="orderlist-deliver">
+												<h6>Delivery location</h6>
+												<p>
+
+												</p>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="table-scroll">
+												<table class="table-list">
+													<thead>
+														<tr>
+															<th scope="col">Serial
+															</th>
+															<th scope="col">Product
+															</th>
+															<th scope="col">Name
+															</th>
+															<th scope="col">Price
+															</th>
+															<th scope="col">brand
+															</th>
+															<th scope="col">quantity
+															</th>
+														</tr>
+													</thead>
+													<tbody>
 
 
-           <div class=" container">
-            <div class="row">
-                  <aside class="col-md-4 col-lg-3">
-                        <ul class="nav  flex-column mb-3 mb-md-0" role="tablist">
-                              <li class="nav-item">
-                                    <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
-                                          href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
-                                          aria-selected="true">Dashboard</a>
-                              </li>
-                              <li class="nav-item">
-                                    <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
-                                          role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
-                              </li>
-                              <li class="nav-item">
-                                    <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
-                                          role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
-                              </li>
-                              <li class="nav-item">
-                                    <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
-                                          role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
-                              </li>
-                              <li class="nav-item">
-                                    <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
-                                          role="tab" aria-controls="tab-account" aria-selected="false">Account
-                                          Details</a>
-                              </li>
-                              <li class="nav-item">
-                                    <a class="nav-link" href="#">Sign Out</a>
-                              </li>
-                        </ul>
-                  </aside><!-- End .col-lg-3 -->
 
-                  <div class="col-md-8 col-lg-9">
-                        <div class="tab-content">
-                              <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
-                                    aria-labelledby="tab-dashboard-link">
-                                    <p>Hello <span class="font-weight-normal text-dark">User</span>
-                                          (not <span class="font-weight-normal text-dark">User</span>?
-                                          <a href="#">Log out</a>)
-                                          <br>
-                                          From your account dashboard you can view your <a href="#tab-orders"
-                                                class="tab-trigger-link link-underline">recent
-                                                orders</a>, manage your <a href="#tab-address"
-                                                class="tab-trigger-link">shipping and billing
-                                                addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit
-                                                your password and
-                                                account details</a>.
-                                    </p>
-                              </div><!-- .End .tab-pane -->
+														<tr>
+															<td class="table-serial">
+																<h6>
 
-                              <div class="tab-pane fade" id="tab-orders" role="tabpanel"
-                                    aria-labelledby="tab-orders-link">
-                                    <p>No order has been made yet.</p>
-                                    <a href="category.html" class="btn btn-outline-primary-2"><span>GO
-                                                SHOP</span><i class="icon-long-arrow-right"></i></a>
-                              </div><!-- .End .tab-pane -->
+																</h6>
+															</td>
+															<td class="table-image">
+																<img src=""
+																	alt="product">
+															</td>
+															<td class="table-name">
+																<a href=""">
+																			<h6>
+																				
+																					...
+																			</h6>
+																		</a>
+																	</td>
+																	<td
+																		class=" table-price">
+																	<h6>$
+																	</h6>
+															</td>
+															<td class="table-brand">
+																<h6>
 
-                              <div class="tab-pane fade" id="tab-downloads" role="tabpanel"
-                                    aria-labelledby="tab-downloads-link">
-                                    <p>No downloads available yet.</p>
-                                    <a href="category.html" class="btn btn-outline-primary-2"><span>GO
-                                                SHOP</span><i class="icon-long-arrow-right"></i></a>
-                              </div><!-- .End .tab-pane -->
+																</h6>
+															</td>
+															<td class="table-quantity">
+																<h6>
 
-                              <div class="tab-pane fade" id="tab-address" role="tabpanel"
-                                    aria-labelledby="tab-address-link">
-                                    <p>The following addresses will be used on the checkout page
-                                          by default.</p>
-
-                                    <div class="row">
-                                          <div class="col-lg-6">
-                                                <div class="card card-dashboard">
-                                                      <div class="card-body">
-                                                            <h3 class="card-title">Billing
-                                                                  Address</h3>
-                                                            <!-- End .card-title -->
-
-                                                            <p>User Name<br>
-                                                                  User Company<br>
-                                                                  John str<br>
-                                                                  New York, NY 10001<br>
-                                                                  1-234-987-6543<br>
-                                                                  yourmail@mail.com<br>
-                                                                  <a href="#">Edit <i class="icon-edit"></i></a>
-                                                            </p>
-                                                      </div><!-- End .card-body -->
-                                                </div><!-- End .card-dashboard -->
-                                          </div><!-- End .col-lg-6 -->
-
-                                          <div class="col-lg-6">
-                                                <div class="card card-dashboard">
-                                                      <div class="card-body">
-                                                            <h3 class="card-title">Shipping
-                                                                  Address</h3>
-                                                            <!-- End .card-title -->
-
-                                                            <p>You have not set up this type of
-                                                                  address yet.<br>
-                                                                  <a href="#">Edit <i class="icon-edit"></i></a>
-                                                            </p>
-                                                      </div><!-- End .card-body -->
-                                                </div><!-- End .card-dashboard -->
-                                          </div><!-- End .col-lg-6 -->
-                                    </div><!-- End .row -->
-                              </div><!-- .End .tab-pane -->
-
-                              <!-- .End .tab-pane -->
-                        </div>
-                  </div><!-- End .col-lg-9 -->
-            </div><!-- End .row -->
-      </div><!-- End .container -->
+																</h6>
+															</td>
+														</tr>
 
 
-      <!-- End .footer -->
-      <!-- End .page-wrapper -->
-      <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-      <!-- Mobile Menu -->
-      <div class="mobile-menu-overlay"></div>
 
-      <!-- Sign in / Register Modal -->
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link" href="#"><i
+											class="icofont-arrow-left"></i></a></li>
+								<li class="page-item"><a class="page-link active" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">...</li>
+								<li class="page-item"><a class="page-link" href="#">65</a></li>
+								<li class="page-item"><a class="page-link" href="#"><i
+											class="icofont-arrow-right"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+
+
+		</div>
+	</div><!-- End .col-lg-9 -->
+	<%- include ('layout/footer.ejs') %>
+
+		<script>
+			jQuery(document).ready(function ($) {
+
+				var panels = $(".faq-ans").hide();
+
+				panels.first().show();
+
+				$(".faq-que").click(function () {
+
+					var $this = $(this);
+
+					panels.slideUp();
+					$this.next().slideDown();
+
+				});
+
+			});
+
+			// FOR ORDER LIST
+			jQuery(document).ready(function ($) {
+
+				var panels = $(".orderlist-body").hide();
+
+				panels.first().show();
+
+				$(".orderlist-head").click(function () {
+
+					var $this = $(this);
+
+					panels.slideUp();
+					$this.next().slideDown();
+
+				});
+
+			});
+		</script>

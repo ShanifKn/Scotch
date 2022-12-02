@@ -3,6 +3,7 @@ import { cartModel } from "../model/cart.js";
 import { OrderModel } from "../model/order.js";
 import { UserModel } from "../model/User.js";
 import Jwt from "jsonwebtoken";
+import { instance, verfiyRazorPay } from "../database/paymeny.js";
 
 const checkout = async (req, res) => {
   try {
@@ -219,7 +220,7 @@ const updateEditAddress = async (req, res) => {
   }
 };
 
-// Order
+// Order COD
 const orderPlaced = async (req, res) => {
   try {
     const token = req.cookies.Jwt;
@@ -271,15 +272,20 @@ const orderPlaced = async (req, res) => {
           User: userId,
           orderItems: cart.cart,
           totalPrice: cart.subtotal,
-          billingAddress: address,
-          deliveryAddress: billingAddress.Address,
+          billingAddress: billingAddress.Address,
+          deliveryAddress: address,
           paymentDetails: "COD",
           orderStatus: true,
           deliveryStatus: "Pending",
         });
-        await newOrder.save().then(() => {
-          res.json({ response: true });
-        });
+        await newOrder.save();
+        await cartModel.updateOne(
+          { user: userId },
+          {
+            $set: { cart: [], subtotal: 0 },
+          }
+        );
+        res.json({ response: true });
       } else {
         const cart = await cartModel.findOne(
           { user: userId },
@@ -295,10 +301,14 @@ const orderPlaced = async (req, res) => {
           orderStatus: true,
           deliveryStatus: "Pending",
         });
-        await newOrder.save().then(() => {
-          const removeCart = cartModel.findByIdAndDelete({ user: userId });
-          res.json({ response: true });
-        });
+        await newOrder.save();
+        await cartModel.updateOne(
+          { user: userId },
+          {
+            $set: { cart: [], subtotal: 0 },
+          }
+        );
+        res.json({ response: true });
       }
     } else {
       res.redirect("/login");
@@ -307,6 +317,135 @@ const orderPlaced = async (req, res) => {
     res.redirect("/error");
     console.log(err.message);
   }
+};
+
+const onlinePayment = async (req, res) => {
+  try {
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      const billingAddress = await UserModel.findOne(
+        {
+          _id: userId,
+          "Address.Default": true,
+        },
+        { DeliveryAddress: 0 }
+      );
+      if (!billingAddress) {
+        const deliveryAddress = await UserModel.aggregate([
+          {
+            $match: {
+              _id: mongoose.Types.ObjectId(userId),
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              DeliveryAddress: {
+                $filter: {
+                  input: "$DeliveryAddress",
+                  cond: {
+                    $eq: ["$$this.Default", true],
+                  },
+                },
+              },
+            },
+          },
+        ]);
+        const billingAddress = await UserModel.findOne(
+          {
+            _id: userId,
+            "Address.Default": false,
+          },
+          { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
+        );
+        const cart = await cartModel.findOne(
+          { user: userId },
+          { cart: 1, subtotal: 1 }
+        );
+        const address = deliveryAddress[0].DeliveryAddress[0];
+        const newOrder = new OrderModel({
+          User: userId,
+          orderItems: cart.cart,
+          totalPrice: cart.subtotal,
+          billingAddress: billingAddress.Address,
+          deliveryAddress: address,
+          paymentDetails: "ONLINE",
+          orderStatus: false,
+          deliveryStatus: "Pending",
+        });
+        await newOrder.save().then((order) => {
+          instance.orders
+            .create({
+              amount: order.totalPrice * 100,
+              currency: "INR",
+              receipt: order.id,
+            })
+            .then(async (order) => {
+              await cartModel.updateOne(
+                { user: userId },
+                {
+                  $set: { cart: [], subtotal: 0 },
+                }
+              );
+              res.json({ response: true, order: order });
+            });
+        });
+      } else {
+        const cart = await cartModel.findOne(
+          { user: userId },
+          { cart: 1, subtotal: 1 }
+        );
+        const newOrder = new OrderModel({
+          User: userId,
+          orderItems: cart.cart,
+          totalPrice: cart.subtotal,
+          billingAddress: billingAddress.Address,
+          deliveryAddress: billingAddress.Address,
+          paymentDetails: "ONLINE",
+          orderStatus: false,
+          deliveryStatus: "Pending",
+        });
+        await newOrder.save().then((order) => {
+          instance.orders
+            .create({
+              amount: order.totalPrice * 100,
+              currency: "INR",
+              receipt: order.id,
+            })
+            .then(async (order) => {
+              await cartModel.updateOne(
+                { user: userId },
+                {
+                  $set: { cart: [], subtotal: 0 },
+                }
+              );
+              res.json({ response: true, order: order });
+            });
+        });
+      }
+    }
+  } catch (err) {
+    console.log(err.messages);
+    res.redirect("/error");
+  }
+};
+
+const verfiyPayment = async (req, res) => {
+  const response = req.body.response;
+  const order = req.body.order;
+  verfiyRazorPay(response, order)
+    .then(async (id) => {
+      const order = await OrderModel.updateOne(
+        { _id: id },
+        { $set: { orderStatus: true } }
+      );
+      res.json({ response: true });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 export {
@@ -318,4 +457,6 @@ export {
   editAddress,
   updateEditAddress,
   orderPlaced,
+  onlinePayment,
+  verfiyPayment,
 };

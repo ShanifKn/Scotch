@@ -1,0 +1,170 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+<%- include ('layout/navbar.ejs') %>
+
+	<div class="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto ">
+		<div class="flex justify-start item-start space-y-2 flex-col">
+			<h1 class="text-3xl text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
+				My Orders
+			</h1>
+
+		</div>
+
+
+
+
+
+		<div
+			class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+			<div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
+
+
+				<% for( let i=0; i < orders.length; i++ ) { %>
+					<div
+						class="flex flex-col justify-start items-start  px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+						<p class="text-lg md:text-xl text-black font-semibold leading-6 xl:leading-5 ">
+							Ordes #<%= orders[i]._id %>
+						</p>
+						<% for( let f=0; f < orders[i].orderItems.length; f++ ) { %>
+
+
+							<div
+								class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+
+								<div class="pb-4 md:pb-8 w-full md:w-40">
+									<img class="w-full hidden md:block"
+										src="<%=orders[i].orderItems[f].product.images[0].Location  %> "
+										alt="dress" />
+
+								</div>
+								<div
+									class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+									<div
+										class="w-full flex flex-col justify-start items-start space-y-8">
+										<h3
+											class="text-xl text-black xl:text-2xl font-semibold leading-6 text-gray-800">
+											<%=orders[i].orderItems[f].product.Product_title %>
+												<br>
+												<span class="text-sm text-gray-400 ">
+													Ordered on <%=orders[i].order_date %>
+												</span>
+										</h3>
+
+
+										<div
+											class="flex justify-start items-start flex-col space-y-2">
+											<p
+												class="text-sm text-black leading-none text-gray-800">
+												<span class="text-gray-400 ">Style:
+												</span>
+												<%=orders[i].orderItems[f].product.Product_des
+													%>
+
+											</p>
+											<p
+												class="text-sm text-black leading-none text-gray-800">
+												<span class="text-gray-400 ">Size:
+												</span>
+												<%=orders[i].orderItems[f].product.Size %>
+											</p>
+											<p
+												class="text-sm text-black leading-none text-gray-800">
+												<span class="text-gray-400 ">Color:
+												</span>
+												<%=orders[i].orderItems[f].product.color %>
+
+											</p>
+										</div>
+									</div>
+									<div class="flex justify-between space-x-8 items-start w-full">
+
+										<p
+											class="text-base text-black xl:text-lg leading-6 text-gray-800">
+											<%=orders[i].orderItems[f].quantity %>
+										</p>
+										<p
+											class="text-base text-black xl:text-lg font-semibold leading-6 text-gray-800">
+											₹ <%=orders[i].orderItems[f].total %>
+										</p>
+										<button type="button" class="btn btn-primary bg-blue-500"
+											data-bs-toggle="modal" data-bs-target="#exampleModal">
+											Track your order
+										</button>
+									</div>
+								</div>
+
+							</div>
+							<% } %>
+
+
+					</div>
+					<% } %>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content text-white" style="background-color: #6d5b98; border-radius: 10px;">
+				<div class="modal-header border-bottom-0">
+					<button type="button" class="btn-close btn-close-white" data-mdb-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body text-start px-4 pt-0 pb-4">
+					<div class="text-center">
+						<h5 class="mb-3">Order Status</h5>
+						<h5 class="mb-5">AWB Number-5335T5S</h5>
+					</div>
+
+					<div class="d-flex justify-content-between mb-5">
+						<div class="text-center">
+							<i class="fas fa-circle"></i>
+							<p>Order placed</p>
+						</div>
+						<div class="text-center">
+							<i class="fas fa-circle"></i>
+							<p>In Transit</p>
+						</div>
+						<div class="text-center">
+							<i class="fas fa-circle"></i>
+							<p class="lead fw-normal">Out of Delivery</p>
+						</div>
+						<div class="text-center">
+							<i class="fas fa-circle" style="color: #979595;"></i>
+							<p style="color: #979595;">Delivered</p>
+						</div>
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-md-4 text-center">
+							<p class="lead fw-normal">Shipped with</p>
+						</div>
+						<div class="col-md-4 text-center">
+							<p class="lead fw-normal">UPS Expedited</p>
+						</div>
+						<div class="col-md-2 text-center">
+							<i class="fas fa-phone fa-lg"></i>
+						</div>
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-md-4 text-center">
+							<p class="lead fw-normal">Estimated Delivery</p>
+						</div>
+						<div class="col-md-4 text-center">
+							<p class="lead fw-normal">02/12/2017</p>
+						</div>
+						<div class="col-md-2 text-center">
+							<i class="fas fa-envelope fa-lg"></i>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include ('layout/footer.ejs') %>

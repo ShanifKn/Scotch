@@ -56,6 +56,9 @@ app.use(flash());
 // Routes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
+app.use((req, res) => {
+  res.redirect("/error");
+});
 
 // Server configuration
 const port = process.env.PORT;
