@@ -19,6 +19,10 @@ const orderSchema = new Schema({
       total: {
         type: Number,
       },
+      active: {
+        type: Boolean,
+        default: true,
+      },
     },
   ],
   totalPrice: {

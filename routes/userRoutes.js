@@ -41,7 +41,7 @@ import {
   updateNil,
   verfiyPayment,
 } from "../controllers/checkout.js";
-import { myOrders } from "../controllers/orders.js";
+import { deleteOrderItem, myOrders, orderPlace, singleOrder } from "../controllers/orders.js";
 
 // get request;;;;;;;;;;;;;;
 router.get("/", index);
@@ -60,15 +60,7 @@ router.get("/wishlist", verifyToken, wishlist);
 router.get("/profile", userProfile);
 router.get("/editAddress", editAddress);
 router.get("/myorders", myOrders);
-router.get("/orderPlaced", (req, res, next) => {
-  res.locals.user = req.session.user;
-  res.render("user/orderComfrom");
-});
-
-router.get("/orders", (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/orders");
-});
+router.get("/orderPlaced", orderPlace);
 
 // post request::::::
 router.post("/signup", register);
@@ -82,10 +74,12 @@ router.post("/updateEditAddress", updateEditAddress);
 router.post("/order", orderPlaced);
 router.post("/onlineOrder", onlinePayment);
 router.post("/verfiyPayment", verfiyPayment);
+router.get("/singleOrder/:id", singleOrder);
 
 // delete request::::::::::::
 router.delete("/deleteCartProduct", deleteCartProduct);
 router.delete("/deletewishlist", deleteProductwishlist);
+router.delete("/deleteOrderItem", deleteOrderItem);
 // patch request::::::::::::
 
 router.patch("/quantityDec", quantityDec);
@@ -94,6 +88,7 @@ router.patch("/updateDefault", updateDefault);
 router.patch("/updateAdd", updateNil);
 router.patch("/billingAddress", billingAddress);
 router.patch("/shippingAddress", shippingAddress);
+router.patch
 // error
 router.get("/error", (req, res) => {
   res.render("admin/404");
