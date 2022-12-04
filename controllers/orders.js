@@ -1,4 +1,5 @@
 import Jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import { OrderModel } from "../model/order.js";
 
 const myOrders = async (req, res) => {
@@ -11,7 +12,6 @@ const myOrders = async (req, res) => {
       const orders = await OrderModel.find({ user: userId }).populate(
         "orderItems.product"
       );
-      console.log(orders[0].orderItems[0]);
       res.render("user/myorders", { orders });
     } else {
       res.render("/login");
@@ -32,8 +32,9 @@ const singleOrder = async (req, res) => {
       const order = await OrderModel.findOne({ _id: orderId }).populate(
         "orderItems.product"
       );
-      console.log(order);
       res.render("user/orders", { order });
+    } else {
+      res.redirect("/login");
     }
   } catch (err) {
     console.log(err.message);
@@ -57,9 +58,28 @@ const orderPlace = (req, res) => {
 
 const deleteOrderItem = async (req, res) => {
   try {
-    console.log(req.body);
     const productId = req.body.id;
     const orderId = req.body.orderId;
+    const price = await OrderModel.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(orderId),
+        },
+      },
+      {
+        $project: {
+          orderItems: {
+            $filter: {
+              input: "$orderItems",
+              cond: {
+                $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+              },
+            },
+          },
+        },
+      },
+    ]);
+    const onePrice = price[0].orderItems[0].total;
     const deleteOrder = await OrderModel.updateOne(
       {
         _id: orderId,
@@ -69,6 +89,7 @@ const deleteOrderItem = async (req, res) => {
         $set: {
           "orderItems.$.active": false,
         },
+        $inc: { totalPrice: -onePrice },
       }
     ).then(() => {
       res.json({ response: true });
@@ -78,4 +99,53 @@ const deleteOrderItem = async (req, res) => {
   }
 };
 
-export { myOrders, orderPlace, singleOrder, deleteOrderItem };
+const reorder = async (req, res) => {
+  try {
+    const productId = req.body.id;
+    const orderId = req.body.orderId;
+    const price = await OrderModel.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(orderId),
+        },
+      },
+      {
+        $project: {
+          orderItems: {
+            $filter: {
+              input: "$orderItems",
+              cond: {
+                $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+              },
+            },
+          },
+        },
+      },
+    ]);
+    const onePrice = price[0].orderItems[0].total;
+    const ReOrder = await OrderModel.updateOne(
+      {
+        _id: orderId,
+        "orderItems.product": productId,
+      },
+      {
+        $set: {
+          "orderItems.$.active": true,
+        },
+        $inc: { totalPrice: onePrice },
+      }
+    );
+    res.json({ response: true });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+// AdminSide:::::::::
+const order = async (req, res) => {
+  const order = await OrderModel.find({});
+  console.log(order)
+  res.render("admin/orders", { order });
+};
+
+export { myOrders, orderPlace, singleOrder, deleteOrderItem, reorder, order };

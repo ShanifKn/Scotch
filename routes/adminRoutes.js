@@ -29,6 +29,7 @@ import {
   editCategory,
 } from "../controllers/categoryController.js";
 import { upload } from "../middleware/muter.js";
+import { order } from "../controllers/orders.js";
 
 const router = express.Router();
 
@@ -46,7 +47,7 @@ router.get("/editProduct/:id", verifyAdmin, editProduct);
 router.get("/category", Category);
 router.get("/banner", banner);
 router.get("/bannerlist", bannerList);
-
+router.get("/order", order);
 
 // post::::::::
 router.post("/Userlogin", adminAuth);
@@ -57,7 +58,6 @@ router.post("/edit/:id", upload.array("img", 4), updateProduct);
 router.post("/editcategory/:id", upload.single("img"), editCategory);
 router.post("/addBannar", upload.single("Image"), addBanner);
 router.post("/editBanner/:id", upload.single("Image"), editBanner);
-
 
 // Delete & patch
 router.delete("/deleteproduct", deleteProduct);

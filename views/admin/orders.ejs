@@ -1,0 +1,136 @@
+<head>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+            integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+            crossorigin="anonymous"></script>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+</head>
+
+
+<%- include ('layout/navbar.ejs') %>
+      <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+
+            <!-- Navbar -->
+            <%- include ('layout/header.ejs') %>
+                  <div class="w-full px-6 py-6 mx-auto">
+                        <div class="flex flex-wrap -mx-3">
+                              <div class="flex-none w-full max-w-full px-3">
+                                    <div
+                                          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                          <div
+                                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                                                <h6 class="dark:text-white">Order Management</h6>
+                                          </div>
+                                          <div class="justify-items-end p-6 ml-auto">
+                                                <a class="inline-block w-20 px-8 py-2  text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px"
+                                                      href="/admin/add-product">Add Product</a>
+                                          </div>
+
+                                          <div class="flex-auto px-0 pt-0 pb-2 w-full">
+                                                <div class="p-0 overflow-x-auto px-5 w-full">
+                                                      <table id="example"
+                                                            class="items-center justify-center w-full mb-0 ml-5 align-top border-collapse dark:border-white/40 text-slate-500"
+                                                            style="width:90% ;padding-bottom: 40vh;">
+                                                            <thead class="align-bottom">
+                                                                  <tr>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Order Id</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Date</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Payment Method</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Price</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Order Status</th>
+
+                                                                  </tr>
+                                                            </thead>
+                                                            <tbody class="border-t ">
+                                                                  <% for( let i=0; i < order.length; i++ ) { %>
+                                                                        <tr>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <h6
+                                                                                          class="mb-0 text-sm leading-normal dark:text-white">
+                                                                                          <%= order[i]._id %>
+                                                                                    </h6>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <p
+                                                                                          class="mb-0 text-sm font-semibold leading-normal dark:text-white dark:opacity-60">
+                                                                                          <%= order[i].order_date %>
+                                                                                    </p>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <p
+                                                                                          class="mb-0 text-sm font-semibold leading-normal dark:text-white dark:opacity-60">
+                                                                                          <%= order[i].paymentDetails %>
+                                                                                    </p>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <span
+                                                                                          class="text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
+                                                                                          <%= order[i].totalPrice %>
+                                                                                    </span>
+                                                                              </td>
+
+
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <div class="input-group mb-3">
+
+                                                                                          <select class="form-select"
+                                                                                                id="inputGroupSelect01">
+                                                                                                <option selected
+                                                                                                      value="">
+                                                                                                      <%= order[i].deliveryStatus
+                                                                                                            %>
+                                                                                                </option>
+                                                                                                <option value="1">
+                                                                                                      Shipped
+                                                                                                </option>
+                                                                                                <option value="2">
+                                                                                                      Delivered
+                                                                                                </option>
+                                                                                                <option value="3">Cancel
+                                                                                                </option>
+                                                                                          </select>
+                                                                                    </div>
+
+
+                                                                              </td>
+                                                                        </tr>
+                                                                        <% } %>
+
+                                                            </tbody>
+                                                      </table>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+
+                  </div>
+      </main>
+
+
+      <script>
+            $(document).ready(function () {
+                  $('#example').DataTable();
+            });
+      </script>
