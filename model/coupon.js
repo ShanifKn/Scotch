@@ -8,7 +8,7 @@ const couponSchema = new Schema(
       required: true,
     },
     code: {
-      type: Strin,
+      type: String,
     },
     description: {
       type: String,
