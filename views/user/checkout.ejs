@@ -26,22 +26,22 @@
                                           <h6 class="checkout__title">Billing Address</h6>
 
                                           <h3 class="fs-bold mt-3">
-                                                <%= Address[0].Address.Firstname %>
-                                                      <%= Address[0].Address.Lastname %>
+                                                <%= Address[0].Address[0].Firstname %>
+                                                      <%= Address[0].Address[0].Lastname %>
                                           </h3>
                                           <span>
-                                                <%= Address[0].Address.address %>,
+                                                <%= Address[0].Address[0].address %>,
                                           </span><br>
-                                          <span>Country/State <%= Address[0].Address.city %>,
-                                          </span><br>
-                                          <span>
-                                                <%= Address[0].Address.pincode %>,
+                                          <span>Country/State <%= Address[0].Address[0].city %>,
                                           </span><br>
                                           <span>
-                                                <%= Address[0].Email %>
+                                                <%= Address[0].Address[0].pincode %>,
                                           </span><br>
                                           <span>
-                                                <%= Address[0].Phone %>
+                                                <%= Address[0].Address[0].email %>
+                                          </span><br>
+                                          <span>
+                                                <%= Address[0].Address[0].phone %>
                                           </span>
                                     </div>
 
@@ -373,7 +373,23 @@
                                           if (input.checked) {
                                                 textbox.style.display = "none"
                                                 axios.patch("/billingAddress", {}).then((e) => {
-
+                                                      if (e.data.response) {
+                                                            const Toast = Swal.mixin({
+                                                                  toast: true,
+                                                                  position: 'top-end',
+                                                                  showConfirmButton: false,
+                                                                  timer: 50000,
+                                                                  timerProgressBar: true,
+                                                                  didOpen: (toast) => {
+                                                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                                  }
+                                                            })
+                                                            Toast.fire({
+                                                                  icon: 'success',
+                                                                  title: 'Delivery Address Updated!'
+                                                            })
+                                                      }
                                                 })
                                           } else {
                                                 textbox.style.display = "block"

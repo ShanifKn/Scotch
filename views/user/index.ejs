@@ -3,34 +3,7 @@
 
       <section class="hero">
             <div class="hero__slider owl-carousel">
-                  <div class="hero__items set-bg" data-setbg="<%= banner[0].Image %> ">
-                        <div class="container">
-                              <div class="row">
-                                    <div class="col-xl-5 col-lg-7 col-md-8">
-                                          <div class="hero__text">
-                                                <h6>
-                                                      <%= banner[0].Category %>
-                                                </h6>
-                                                <h2>
-                                                      <%= banner[0].Title %>
-                                                </h2>
-                                                <p>
-                                                      <%= banner[0].Message %>
-                                                </p>
-                                                <a href="/product" class="primary-btn">Shop now <span
-                                                            class="arrow_right"></span></a>
-                                                <div class="hero__social">
-                                                      <a href="#"><i class="fa fa-facebook"></i></a>
-                                                      <a href="#"><i class="fa fa-twitter"></i></a>
-                                                      <a href="#"><i class="fa fa-pinterest"></i></a>
-                                                      <a href="#"><i class="fa fa-instagram"></i></a>
-                                                </div>
-                                          </div>
-                                    </div>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="hero__items set-bg" data-setbg="<%= banner[1].Image %>">
+                  <div class="hero__items set-bg" data-setbg="<%= banner[1].Image %> ">
                         <div class="container">
                               <div class="row">
                                     <div class="col-xl-5 col-lg-7 col-md-8">
@@ -57,6 +30,33 @@
                               </div>
                         </div>
                   </div>
+                  <div class="hero__items set-bg" data-setbg="<%= banner[0].Image %>">
+                        <div class="container">
+                              <div class="row">
+                                    <div class="col-xl-5 col-lg-7 col-md-8">
+                                          <div class="hero__text">
+                                                <h6>
+                                                      <%= banner[0].Category %>
+                                                </h6>
+                                                <h2>
+                                                      <%= banner[0].Title %>
+                                                </h2>
+                                                <p>
+                                                      <%= banner[0].Message %>
+                                                </p>
+                                                <a href="/product" class="primary-btn">Shop now <span
+                                                            class="arrow_right"></span></a>
+                                                <div class="hero__social">
+                                                      <a href="#"><i class="fa fa-facebook"></i></a>
+                                                      <a href="#"><i class="fa fa-twitter"></i></a>
+                                                      <a href="#"><i class="fa fa-pinterest"></i></a>
+                                                      <a href="#"><i class="fa fa-instagram"></i></a>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
             </div>
       </section>
       <section class="banner spad">
@@ -65,10 +65,12 @@
                         <div class="col-lg-7 offset-lg-4">
                               <div class="banner__item">
                                     <div class="banner__item__pic">
-                                          <img src="/user/assets/img/banner/banner-1.jpg" alt="">
+                                          <img src="<%= subBanner[0].Image %> " alt="">
                                     </div>
                                     <div class="banner__item__text">
-                                          <h2>Clothing Collections 2030</h2>
+                                          <h2>
+                                                <%= subBanner[0].Title %>
+                                          </h2>
                                           <a href="#">Shop now</a>
                                     </div>
                               </div>
@@ -76,10 +78,12 @@
                         <div class="col-lg-5">
                               <div class="banner__item banner__item--middle">
                                     <div class="banner__item__pic">
-                                          <img src="/user/assets/img/banner/banner-2.jpg" alt="">
+                                          <img src="<%= subBanner[1].Image %>" alt="">
                                     </div>
                                     <div class="banner__item__text">
-                                          <h2>Accessories</h2>
+                                          <h2>
+                                                <%= subBanner[1].Title %>
+                                          </h2>
                                           <a href="#">Shop now</a>
                                     </div>
                               </div>
@@ -87,15 +91,19 @@
                         <div class="col-lg-7">
                               <div class="banner__item banner__item--last">
                                     <div class="banner__item__pic">
-                                          <img src="/user/assets/img/banner/banner-3.jpg" alt="">
+                                          <img src="<%= subBanner[2].Image %>" alt="">
                                     </div>
                                     <div class="banner__item__text">
-                                          <h2>Shoes Spring 2030</h2>
+                                          <h2>
+                                                <%= subBanner[2].Title %>
+                                          </h2>
                                           <a href="#">Shop now</a>
                                     </div>
                               </div>
                         </div>
+
                   </div>
+
             </div>
       </section>
       <section class="product spad">
@@ -248,7 +256,7 @@
                         </div>
                         <div class="col-lg-4">
                               <div class="categories__hot__deal">
-                                    <img src="/user/assets/img/product-sale.png" alt="">
+                                    <img src="<%= subBanner[3].Image %> " alt="">
                                     <div class="hot__deal__sticker">
                                           <span>Sale Of</span>
                                           <h5>₹ 2999</h5>

@@ -9,27 +9,30 @@ const updateProfile = async (req, res) => {
       const userId = decoded.userId;
       const user = await UserModel.findOne({ _id: userId });
       const Email = user.Email;
-      //     const Name = user.Name;
       const Phone = user.Phone;
-      const { firstname, lastname, address, city, state, pincode } = req.body;
-
-      const updateUser = await UserModel.findOneAndUpdate(
+      const { Firstname, Lastname, address, city, state, pincode } = req.body;
+      const updateNew = [
+        {
+          Firstname: Firstname,
+          Lastname: Lastname,
+          address: address,
+          city: city,
+          state: state,
+          pincode: pincode,
+          email: Email,
+          phone: Phone,
+        },
+      ];
+      const updateUser = await UserModel.updateOne(
         { _id: userId },
         {
           $set: {
-            "Address.Default": false,
-            "Address.Firstname": firstname,
-            "Address.Lastname": lastname,
-            "Address.address": address,
-            "Address.city": city,
-            "Address.state": state,
-            "Address.pincode": pincode,
-            "Address.email": Email,
-            "Address.phone": Phone,
+            Address: updateNew,
           },
         }
       );
       console.log("sucessfully");
+      res.redirect("/profile");
     } else {
       res.redirect("/login");
     }
@@ -45,7 +48,6 @@ const deliveryAddress = async (req, res) => {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
 
-      // const { firstname, lastname, address, city, state, pincode } = req.body;
       const updateUser = await UserModel.findOneAndUpdate(
         { _id: userId },
         {

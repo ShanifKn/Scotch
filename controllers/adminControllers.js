@@ -1,5 +1,6 @@
 import { s3Upload } from "../database/multerS3.js";
 import { bannerModel } from "../model/banner.js";
+import { subBannerModel } from "../model/subBanner.js";
 import { UserModel } from "../model/User.js";
 let style = "bg-blue-500/13";
 
@@ -7,11 +8,11 @@ const dashboard = (req, res) => {
   res.render("admin/dashboard", {
     Dashboard: style,
     expressFlash: req.flash("Msg"),
-  }); 
+  });
 };
 
 const login = (req, res) => {
-  res.render("admin/login", { expressFlash: req.flash("Msg") }); 
+  res.render("admin/login", { expressFlash: req.flash("Msg") });
 };
 
 const adminProfile = (req, res) => {
@@ -32,9 +33,11 @@ const userView = async (req, res) => {
 
 // Banner::::::::::::::::::::::::::::::::::::::::
 const bannerList = (req, res) => {
-  let banner = bannerModel.find().then((banner) => {
+  let banner = bannerModel.find().then(async (banner) => {
+    let subbanner = await subBannerModel.find();
     res.render("admin/viewBanner", {
       banner,
+      subbanner,
       Banner: style,
       expressFlash: req.flash("Msg"),
     });
@@ -103,6 +106,75 @@ const editBanner = async (req, res) => {
     }
   }
 };
+
+// subbanner:::::::::
+const subbanner = (req, res) => {
+  res.render("admin/subbanner");
+};
+
+const addSubBanner = async (req, res) => {
+  const file = req.file;
+  try {
+    const result = await s3Upload(file);
+    console.log(result);
+    const newBanner = new subBannerModel({
+      Title: req.body.Category,
+      Image: result.Location,
+    });
+    newBanner.save().then(() => {
+      req.flash("Msg", "New Category has been Added");
+      res.redirect("/admin/bannerlist");
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+const deletesubBanner = async (req, res) => {
+  const id = req.body.id;
+  await subBannerModel.findByIdAndDelete(id).then(() => {
+    res.json({ response: true });
+  });
+};
+
+const editSubBanner = async (req, res) => {
+  const id = req.params.id;
+  const Title = req.body.Title;
+  const Image = req.file;
+  if (!Image) {
+    await subBannerModel
+      .findByIdAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            Title: Title,
+          },
+        }
+      )
+      .then(() => {
+        req.flash("Msg", "Banner update");
+        res.redirect("/admin/bannerlist");
+      })
+      .catch((err) => {
+        req.flash("Msg", `${err.message}`);
+        res.redirect("/admin/bannerlist");
+      });
+  } else {
+    try {
+      const result = await s3Upload(Image);
+      const updateBanner = {
+        Title: Title,
+        Image: result.Location,
+      };
+      await subBannerModel.findByIdAndUpdate(id, updateBanner).then(() => {
+        req.flash("Msg", "Banner update");
+        res.redirect("/admin/bannerlist");
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+};
+
 const deleteBanner = async (req, res) => {
   const id = req.body.id;
   await bannerModel.findByIdAndDelete(id).then(() => {
@@ -139,4 +211,8 @@ export {
   bannerList,
   editBanner,
   deleteBanner,
+  subbanner,
+  addSubBanner,
+  deletesubBanner,
+  editSubBanner,
 };

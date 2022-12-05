@@ -10,6 +10,7 @@ const register = async (req, res) => {
   const email = req.body.Email;
   const phone = req.body.Phone;
   req.session.newUser = req.body;
+  console.log(req.body);
   let user = UserModel.findOne({ Email: email }).then((user) => {
     if (user) {
       console.log("user already exists");
@@ -59,9 +60,7 @@ const userRegistration = async (email, name, phone, password) => {
           {
             expiresIn: "10h",
           }
-        ).catch((err) => {
-          console.log(err);
-        });
+        );
         resolve(token);
       })
       .catch((err) => {

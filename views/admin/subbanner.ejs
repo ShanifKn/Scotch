@@ -4,7 +4,7 @@
             <%- include ('layout/header.ejs') %>
                   <div class="flex items-center mt-64 ml-10">
                         <div class=" w-full max-w-[550px]">
-                              <form action="./addBannar" method="POST" enctype="multipart/form-data">
+                              <form action="./addsubannar" method="POST" enctype="multipart/form-data">
                                     <div class="mb-3 ">
 
                                           <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
@@ -13,20 +13,6 @@
                                           <input type="text" name="Category" id="name"
                                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
-                                    </div>
-                                    <div class="mb-3">
-                                          <label for="text" class="mb-3 block text-base font-medium text-[#07074D]">
-                                                Title
-                                          </label>
-                                          <input type="text" name="Title" id="name"
-                                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
-                                    <div class="mb-3">
-                                          <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
-                                                Message
-                                          </label>
-                                          <textarea rows="4" name="Message" id="message"
-                                                class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
                                     </div>
                                     <div class="mb-3 w-96">
                                           <label for="formFile"

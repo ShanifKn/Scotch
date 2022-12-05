@@ -11,6 +11,10 @@ import {
   bannerList,
   editBanner,
   deleteBanner,
+  subbanner,
+  addSubBanner,
+  deletesubBanner,
+  editSubBanner,
 } from "../controllers/adminControllers.js";
 
 import {
@@ -29,7 +33,7 @@ import {
   editCategory,
 } from "../controllers/categoryController.js";
 import { upload } from "../middleware/muter.js";
-import { order } from "../controllers/orders.js";
+import { deliveryStatus, order } from "../controllers/orders.js";
 
 const router = express.Router();
 
@@ -48,7 +52,7 @@ router.get("/category", Category);
 router.get("/banner", banner);
 router.get("/bannerlist", bannerList);
 router.get("/order", order);
-
+router.get("/subbanner", subbanner);
 // post::::::::
 router.post("/Userlogin", adminAuth);
 router.post("/addCategory", upload.single("Image"), addCategory);
@@ -58,9 +62,13 @@ router.post("/edit/:id", upload.array("img", 4), updateProduct);
 router.post("/editcategory/:id", upload.single("img"), editCategory);
 router.post("/addBannar", upload.single("Image"), addBanner);
 router.post("/editBanner/:id", upload.single("Image"), editBanner);
+router.post("/addsubannar", upload.single("Image"), addSubBanner);
+router.post("/editSubBanner/:id", upload.single("Image"), editSubBanner);
 
 // Delete & patch
 router.delete("/deleteproduct", deleteProduct);
 router.delete("/deleteBanner", deleteBanner);
+router.delete("/deletesubBanner", deletesubBanner);
+router.patch("/deliveryStatus", deliveryStatus);
 
 export default router;

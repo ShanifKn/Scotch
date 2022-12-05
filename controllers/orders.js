@@ -9,7 +9,8 @@ const myOrders = async (req, res) => {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
       res.locals.user = userId;
-      const orders = await OrderModel.find({ user: userId }).populate(
+
+      const orders = await OrderModel.find({ User: userId }).populate(
         "orderItems.product"
       );
       res.render("user/myorders", { orders });
@@ -144,8 +145,29 @@ const reorder = async (req, res) => {
 // AdminSide:::::::::
 const order = async (req, res) => {
   const order = await OrderModel.find({});
-  console.log(order)
   res.render("admin/orders", { order });
 };
 
-export { myOrders, orderPlace, singleOrder, deleteOrderItem, reorder, order };
+const deliveryStatus = async (req, res) => {
+  const orderId = req.body.Id;
+  const status = req.body.Value;
+  await OrderModel.updateOne(
+    { _id: orderId },
+    {
+      $set: {
+        deliveryStatus: status,
+      },
+    }
+  );
+  res.json({ response: true, status: status });
+};
+
+export {
+  myOrders,
+  orderPlace,
+  singleOrder,
+  deleteOrderItem,
+  reorder,
+  order,
+  deliveryStatus,
+};

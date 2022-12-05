@@ -82,9 +82,9 @@
                                                                                     </p>
                                                                               </td>
                                                                               <td
-                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    class="p-2 align-middle  border-b  whitespace-nowrap shadow-transparent">
                                                                                     <span
-                                                                                          class="text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
+                                                                                          class="text-xs font-semibold  dark:text-white dark:opacity-60">
                                                                                           <%= order[i].totalPrice %>
                                                                                     </span>
                                                                               </td>
@@ -95,19 +95,22 @@
                                                                                     <div class="input-group mb-3">
 
                                                                                           <select class="form-select"
+                                                                                                onchange="DeliveryStatus( `<%= order[i]._id %>` )"
                                                                                                 id="inputGroupSelect01">
                                                                                                 <option selected
-                                                                                                      value="">
-                                                                                                      <%= order[i].deliveryStatus
-                                                                                                            %>
+                                                                                                      disabled
+                                                                                                      id="SelectedValue">
+                                                                                                      <%= order[i].deliveryStatus%>
                                                                                                 </option>
-                                                                                                <option value="1">
+                                                                                                <option value="Shipped">
                                                                                                       Shipped
                                                                                                 </option>
-                                                                                                <option value="2">
+                                                                                                <option
+                                                                                                      value="Delivered">
                                                                                                       Delivered
                                                                                                 </option>
-                                                                                                <option value="3">Cancel
+                                                                                                <option value="Cancel">
+                                                                                                      Cancel
                                                                                                 </option>
                                                                                           </select>
                                                                                     </div>
@@ -133,4 +136,30 @@
             $(document).ready(function () {
                   $('#example').DataTable();
             });
+      </script>
+      <script>
+            const DeliveryStatus = (id) => {
+                  const value = document.getElementById("inputGroupSelect01").value;
+                  alert(value)
+                  axios.patch("/admin/deliveryStatus", { Id: id, Value: value }).then((e) => {
+                        if (e.data.response) {
+                              const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                          toast.addEventListener("mouseenter", Swal.stopTimer);
+                                          toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                    },
+                              });
+                              Toast.fire({
+                                    icon: "success",
+                                    title: `Status Changed to ${status}`,
+                              });
+                              location.href = "/admin/order";
+                        }
+                  })
+            }
       </script>

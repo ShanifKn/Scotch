@@ -8,6 +8,7 @@ const sessionID = process.env.TWILIO_SESSION_SID;
 
 const sendSms = (phone) => {
   const client = Twilio(accountSid, authToken);
+  console.log(client);
   client.verify.v2
     .services(sessionID)
     .verifications.create({ to: `+91${phone}`, channel: "sms" })

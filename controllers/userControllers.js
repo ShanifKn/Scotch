@@ -2,6 +2,7 @@ import { bannerModel } from "../model/banner.js";
 import { cartModel } from "../model/cart.js";
 import { productModel } from "../model/product.js";
 import Jwt from "jsonwebtoken";
+import { subBannerModel } from "../model/subBanner.js";
 
 const index = async (req, res) => {
   try {
@@ -18,11 +19,13 @@ const index = async (req, res) => {
             let secondProduct = productModel
               .find()
               .skip(4)
-              .then((secondProduct) => {
+              .then(async (secondProduct) => {
+                const subBanner = await subBannerModel.find();
                 res.render("user/index", {
                   banner,
                   product,
                   secondProduct,
+                  subBanner,
                 });
               });
           });
@@ -37,11 +40,13 @@ const index = async (req, res) => {
             let secondProduct = productModel
               .find()
               .skip(4)
-              .then((secondProduct) => {
+              .then(async (secondProduct) => {
+                const subBanner = await subBannerModel.find();
                 res.render("user/index", {
                   banner,
                   product,
                   secondProduct,
+                  subBanner,
                 });
               });
           });
@@ -63,6 +68,7 @@ const cart = async (req, res) => {
       const cartProduct = await cartModel
         .findOne({ user: userId })
         .populate("cart.product");
+
       res.render("user/cart", { cartProduct });
     } else {
       res.redirect("/login");

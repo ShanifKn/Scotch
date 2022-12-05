@@ -10,10 +10,11 @@ const wishlist = async (req, res) => {
     if (token) {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
+      res.locals.user = userId;
       const wishlist = await wishlistModel
         .findOne({ user: userId })
         .populate("wishlist.product");
-      res.render("user/wishList", wishlist);
+      res.render("user/wishList", { wishlist });
     } else {
       res.redirect("/login");
     }
@@ -30,8 +31,8 @@ const addToWishlist = async (req, res) => {
       const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       const userId = decoded.userId;
       const productId = req.body.id;
-      let user = await wishlistModel.findOne({ userId });
-      if (user == null) {
+      let user = await wishlistModel.findOne({ user: userId });
+      if (!user) {
         const newWishList = new wishlistModel({
           user: userId,
           wishlist: [{ product: productId }],
@@ -108,7 +109,7 @@ const addtoCart = async (req, res) => {
         { user: userId },
         { $pull: { wishlist: { product: productId } } }
       );
-      let user = await cartModel.findOne({ userId });
+      let user = await cartModel.findOne({ user: userId });
       if (user == null) {
         let newCart = new cartModel({
           user: userId,

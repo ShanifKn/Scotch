@@ -32,7 +32,6 @@ const checkout = async (req, res) => {
           user: userId,
         })
         .populate("cart.product");
-
       res.render("user/checkout", {
         Address,
         cartSaved,
@@ -54,8 +53,8 @@ const updateDefault = async (req, res) => {
       const userId = decoded.userId;
       const id = req.body.id;
       await UserModel.updateOne(
-        { _id: userId },
-        { $set: { "Address.Default": false } }
+        { _id: userId, "Address.Default": true },
+        { $set: { "Address.$.Default": false } }
       );
       await UserModel.updateMany(
         { _id: userId, "DeliveryAddress.Default": true },
@@ -120,8 +119,8 @@ const billingAddress = async (req, res) => {
         { arrayFilters: [{ "elem.Default": true }], multi: true }
       );
       await UserModel.updateOne(
-        { _id: userId },
-        { $set: { "Address.Default": true } }
+        { _id: userId, "Address.Default": false },
+        { $set: { "Address.$.Default": true } }
       );
       res.json({ response: true });
     } else {
@@ -140,8 +139,8 @@ const shippingAddress = async (req, res) => {
       const userId = decoded.userId;
 
       await UserModel.updateOne(
-        { _id: userId },
-        { $set: { "Address.Default": false } }
+        { _id: userId, "Address.Default": true },
+        { $set: { "Address.$.Default": false } }
       );
       res.json({ response: true });
     } else {
