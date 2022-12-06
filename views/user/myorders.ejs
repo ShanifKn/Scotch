@@ -25,109 +25,230 @@
 					</div>
 
 					<% } else { %>
-						<% for( let i=0; i < orders.length; i++ ) { %>
+						<% if (orders.deliveryStatus=="Cancel" ) { %>
 
-							<div
-								class="flex flex-col justify-start items-start  px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
-								<a href="/singleOrder/<%=orders[i]._id %>">
-									<p
-										class="text-lg md:text-xl text-black font-semibold leading-6 xl:leading-5 cursor-pointer">
-										Ordes #<%= orders[i]._id %>
-									</p>
-								</a>
-								<% for( let f=0; f < orders[i].orderItems.length; f++ ) { %>
-									<div
-										class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
-
-										<div class="pb-4 md:pb-8 w-full md:w-40">
-											<img class="w-full hidden md:block"
-												src="<%=orders[i].orderItems[f].product.images[0].Location  %> "
-												alt="dress" />
-										</div>
-										<div
-											class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
-											<div
-												class="w-full flex flex-col justify-start items-start space-y-8">
-												<h3
-													class="text-xl text-black xl:text-2xl font-semibold  text-gray-800">
-													<%=orders[i].orderItems[f].product.Product_title
-														%>
-														<br>
-														<span
-															class="text-sm text-gray-400 ">
-															Ordered on
-															<%=orders[i].order_date %>
-														</span>
-												</h3>
-												<div
-													class="flex justify-start items-start flex-col space-y-2">
-													<p
-														class="text-sm text-black leading-none text-gray-800">
-														<span class="text-gray-400 ">Style:
-														</span>
-														<%=orders[i].orderItems[f].product.Product_des
-															%>
-													</p>
-													<p
-														class="text-sm text-black leading-none text-gray-800">
-														<span class="text-gray-400 ">Size:
-														</span>
-														<%=orders[i].orderItems[f].product.Size
-															%>
-													</p>
-													<p
-														class="text-sm text-black leading-none text-gray-800">
-														<span class="text-gray-400 ">Color:
-														</span>
-														<%=orders[i].orderItems[f].product.color
-															%>
-													</p>
-												</div>
-											</div>
-											<div
-												class="flex justify-between space-x-8 items-start w-full">
-												<p class="text-base xl:text-lg leading-6">
-													₹
-													<%=orders[i].orderItems[f].product.Price.Offer_price%>
-
-														<span
-															class="text-red-300 line-through">
-															₹
-															<%=orders[i].orderItems[f].product.Price.Retail_price
-																%>
-														</span>
-												</p>
-												<p
-													class="text-base text-black xl:text-lg leading-6 text-gray-800">
-													<%=orders[i].orderItems[f].quantity %>
-												</p>
-												<p
-													class="text-base text-black xl:text-lg font-semibold leading-6 text-gray-800">
-													₹ <%=orders[i].orderItems[f].total %>
-												</p>
-												<!-- <!-- <button type="button"
-											class="btn btn-primary bg-blue-500 mt-1"
-											data-bs-toggle="modal" data-bs-target="#exampleModal">
-											Track your order
-										</button> -->
-												<% if (orders[i].orderItems[f].active ) { %>
-													<button type="button"
-														class="btn  bg-red-500"
-														onclick="deleteOrder(`<%= orders[i]._id %>`,`<%=orders[i].orderItems[f].product._id%>`)">
-														Cancel-order </button>
-													<% } else { %>
-														<button type="button"
-															class="btn btn-primary bg-blue-500"
-															onclick="reorder(`<%= orders[i]._id %>`,`<%=orders[i].orderItems[f].product._id%>`)">
-															Re-order </button>
-														<% } %>
-											</div>
-										</div>
-									</div>
-									<% } %>
-							</div>
 							<% } %>
-								<% } %>
+								<% for( let i=0; i < orders.length; i++ ) { %>
+									<% if (orders[i].deliveryStatus=="Cancel" ) { %>
+										<div
+											class="flex flex-col justify-start items-start  px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+											<a href="/singleOrder/<%=orders[i]._id %>"
+												class="flex">
+												<p
+													class="text-lg md:text-xl text-red-500 font-semibold leading-6 xl:leading-5 cursor-pointer">
+													Ordes #<%= orders[i]._id %>
+												</p>
+												<span
+													class="badge rounded-pill bg-red-500 ml-3">Canceled</span>
+											</a>
+											<% for( let f=0; f < orders[i].orderItems.length; f++
+												) { %>
+
+												<div
+													class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
+
+													<div class="pb-4 md:pb-8 w-full md:w-40">
+														<img class="w-full hidden md:block"
+															src="<%=orders[i].orderItems[f].product.images[0].Location  %> "
+															alt="dress" />
+													</div>
+													<div
+														class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+														<div
+															class="w-full flex flex-col justify-start items-start space-y-8">
+															<h3
+																class="text-xl text-black xl:text-2xl font-semibold  text-gray-800">
+																<%=orders[i].orderItems[f].product.Product_title
+																	%>
+																	<br>
+																	<span
+																		class="text-sm text-gray-400 ">
+																		Ordered
+																		on
+																		<%=orders[i].order_date
+																			%>
+																	</span>
+															</h3>
+															<div
+																class="flex justify-start items-start flex-col space-y-2">
+																<p
+																	class="text-sm text-black leading-none text-gray-800">
+																	<span
+																		class="text-gray-400 ">Style:
+																	</span>
+																	<%=orders[i].orderItems[f].product.Product_des
+																		%>
+																</p>
+																<p
+																	class="text-sm text-black leading-none text-gray-800">
+																	<span
+																		class="text-gray-400 ">Size:
+																	</span>
+																	<%=orders[i].orderItems[f].product.Size
+																		%>
+																</p>
+																<p
+																	class="text-sm text-black leading-none text-gray-800">
+																	<span
+																		class="text-gray-400 ">Color:
+																	</span>
+																	<%=orders[i].orderItems[f].product.color
+																		%>
+																</p>
+															</div>
+														</div>
+														<div
+															class="flex justify-between space-x-8 items-start w-full">
+															<p
+																class="text-base xl:text-lg leading-6">
+																₹
+																<%=orders[i].orderItems[f].product.Price.Offer_price%>
+
+																	<span
+																		class="text-red-300 line-through">
+																		₹
+																		<%=orders[i].orderItems[f].product.Price.Retail_price
+																			%>
+																	</span>
+															</p>
+															<p
+																class="text-base text-black xl:text-lg leading-6 text-gray-800">
+																<%=orders[i].orderItems[f].quantity
+																	%>
+															</p>
+															<p
+																class="text-base text-black xl:text-lg font-semibold leading-6 text-gray-800">
+																₹
+																<%=orders[i].orderItems[f].total
+																	%>
+															</p>
+														</div>
+													</div>
+												</div>
+												<% } %>
+										</div>
+										<% } else { %>
+											<div
+												class="flex flex-col justify-start items-start  px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+												<a href="/singleOrder/<%=orders[i]._id %>">
+													<p
+														class="text-lg md:text-xl text-black font-semibold leading-6 xl:leading-5 cursor-pointer">
+														Ordes #<%= orders[i]._id %>
+													</p>
+												</a>
+												<% for( let f=0; f <
+													orders[i].orderItems.length; f++ ) { %>
+
+													<div
+														class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
+
+														<div
+															class="pb-4 md:pb-8 w-full md:w-40">
+															<img class="w-full hidden md:block"
+																src="<%=orders[i].orderItems[f].product.images[0].Location  %> "
+																alt="dress" />
+														</div>
+														<div
+															class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+															<div
+																class="w-full flex flex-col justify-start items-start space-y-8">
+																<h3
+																	class="text-xl text-black xl:text-2xl font-semibold  text-gray-800">
+																	<%=orders[i].orderItems[f].product.Product_title
+																		%>
+																		<br>
+																		<span
+																			class="text-sm text-gray-400 ">
+																			Ordered
+																			on
+																			<%=orders[i].order_date
+																				%>
+																		</span>
+																</h3>
+																<div
+																	class="flex justify-start items-start flex-col space-y-2">
+																	<p
+																		class="text-sm text-black leading-none text-gray-800">
+																		<span
+																			class="text-gray-400 ">Style:
+																		</span>
+																		<%=orders[i].orderItems[f].product.Product_des
+																			%>
+																	</p>
+																	<p
+																		class="text-sm text-black leading-none text-gray-800">
+																		<span
+																			class="text-gray-400 ">Size:
+																		</span>
+																		<%=orders[i].orderItems[f].product.Size
+																			%>
+																	</p>
+																	<p
+																		class="text-sm text-black leading-none text-gray-800">
+																		<span
+																			class="text-gray-400 ">Color:
+																		</span>
+																		<%=orders[i].orderItems[f].product.color
+																			%>
+																	</p>
+																</div>
+															</div>
+															<div
+																class="flex justify-between space-x-8 items-start w-full">
+																<p
+																	class="text-base xl:text-lg leading-6">
+																	₹
+																	<%=orders[i].orderItems[f].product.Price.Offer_price%>
+
+																		<span
+																			class="text-red-300 line-through">
+																			₹
+																			<%=orders[i].orderItems[f].product.Price.Retail_price
+																				%>
+																		</span>
+																</p>
+																<p
+																	class="text-base text-black xl:text-lg leading-6 text-gray-800">
+																	<%=orders[i].orderItems[f].quantity
+																		%>
+																</p>
+																<p
+																	class="text-base text-black xl:text-lg font-semibold leading-6 text-gray-800">
+																	₹
+																	<%=orders[i].orderItems[f].total
+																		%>
+																</p>
+																<!-- <!-- <button type="button"
+										class="btn btn-primary bg-blue-500 mt-1"
+										data-bs-toggle="modal" data-bs-target="#exampleModal">
+										Track your order
+									</button> -->
+																<% if (orders[i].orderItems[f].active
+																	) { %>
+																	<button
+																		type="button"
+																		class="btn  bg-red-500"
+																		onclick="deleteOrder(`<%= orders[i]._id %>`,`<%=orders[i].orderItems[f].product._id%>`)">
+																		Cancel-order
+																	</button>
+																	<% } else { %>
+																		<button
+																			type="button"
+																			class="btn btn-primary bg-blue-500"
+																			onclick="reorder(`<%= orders[i]._id %>`,`<%=orders[i].orderItems[f].product._id%>`)">
+																			Re-order
+																		</button>
+																		<% } %>
+															</div>
+														</div>
+													</div>
+													<% } %>
+											</div>
+											<% } %>
+
+
+												<% } %>
+													<% } %>
 			</div>
 		</div>
 

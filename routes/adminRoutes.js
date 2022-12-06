@@ -34,6 +34,7 @@ import {
 } from "../controllers/categoryController.js";
 import { upload } from "../middleware/muter.js";
 import { deliveryStatus, order } from "../controllers/orders.js";
+import { addCoupon, coupon } from "../controllers/coupon.js";
 
 const router = express.Router();
 
@@ -53,6 +54,7 @@ router.get("/banner", banner);
 router.get("/bannerlist", bannerList);
 router.get("/order", order);
 router.get("/subbanner", subbanner);
+router.get("/coupon", coupon);
 // post::::::::
 router.post("/Userlogin", adminAuth);
 router.post("/addCategory", upload.single("Image"), addCategory);
@@ -64,6 +66,7 @@ router.post("/addBannar", upload.single("Image"), addBanner);
 router.post("/editBanner/:id", upload.single("Image"), editBanner);
 router.post("/addsubannar", upload.single("Image"), addSubBanner);
 router.post("/editSubBanner/:id", upload.single("Image"), editSubBanner);
+router.post("/addcoupon", addCoupon);
 
 // Delete & patch
 router.delete("/deleteproduct", deleteProduct);

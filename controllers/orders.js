@@ -1,6 +1,7 @@
 import Jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { OrderModel } from "../model/order.js";
+const style = "bg-blue-500/13";
 
 const myOrders = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ const myOrders = async (req, res) => {
       const orders = await OrderModel.find({ User: userId }).populate(
         "orderItems.product"
       );
+
       res.render("user/myorders", { orders });
     } else {
       res.render("/login");
@@ -145,7 +147,7 @@ const reorder = async (req, res) => {
 // AdminSide:::::::::
 const order = async (req, res) => {
   const order = await OrderModel.find({});
-  res.render("admin/orders", { order });
+  res.render("admin/orders", { order, Orders: style });
 };
 
 const deliveryStatus = async (req, res) => {

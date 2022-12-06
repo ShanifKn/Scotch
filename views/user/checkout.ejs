@@ -343,8 +343,6 @@
       <%- include ('layout/footer.ejs') %>
             <% if ( expressFlash.length> 0 ) { %>
                   <script>
-
-
                         const Toast = Swal.mixin({
                               toast: true,
                               position: 'top-end',
@@ -356,7 +354,6 @@
                                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                               }
                         })
-
                         Toast.fire({
                               icon: 'success',
                               title: "Address Updated"

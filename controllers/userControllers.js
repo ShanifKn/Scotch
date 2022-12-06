@@ -3,6 +3,7 @@ import { cartModel } from "../model/cart.js";
 import { productModel } from "../model/product.js";
 import Jwt from "jsonwebtoken";
 import { subBannerModel } from "../model/subBanner.js";
+import { couponModel } from "../model/coupon.js";
 
 const index = async (req, res) => {
   try {
@@ -68,8 +69,14 @@ const cart = async (req, res) => {
       const cartProduct = await cartModel
         .findOne({ user: userId })
         .populate("cart.product");
-
-      res.render("user/cart", { cartProduct });
+      const coupon = await couponModel.findOne({ user: userId });
+      if (!coupon) {
+        const Coupon = await couponModel.find();
+        res.render("user/cart", { cartProduct, Coupon });
+      } else {
+        const Coupon = await couponModel.find();
+        res.render("user/cart", { cartProduct, Coupon });
+      }
     } else {
       res.redirect("/login");
     }

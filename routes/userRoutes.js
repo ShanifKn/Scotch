@@ -41,7 +41,14 @@ import {
   updateNil,
   verfiyPayment,
 } from "../controllers/checkout.js";
-import { deleteOrderItem, myOrders, orderPlace, reorder, singleOrder } from "../controllers/orders.js";
+import {
+  deleteOrderItem,
+  myOrders,
+  orderPlace,
+  reorder,
+  singleOrder,
+} from "../controllers/orders.js";
+import { discountAdded } from "../controllers/coupon.js";
 
 // get request;;;;;;;;;;;;;;
 router.get("/", index);
@@ -80,6 +87,8 @@ router.get("/singleOrder/:id", singleOrder);
 router.delete("/deleteCartProduct", deleteCartProduct);
 router.delete("/deletewishlist", deleteProductwishlist);
 router.delete("/deleteOrderItem", deleteOrderItem);
+
+
 // patch request::::::::::::
 router.patch("/quantityDec", quantityDec);
 router.patch("/quantityInc", quantityInc);
@@ -87,8 +96,10 @@ router.patch("/updateDefault", updateDefault);
 router.patch("/updateAdd", updateNil);
 router.patch("/billingAddress", billingAddress);
 router.patch("/shippingAddress", shippingAddress);
-router.patch("/reorder",reorder)
-// error
+router.patch("/reorder", reorder);
+router.patch("/discount", discountAdded);
+
+// Error request::::::::::::
 router.get("/error", (req, res) => {
   res.render("admin/404");
 });

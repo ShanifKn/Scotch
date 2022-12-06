@@ -1,0 +1,185 @@
+<head>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+</head>
+
+
+<%- include ('layout/navbar.ejs') %>
+      <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+
+            <!-- Navbar -->
+            <%- include ('layout/header.ejs') %>
+                  <div class="w-full px-6 py-6 mx-auto">
+                        <div class="flex flex-wrap -mx-3">
+                              <div class="flex-none w-full max-w-full px-3">
+                                    <div
+                                          class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                          <div
+                                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                                                <h6 class="dark:text-white">Coupon Management</h6>
+                                          </div>
+                                          <div class="justify-items-end p-6 ml-auto">
+                                                <a class="inline-block w-20 px-8 py-2  text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px"
+                                                      data-bs-toggle="modal" data-bs-target="#staticBack">Add Coupon</a>
+                                          </div>
+
+                                          <div class="flex-auto px-0 pt-0 pb-2 w-full">
+                                                <div class="p-0 overflow-x-auto px-5 w-full">
+                                                      <table id="example"
+                                                            class="items-center justify-center w-full mb-0 ml-5 align-top border-collapse dark:border-white/40 text-slate-500"
+                                                            style="width:90%; padding-bottom: 50vh;">
+                                                            <thead class="align-bottom">
+                                                                  <tr>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Coupon Name</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Code</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              DISCRIPTION</th>
+                                                                        <th
+                                                                              class="px-4 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              PERCENTAGE</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              MAXIMUM</th>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Edit
+                                                                        </th>
+                                                                  </tr>
+                                                            </thead>
+                                                            <tbody class="border-t">
+                                                                  <% for( let i=0; i < couponList.length; i++ ) { %>
+                                                                        <tr>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <div
+                                                                                          class="flex flex-col justify-center">
+                                                                                          <h6
+                                                                                                class="mb-0 text-sm leading-normal dark:text-white">
+                                                                                                <%= couponList[i].name
+                                                                                                      %>
+                                                                                          </h6>
+                                                                                    </div>
+
+                                                                              </td>
+
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <p
+                                                                                          class="mb-0 text-sm font-semibold leading-normal dark:text-white dark:opacity-60">
+                                                                                          <%= couponList[i].code %>
+                                                                                    </p>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <p
+                                                                                          class="mb-0 text-sm font-semibold leading-normal dark:text-white dark:opacity-60">
+                                                                                          <%= couponList[i].description
+                                                                                                %>
+                                                                                    </p>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <span
+                                                                                          class="text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
+                                                                                          <%= couponList[i].percentage
+                                                                                                %>%
+                                                                                    </span>
+                                                                              </td>
+                                                                              <td
+                                                                                    class=" align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent ">
+                                                                                    <span
+                                                                                          class="text-xs font-semibold leading-tight dark:text-white dark:opacity-60 ">
+                                                                                          ₹ <%= couponList[i].maximum %>
+
+                                                                                    </span>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <button onclick="deleteProduct('')"
+                                                                                          class="btn btn-danger btn-sm">Delete</button>
+
+                                                                              </td>
+                                                                        </tr>
+                                                                        <% } %>
+
+                                                            </tbody>
+                                                      </table>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+      </main>
+      <div class="modal fade" id="staticBack" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-body">
+                  <div class="container-fluid">
+                        <div class="row">
+                              <div class="col-md-6 ml-auto">
+                                    <div class="modal-dialog">
+                                          <div class="modal-content">
+                                                <div class="modal-header">
+                                                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Coupon
+                                                      </h1>
+                                                </div>
+
+                                                <div class="modal-body text-black">
+                                                      <form action="/admin/addcoupon" method="post">
+                                                            <div class="checkout__input">
+                                                                  <p>Coupon Name<span>*</span></p>
+                                                                  <input type="text" name="CouponName"
+                                                                        class="text-black">
+                                                            </div>
+                                                            <div class="checkout__input">
+                                                                  <p>Code<span>*</span></p>
+                                                                  <input type="text" name="Code" class="text-black">
+                                                            </div>
+                                                            <div class="checkout__input">
+                                                                  <div class="form-group purple-border">
+                                                                        <label
+                                                                              for="exampleFormControlTextarea4">Description</label>
+                                                                        <textarea class="form-control"
+                                                                              id="exampleFormControlTextarea4"
+                                                                              name="description" rows="3"></textarea>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="checkout__input">
+                                                                  <p>Maximum<span>*</span></p>
+                                                                  <input type="number" name="Maximum"
+                                                                        class="text-black">
+                                                            </div>
+                                                            <div class="checkout__input">
+                                                                  <p>Percentage<span>*</span></p>
+                                                                  <input type="number" name="Percentage"
+                                                                        class="text-black">
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                  <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                  <button type="submit"
+                                                                        class="btn btn-primary">Upated</button>
+                                                            </div>
+                                                      </form>
+                                                </div>
+
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <script>
+            $(document).ready(function () {
+                  $('#example').DataTable();
+            });
+      </script>
