@@ -17,6 +17,8 @@ import {
   cart,
   userProfile,
   resetPassword,
+  setPassword,
+  otpVerifiy,
 } from "../controllers/userControllers.js";
 import { product, productdetail } from "../controllers/productController.js";
 import { categoryMap } from "../controllers/categoryController.js";
@@ -84,6 +86,7 @@ router.post("/order", orderPlaced);
 router.post("/onlineOrder", onlinePayment);
 router.post("/verfiyPayment", verfiyPayment);
 router.post("/resetPassword", resetPassword);
+router.post("/otpVerif", otpVerifiy);
 // delete request::::::::::::
 router.delete("/deleteCartProduct", deleteCartProduct);
 router.delete("/deletewishlist", deleteProductwishlist);
@@ -98,6 +101,7 @@ router.patch("/billingAddress", billingAddress);
 router.patch("/shippingAddress", shippingAddress);
 router.patch("/reorder", reorder);
 router.patch("/discount", discountAdded);
+router.patch("/setPassword", setPassword);
 
 // Error request::::::::::::
 router.get("/error", (req, res) => {

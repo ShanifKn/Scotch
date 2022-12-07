@@ -49,18 +49,6 @@
 
                                                       </div>
                                                       <div class="flex items-center justify-between mb-4">
-                                                            <div class="flex items-start">
-                                                                  <div class="flex items-center h-5">
-                                                                        <input id="remember" type="checkbox"
-                                                                              class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                                                              required="">
-                                                                  </div>
-                                                                  <div class="ml-3 text-sm">
-                                                                        <label for="remember"
-                                                                              class="text-black ">Remember
-                                                                              me</label>
-                                                                  </div>
-                                                            </div>
                                                             <a href="#"
                                                                   class="text-sm font-medium text-slate-900 hover:underline hover:text-amber-400"
                                                                   data-bs-toggle="modal"
@@ -83,8 +71,6 @@
                                                       </p>
                                                 </div>
                               </div>
-
-
                         </div>
                   </div>
                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -96,28 +82,57 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body px-5">
-                                          <p class="py-2">
-                                                Enter your email address and we'll send you an otp into user
-                                                Register
-                                                mobile number.
-                                          </p>
-                                          <div class="form-outline">
-                                                <input type="email" id="typeEmail" class="form-control my-3"
-                                                      autocomplete="off" placeholder="Enter your email address" />
+                                    <div class="modal-body ">
+                                          <div class="px-5" id="resetOtp">
+                                                <p class="py-2">
+                                                      Enter your email address and we'll send you an otp into user
+                                                      Register
+                                                      mobile number.
+                                                </p>
+                                                <div class="form-outline">
+                                                      <input type="email" id="typeEmail" class="form-control my-3"
+                                                            autocomplete="off" placeholder="Enter your email address" />
+                                                </div>
+                                                <div class="form-outline" id="otpox" style="display:none;">
+                                                      <input type="email" id="otpNu" autocomplete="off"
+                                                            onkeyup="otpCode()" class="form-control my-3"
+                                                            placeholder="Otp Number" />
+                                                </div>
+
+
+                                                <button type="button" onclick="SendOtp()" id="buttonSend"
+                                                      class="btn btn-primary bg-blue-500 w-100">Reset
+                                                      password</button>
+                                                <div class="d-flex justify-content-between mt-4">
+                                                      <a class="" href="/login">Login</a>
+                                                      <a class="" href="/signup">Register</a>
+                                                </div>
                                           </div>
-                                          <div class="form-outline" id="otpox" style="display:none;">
-                                                <input type="email" id="otp" autocomplete="off" onclick="otpCode()"
-                                                      class="form-control my-3" placeholder="Otp Number" />
+                                          <div class="px-5" id="passwordBox" style="display: none;">
+                                                <p class="py-2">
+                                                      Enter your new password
+                                                </p>
+                                                <div class="form-outline mb-4">
+                                                      <input type="password" onkeyup="validatePassword()"
+                                                            class="form-control" id="pass1" placeholder="Password" />
+                                                      <span class="text-danger " id="pass1Msg"></span>
+
+                                                </div>
+                                                <div class="form-outline mb-4">
+                                                      <input type="password" onkeyup="validatePassword()"
+                                                            class="form-control" id="pass2"
+                                                            placeholder="Comfrom Password" />
+                                                      <span class="text-danger " id="pass2Msg"></span>
+
+                                                </div>
+                                                <button type="button" id="passwordButton" style="display: none;"
+                                                      class="btn btn-primary bg-blue-500 w-100"
+                                                      onclick="setPassword()">Reset
+                                                      password</button>
                                           </div>
-                                          <button type="button" onclick="SendOtp()"
-                                                class="btn btn-primary bg-blue-500 w-100">Reset
-                                                password</button>
-                                          <div class="d-flex justify-content-between mt-4">
-                                                <a class="" href="/login">Login</a>
-                                                <a class="" href="/signup">Register</a>
-                                          </div>
+
                                     </div>
+
                                     <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary bg-gray-700"
                                                 data-bs-dismiss="modal">Close</button>
@@ -128,92 +143,137 @@
 
       </section>
       <%- include ('layout/footer.ejs') %>
-
-
-
             <script>
-                  const emailError = document.getElementById("emailMsg")
-                  const passError = document.getElementById("passMsg")
-                  const submitError = document.getElementById("submitMsg")
+                  const emailError = document.getElementById("emailMsg");
+                  const passError = document.getElementById("passMsg");
+                  const submitError = document.getElementById("submitMsg");
 
                   function validateEmail() {
                         var email = document.getElementById("emailU").value;
                         if (email.length == 0) {
-                              emailError.innerHTML = "Email is required"
+                              emailError.innerHTML = "Email is required";
                               return false;
                         }
-                        if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-                              emailError.innerHTML = "Email Invalid"
+                        if (
+                              !email.match(
+                                    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+                              )
+                        ) {
+                              emailError.innerHTML = "Email Invalid";
                               return false;
                         }
-                        emailError.innerHTML = " "
+                        emailError.innerHTML = " ";
                         return true;
-
-
                   }
                   function validatePass() {
-                        var pass = document.getElementById("password").value
+                        var pass = document.getElementById("password").value;
                         if (pass.length == 0) {
-                              passError.innerHTML = "Password is required"
+                              passError.innerHTML = "Password is required";
                               return false;
                         }
-                        passError.innerHTML = " "
+                        passError.innerHTML = " ";
                         return true;
                   }
-
-
                   function validate() {
                         if (!validateEmail() || !validatePass()) {
                               submitError.style.display = "block";
                               passError.style.display = "block";
                               submitError.style.display = "block";
-                              passError.innerHTML = "Password is required"
-                              emailError.innerHTML = "Email is required"
-                              submitError.innerHTML = "Please enter your details"
+                              passError.innerHTML = "Password is required";
+                              emailError.innerHTML = "Email is required";
+                              submitError.innerHTML = "Please enter your details";
                               setTimeout(() => {
                                     submitError.style.display = "none";
                                     // passError.style.display = "none";
                                     // emailError.style.display = "none";
-
-                              }, 3000)
+                              }, 3000);
 
                               return false;
                         }
-
-
                   }
 
                   const SendOtp = () => {
-                        const otpBox = document.getElementById("otpox")
-                        const email = document.getElementById("typeEmail").value
-                        otpBox.style.display = "block"
+                        const otpBox = document.getElementById("otpox");
+                        const email = document.getElementById("typeEmail").value;
+                        const buttons = document.getElementById("buttonSend");
                         axios.post("./resetPassword", { Email: email }).then((e) => {
                               if (e.data.response) {
                                     const Toast = Swal.mixin({
                                           toast: true,
-                                          position: 'top-end',
+                                          position: "top-end",
                                           showConfirmButton: false,
                                           timer: 3000,
                                           timerProgressBar: true,
                                           didOpen: (toast) => {
-                                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                          }
-                                    })
+                                                toast.addEventListener("mouseenter", Swal.stopTimer);
+                                                toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                          },
+                                    });
 
                                     Toast.fire({
-                                          icon: 'success',
-                                          title: 'OTP sent to you via SMS  '
-                                    })
+                                          icon: "success",
+                                          title: "OTP sent to you via SMS  ",
+                                    });
+                                    otpBox.style.display = "block";
+                                    buttons.style.display = "none";
                               }
-                        })
-                  }
+                        });
+                  };
 
-
-                  const otp = document.getElementById("otp").value
+                  const pass1Error = document.getElementById("pass1Msg");
+                  const pass3Error = document.getElementById("pass2Msg");
+                  const password = document.getElementById("passwordButton");
+                  const passwordBox = document.getElementById("passwordBox");
+                  const resetOtp = document.getElementById("resetOtp");
                   const otpCode = () => {
-                        alert(otp)
+                        const otpNo = document.getElementById("otpNu").value;
+                        const email = document.getElementById("typeEmail").value;
+
+                        if (otpNo.length == 6) {
+                              axios.post("./otpVerif", { Code: otpNo, Email: email }).then((e) => {
+                                    if (e.data.response) {
+                                          passwordBox.style.display = "block";
+                                          resetOtp.style.display = "none";
+                                    }
+                              });
+                        }
+                  };
+
+                  function validatePassword() {
+                        var pass = document.getElementById("pass1").value;
+                        var pass2 = document.getElementById("pass2").value;
+                        if (pass !== pass2) {
+                              pass3Error.innerHTML = "Password does not match";
+                              return false;
+                        }
+                        if (pass == "" && pass2 == "") {
+                              pass1Error.innerHTML = "Password is required";
+                              pass3Error.innerHTML = "Password is required";
+                              return false;
+                        }
+                        pass1Error.innerHTML = " ";
+                        pass3Error.innerHTML = " ";
+                        password.style.display = "block";
+                        return true;
                   }
 
+                  const setPassword = () => {
+                        var pass = document.getElementById("pass1").value;
+                        var pass2 = document.getElementById("pass2").value;
+                        const email = document.getElementById("typeEmail").value;
+
+                        axios.patch("/setPassword", { Pass: pass, Email: email }).then((e) => {
+                              if (e.data.response) {
+                                    Swal.fire({
+                                          position: "top-end",
+                                          icon: "success",
+                                          title: "Your password has been Changed",
+                                          showConfirmButton: false,
+                                          timer: 1500,
+                                    });
+                                    location.href = "/login";
+                              }
+                        });
+                  };
 
             </script>

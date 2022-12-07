@@ -11,8 +11,7 @@ const sendSms = (phone) => {
   console.log(client);
   client.verify.v2
     .services(sessionID)
-    .verifications.create({ to: `+91${phone}`, channel: "sms" })
-    .then((verification) => console.log(verification.status));
+    .verifications.create({ to: `+91${phone}`, channel: "sms" });
 };
 
 const verifySms = (phone, otp) => {
@@ -22,7 +21,6 @@ const verifySms = (phone, otp) => {
       .services(sessionID)
       .verificationChecks.create({ to: `+91${phone}`, code: otp })
       .then((verification_check) => {
-        console.log(verification_check.status);
         resolve(verification_check);
       });
   });

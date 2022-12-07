@@ -5,7 +5,8 @@ import Jwt from "jsonwebtoken";
 import { subBannerModel } from "../model/subBanner.js";
 import { couponModel } from "../model/coupon.js";
 import { UserModel } from "../model/User.js";
-import { sendSms } from "../Verification/twilio.js";
+import { sendSms, verifySms } from "../Verification/twilio.js";
+import bcrypt from "bcrypt";
 
 const index = async (req, res) => {
   try {
@@ -127,7 +128,36 @@ const resetPassword = async (req, res) => {
     const email = req.body.Email;
     const user = await UserModel.findOne({ Email: email });
     const phoneNo = user.Phone;
-    // sendSms(phoneNo);
+    sendSms(phoneNo);
+    res.json({ response: true });
+  } catch (err) {
+    res.redirect("/error");
+  }
+};
+
+const otpVerifiy = async (req, res) => {
+  try {
+    const code = req.body.Code;
+    const email = req.body.Email;
+    const user = await UserModel.findOne({ Email: email });
+    const phoneNo = user.Phone;
+    verifySms(phoneNo, code).then((verification_check) => {
+      if (verification_check.status === "approved") {
+        res.json({ response: true });
+      }
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.redirect("/error");
+  }
+};
+
+const setPassword = async (req, res) => {
+  try {
+    const pass = req.body.Pass;
+    const email = req.body.Email;
+    let hasPassword = await bcrypt.hash(pass, 10);
+    await UserModel.updateOne({ Email: email }, { Password: hasPassword });
     res.json({ response: true });
   } catch (err) {
     res.redirect("/error");
@@ -144,4 +174,6 @@ export {
   contact,
   userProfile,
   resetPassword,
+  setPassword,
+  otpVerifiy,
 };
