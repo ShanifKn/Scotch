@@ -19,7 +19,7 @@ const __dirname = path.resolve();
 
 // body-Parser Json
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 
 // morgan: https
@@ -37,7 +37,7 @@ app.use(
   })
 );
 // middleware to handle urlencoded from data
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 // server static files
 app.use(express.static(path.join(__dirname, "public")));

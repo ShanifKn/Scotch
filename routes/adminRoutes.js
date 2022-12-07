@@ -49,12 +49,12 @@ router.get("/userblock/:id", verifyAdmin, userBlock);
 router.get("/unBlock/:id", verifyAdmin, unBlock);
 router.get("/add-product", verifyAdmin, addProduct);
 router.get("/editProduct/:id", verifyAdmin, editProduct);
-router.get("/category", Category);
-router.get("/banner", banner);
-router.get("/bannerlist", bannerList);
-router.get("/order", order);
-router.get("/subbanner", subbanner);
-router.get("/coupon", coupon);
+router.get("/category",verifyAdmin, Category);
+router.get("/banner",verifyAdmin, banner);
+router.get("/bannerlist",verifyAdmin, bannerList);
+router.get("/order",verifyAdmin, order);
+router.get("/subbanner",verifyAdmin, subbanner);
+router.get("/coupon",verifyAdmin, coupon);
 // post::::::::
 router.post("/Userlogin", adminAuth);
 router.post("/addCategory", upload.single("Image"), addCategory);

@@ -28,7 +28,7 @@ const addCoupon = async (req, res) => {
     console.log(err.message);
   }
 };
-
+// User Side::::::::; 
 const discountAdded = async (req, res) => {
   try {
     const token = req.cookies.Jwt;
@@ -37,6 +37,13 @@ const discountAdded = async (req, res) => {
       const userId = decoded.userId;
       let couponCode = req.body.Value.trim();
       const coupon = await couponModel.findOne({ code: couponCode });
+      console.log(coupon);
+      const couponId = coupon._id;
+      const findUsed = await couponModel.findOne({
+        _id: couponId,
+        user: userId,
+      });
+      console.log(findUsed);
       // const couponUsed = await couponModel.findOne({
       // const couponId = coupon._id;
       //   _id: couponId,

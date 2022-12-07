@@ -4,6 +4,8 @@ import { productModel } from "../model/product.js";
 import Jwt from "jsonwebtoken";
 import { subBannerModel } from "../model/subBanner.js";
 import { couponModel } from "../model/coupon.js";
+import { UserModel } from "../model/User.js";
+import { sendSms } from "../Verification/twilio.js";
 
 const index = async (req, res) => {
   try {
@@ -74,7 +76,12 @@ const cart = async (req, res) => {
         const Coupon = await couponModel.find();
         res.render("user/cart", { cartProduct, Coupon });
       } else {
-        const Coupon = await couponModel.find();
+        const Coupon = await couponModel.aggregate({
+          $match: {
+            "user._id": { $nin: [userId] },
+          },
+        });
+        console.log(Coupon);
         res.render("user/cart", { cartProduct, Coupon });
       }
     } else {
@@ -82,6 +89,7 @@ const cart = async (req, res) => {
     }
   } catch (err) {
     req.flash("Msg", " login for access");
+    console.log(err.message);
     res.redirect("/login");
   }
 };
@@ -114,4 +122,26 @@ const Sample = (req, res) => {
   res.render("user/Smaple");
 };
 
-export { Signup, validation, Sample, login, index, cart, contact, userProfile };
+const resetPassword = async (req, res) => {
+  try {
+    const email = req.body.Email;
+    const user = await UserModel.findOne({ Email: email });
+    const phoneNo = user.Phone;
+    // sendSms(phoneNo);
+    res.json({ response: true });
+  } catch (err) {
+    res.redirect("/error");
+  }
+};
+
+export {
+  Signup,
+  validation,
+  Sample,
+  login,
+  index,
+  cart,
+  contact,
+  userProfile,
+  resetPassword,
+};

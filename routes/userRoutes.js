@@ -16,6 +16,7 @@ import {
   contact,
   cart,
   userProfile,
+  resetPassword,
 } from "../controllers/userControllers.js";
 import { product, productdetail } from "../controllers/productController.js";
 import { categoryMap } from "../controllers/categoryController.js";
@@ -55,7 +56,7 @@ router.get("/", index);
 router.get("/product", product);
 router.get("/productdetail/:id", productdetail);
 router.get("/cart", verifyToken, cart);
-router.get("/checkout", checkout);
+router.get("/checkout", verifyToken, checkout);
 router.get("/contact", contact);
 router.get("/signup", Signup);
 router.get("/login", login);
@@ -64,10 +65,11 @@ router.get("/resendOtp", verifyToken, Resend);
 router.get("/Userlogout", userLogout);
 router.get("/userCategory", categoryMap);
 router.get("/wishlist", verifyToken, wishlist);
-router.get("/profile", userProfile);
-router.get("/editAddress", editAddress);
-router.get("/myorders", myOrders);
-router.get("/orderPlaced", orderPlace);
+router.get("/profile", verifyToken, userProfile);
+router.get("/editAddress", verifyToken, editAddress);
+router.get("/myorders", verifyToken, myOrders);
+router.get("/orderPlaced", verifyToken, orderPlace);
+router.get("/singleOrder/:id", singleOrder);
 
 // post request::::::
 router.post("/signup", register);
@@ -81,13 +83,11 @@ router.post("/updateEditAddress", updateEditAddress);
 router.post("/order", orderPlaced);
 router.post("/onlineOrder", onlinePayment);
 router.post("/verfiyPayment", verfiyPayment);
-router.get("/singleOrder/:id", singleOrder);
-
+router.post("/resetPassword", resetPassword);
 // delete request::::::::::::
 router.delete("/deleteCartProduct", deleteCartProduct);
 router.delete("/deletewishlist", deleteProductwishlist);
 router.delete("/deleteOrderItem", deleteOrderItem);
-
 
 // patch request::::::::::::
 router.patch("/quantityDec", quantityDec);

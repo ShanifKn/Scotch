@@ -51,8 +51,7 @@
                                                       <div class="flex items-center justify-between mb-4">
                                                             <div class="flex items-start">
                                                                   <div class="flex items-center h-5">
-                                                                        <input id="remember" aria-describedby="remember"
-                                                                              type="checkbox"
+                                                                        <input id="remember" type="checkbox"
                                                                               class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                                                                               required="">
                                                                   </div>
@@ -63,7 +62,9 @@
                                                                   </div>
                                                             </div>
                                                             <a href="#"
-                                                                  class="text-sm font-medium text-slate-900 hover:underline hover:text-amber-400">Forgot
+                                                                  class="text-sm font-medium text-slate-900 hover:underline hover:text-amber-400"
+                                                                  data-bs-toggle="modal"
+                                                                  data-bs-target="#exampleModal">Forgot
                                                                   password?</a>
                                                       </div>
                                                       <div class="mb-2 text-center">
@@ -86,61 +87,133 @@
 
                         </div>
                   </div>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                              <div class="modal-content">
+                                    <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Password Reset</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body px-5">
+                                          <p class="py-2">
+                                                Enter your email address and we'll send you an otp into user
+                                                Register
+                                                mobile number.
+                                          </p>
+                                          <div class="form-outline">
+                                                <input type="email" id="typeEmail" class="form-control my-3"
+                                                      autocomplete="off" placeholder="Enter your email address" />
+                                          </div>
+                                          <div class="form-outline" id="otpox" style="display:none;">
+                                                <input type="email" id="otp" autocomplete="off" onclick="otpCode()"
+                                                      class="form-control my-3" placeholder="Otp Number" />
+                                          </div>
+                                          <button type="button" onclick="SendOtp()"
+                                                class="btn btn-primary bg-blue-500 w-100">Reset
+                                                password</button>
+                                          <div class="d-flex justify-content-between mt-4">
+                                                <a class="" href="/login">Login</a>
+                                                <a class="" href="/signup">Register</a>
+                                          </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary bg-gray-700"
+                                                data-bs-dismiss="modal">Close</button>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+
       </section>
+      <%- include ('layout/footer.ejs') %>
 
 
 
+            <script>
+                  const emailError = document.getElementById("emailMsg")
+                  const passError = document.getElementById("passMsg")
+                  const submitError = document.getElementById("submitMsg")
 
-      <script>
-            const emailError = document.getElementById("emailMsg")
-            const passError = document.getElementById("passMsg")
-            const submitError = document.getElementById("submitMsg")
+                  function validateEmail() {
+                        var email = document.getElementById("emailU").value;
+                        if (email.length == 0) {
+                              emailError.innerHTML = "Email is required"
+                              return false;
+                        }
+                        if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+                              emailError.innerHTML = "Email Invalid"
+                              return false;
+                        }
+                        emailError.innerHTML = " "
+                        return true;
 
-            function validateEmail() {
-                  var email = document.getElementById("emailU").value;
-                  if (email.length == 0) {
-                        emailError.innerHTML = "Email is required"
-                        return false;
+
                   }
-                  if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-                        emailError.innerHTML = "Email Invalid"
-                        return false;
-                  }
-                  emailError.innerHTML = " "
-                  return true;
-
-
-            }
-            function validatePass() {
-                  var pass = document.getElementById("password").value
-                  if (pass.length == 0) {
-                        passError.innerHTML = "Password is required"
-                        return false;
-                  }
-                  passError.innerHTML = " "
-                  return true;
-            }
-
-
-            function validate() {
-                  if (!validateEmail() || !validatePass()) {
-                        submitError.style.display = "block";
-                        passError.style.display = "block";
-                        submitError.style.display = "block";
-                        passError.innerHTML = "Password is required"
-                        emailError.innerHTML = "Email is required"
-                        submitError.innerHTML = "Please enter your details"
-                        setTimeout(() => {
-                              submitError.style.display = "none";
-                              // passError.style.display = "none";
-                              // emailError.style.display = "none";
-
-                        }, 3000)
-
-                        return false;
+                  function validatePass() {
+                        var pass = document.getElementById("password").value
+                        if (pass.length == 0) {
+                              passError.innerHTML = "Password is required"
+                              return false;
+                        }
+                        passError.innerHTML = " "
+                        return true;
                   }
 
 
-            }
+                  function validate() {
+                        if (!validateEmail() || !validatePass()) {
+                              submitError.style.display = "block";
+                              passError.style.display = "block";
+                              submitError.style.display = "block";
+                              passError.innerHTML = "Password is required"
+                              emailError.innerHTML = "Email is required"
+                              submitError.innerHTML = "Please enter your details"
+                              setTimeout(() => {
+                                    submitError.style.display = "none";
+                                    // passError.style.display = "none";
+                                    // emailError.style.display = "none";
 
-      </script>
+                              }, 3000)
+
+                              return false;
+                        }
+
+
+                  }
+
+                  const SendOtp = () => {
+                        const otpBox = document.getElementById("otpox")
+                        const email = document.getElementById("typeEmail").value
+                        otpBox.style.display = "block"
+                        axios.post("./resetPassword", { Email: email }).then((e) => {
+                              if (e.data.response) {
+                                    const Toast = Swal.mixin({
+                                          toast: true,
+                                          position: 'top-end',
+                                          showConfirmButton: false,
+                                          timer: 3000,
+                                          timerProgressBar: true,
+                                          didOpen: (toast) => {
+                                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                          }
+                                    })
+
+                                    Toast.fire({
+                                          icon: 'success',
+                                          title: 'OTP sent to you via SMS  '
+                                    })
+                              }
+                        })
+                  }
+
+
+                  const otp = document.getElementById("otp").value
+                  const otpCode = () => {
+                        alert(otp)
+                  }
+
+
+            </script>
