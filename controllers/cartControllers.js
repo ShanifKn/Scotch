@@ -110,7 +110,7 @@ const addtoCart = async (req, res) => {
         { $pull: { wishlist: { product: productId } } }
       );
       let user = await cartModel.findOne({ user: userId });
-      if (user == null) {
+      if (!user) {
         let newCart = new cartModel({
           user: userId,
           cart: [{ product: productId, total: productPrice }],

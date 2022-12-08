@@ -72,17 +72,14 @@ const cart = async (req, res) => {
       const cartProduct = await cartModel
         .findOne({ user: userId })
         .populate("cart.product");
-      const coupon = await couponModel.findOne({ user: userId });
+      const coupon = await couponModel.findOne({ "user.id": userId });
       if (!coupon) {
-        const Coupon = await couponModel.find();
+        const Coupon = await couponModel.find({});
         res.render("user/cart", { cartProduct, Coupon });
       } else {
-        const Coupon = await couponModel.aggregate({
-          $match: {
-            "user._id": { $nin: [userId] },
-          },
+        const Coupon = await couponModel.find({
+          "user.id": { $ne: userId },
         });
-        console.log(Coupon);
         res.render("user/cart", { cartProduct, Coupon });
       }
     } else {

@@ -23,8 +23,7 @@ const couponSchema = new Schema(
     },
     user: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
       },
     ],
   },

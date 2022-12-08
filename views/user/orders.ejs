@@ -103,26 +103,39 @@
                     </tr>
                     <% } %>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="2">Subtotal</td>
-                    <td class="text-end">₹ <%= order.totalPrice %>
-                    </td>
-                  </tr>
-                  <!-- <tr>
-                    <td colspan="2">Shipping</td>
-                    <td class="text-end">$20.00</td>
-                  </tr> -->
-                  <!-- <tr>
-                    <td colspan="2">Discount (Code: NEWYEAR)</td>
-                    <td class="text-danger text-end">-$10.00</td>
-                  </tr> -->
-                  <tr class="fw-bold">
-                    <td colspan="2">TOTAL</td>
-                    <td class="text-end">₹ <%= order.totalPrice %>
-                    </td>
-                  </tr>
-                </tfoot>
+                <% if (!locals.order.subtotal) { %>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2">Subtotal</td>
+                      <td class="text-end">₹ <%= order.totalPrice %>
+                      </td>
+                    </tr>
+                    <tr class="fw-bold">
+                      <td colspan="2">TOTAL</td>
+                      <td class="text-end">₹ <%= order.totalPrice %>
+                      </td>
+                    </tr>
+                  </tfoot>
+                  <% } else { %>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2">Subtotal</td>
+                        <td class="text-end">₹ <%= order.subtotal %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">Discount</td>
+                        <td class="text-danger text-end">-₹<%= order.discountAmount %>
+                        </td>
+                      </tr>
+                      <tr class="fw-bold">
+                        <td colspan="2">TOTAL</td>
+                        <td class="text-end">₹ <%= order.totalPrice %>
+                        </td>
+                      </tr>
+                    </tfoot>
+                    <% } %>
+
               </table>
             </div>
           </div>

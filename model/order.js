@@ -25,9 +25,15 @@ const orderSchema = new Schema({
       },
     },
   ],
+  subtotal: {
+    type: Number,
+  },
   totalPrice: {
     type: Number,
     require: true,
+  },
+  discountAmount: {
+    type: Number,
   },
   billingAddress: {
     type: Array,

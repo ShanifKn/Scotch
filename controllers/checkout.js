@@ -27,16 +27,42 @@ const checkout = async (req, res) => {
           },
         },
       ]);
-      const cartSaved = await cartModel
-        .findOne({
-          user: userId,
-        })
-        .populate("cart.product");
-      res.render("user/checkout", {
-        Address,
-        cartSaved,
-        expressFlash: req.flash("Msg"),
+      const cart = await cartModel.findOne({
+        user: userId,
       });
+      if (cart.coupon) {
+        const cartSaved = await cartModel
+          .findOne({
+            user: userId,
+          })
+          .populate("cart.product")
+          .populate("coupon");
+        const couponCode = cartSaved.coupon.code;
+        const discountedAmount =
+          (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        const discountAmount =
+          cartSaved.subtotal -
+          (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        res.render("user/checkout", {
+          Address,
+          cartSaved,
+          discountAmount,
+          discountedAmount,
+          couponCode,
+          expressFlash: req.flash("Msg"),
+        });
+      } else {
+        const cartSaved = await cartModel
+          .findOne({
+            user: userId,
+          })
+          .populate("cart.product");
+        res.render("user/checkout", {
+          Address,
+          cartSaved,
+          expressFlash: req.flash("Msg"),
+        });
+      }
     } else {
       res.redirect("/login");
     }
@@ -234,80 +260,183 @@ const orderPlaced = async (req, res) => {
         },
         { DeliveryAddress: 0 }
       );
-      if (!billingAddress) {
-        const deliveryAddress = await UserModel.aggregate([
+
+      const cartSaved = await cartModel
+        .findOne(
           {
-            $match: {
-              _id: mongoose.Types.ObjectId(userId),
-            },
+            user: userId,
           },
-          {
-            $project: {
-              _id: 0,
-              DeliveryAddress: {
-                $filter: {
-                  input: "$DeliveryAddress",
-                  cond: {
-                    $eq: ["$$this.Default", true],
+          { subtotal: 1, coupon: 1 }
+        )
+        .populate("coupon");
+
+      const cart = await cartModel.findOne({
+        user: userId,
+      });
+      if (cart.coupon) {
+        const Subtotal =
+          cartSaved.subtotal -
+          (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        const discountAmount =
+          (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+
+        if (!billingAddress) {
+          const deliveryAddress = await UserModel.aggregate([
+            {
+              $match: {
+                _id: mongoose.Types.ObjectId(userId),
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                DeliveryAddress: {
+                  $filter: {
+                    input: "$DeliveryAddress",
+                    cond: {
+                      $eq: ["$$this.Default", true],
+                    },
                   },
                 },
               },
             },
-          },
-        ]);
-        const billingAddress = await UserModel.findOne(
-          {
-            _id: userId,
-            "Address.Default": false,
-          },
-          { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
-        );
-        const cart = await cartModel.findOne(
-          { user: userId },
-          { cart: 1, subtotal: 1 }
-        );
-        const address = deliveryAddress[0].DeliveryAddress[0];
-        const newOrder = new OrderModel({
-          User: userId,
-          orderItems: cart.cart,
-          totalPrice: cart.subtotal,
-          billingAddress: billingAddress.Address,
-          deliveryAddress: address,
-          paymentDetails: "COD",
-          orderStatus: true,
-          deliveryStatus: "Pending",
-        });
-        await newOrder.save();
-        await cartModel.updateOne(
-          { user: userId },
-          {
-            $set: { cart: [], subtotal: 0 },
-          }
-        );
-        res.json({ response: true });
+          ]);
+          const billingAddress = await UserModel.findOne(
+            {
+              _id: userId,
+              "Address.Default": false,
+            },
+            { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
+          );
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const address = deliveryAddress[0].DeliveryAddress[0];
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            subtotal: cart.subtotal,
+            totalPrice: Subtotal,
+            discountAmount: discountAmount,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: address,
+            paymentDetails: "COD",
+            orderStatus: true,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save();
+          await cartModel.updateOne(
+            { user: userId },
+            {
+              $set: { cart: [], subtotal: 0 },
+              $unset: { coupon: "" },
+            }
+          );
+          res.json({ response: true });
+        } else {
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            subtotal: cart.subtotal,
+            totalPrice: Subtotal,
+            discountAmount: discountAmount,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: billingAddress.Address,
+            paymentDetails: "COD",
+            orderStatus: true,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save();
+          await cartModel.updateOne(
+            { user: userId },
+            {
+              $set: { cart: [], subtotal: 0 },
+              $unset: { coupon: "" },
+            }
+          );
+          res.json({ response: true });
+        }
       } else {
-        const cart = await cartModel.findOne(
-          { user: userId },
-          { cart: 1, subtotal: 1 }
-        );
-        const newOrder = new OrderModel({
-          User: userId,
-          orderItems: cart.cart,
-          totalPrice: cart.subtotal,
-          billingAddress: billingAddress.Address,
-          deliveryAddress: billingAddress.Address,
-          paymentDetails: "COD",
-          orderStatus: true,
-          deliveryStatus: "Pending",
-        });
-        await newOrder.save();
-        await cartModel.updateOne(
-          { user: userId },
-          {
-            $set: { cart: [], subtotal: 0 },
-          }
-        );
-        res.json({ response: true });
+        if (!billingAddress) {
+          const deliveryAddress = await UserModel.aggregate([
+            {
+              $match: {
+                _id: mongoose.Types.ObjectId(userId),
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                DeliveryAddress: {
+                  $filter: {
+                    input: "$DeliveryAddress",
+                    cond: {
+                      $eq: ["$$this.Default", true],
+                    },
+                  },
+                },
+              },
+            },
+          ]);
+          const billingAddress = await UserModel.findOne(
+            {
+              _id: userId,
+              "Address.Default": false,
+            },
+            { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
+          );
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const address = deliveryAddress[0].DeliveryAddress[0];
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            totalPrice: cart.subtotal,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: address,
+            paymentDetails: "COD",
+            orderStatus: true,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save();
+          await cartModel.updateOne(
+            { user: userId },
+            {
+              $set: { cart: [], subtotal: 0 },
+            }
+          );
+          res.json({ response: true });
+        } else {
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            totalPrice: cart.subtotal,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: billingAddress.Address,
+            paymentDetails: "COD",
+            orderStatus: true,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save();
+          await cartModel.updateOne(
+            { user: userId },
+            {
+              $set: { cart: [], subtotal: 0 },
+            }
+          );
+          res.json({ response: true });
+        }
       }
     } else {
       res.redirect("/login");
@@ -331,98 +460,218 @@ const onlinePayment = async (req, res) => {
         },
         { DeliveryAddress: 0 }
       );
-      if (!billingAddress) {
-        const deliveryAddress = await UserModel.aggregate([
-          {
-            $match: {
-              _id: mongoose.Types.ObjectId(userId),
+
+      const cart = await cartModel.findOne({
+        user: userId,
+      });
+      if (cart.coupon) {
+        const cartSaved = await cartModel
+          .findOne(
+            {
+              user: userId,
             },
-          },
-          {
-            $project: {
-              _id: 0,
-              DeliveryAddress: {
-                $filter: {
-                  input: "$DeliveryAddress",
-                  cond: {
-                    $eq: ["$$this.Default", true],
+            { subtotal: 1, coupon: 1 }
+          )
+          .populate("coupon");
+
+        const Subtotal =
+          cartSaved.subtotal -
+          (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        const discountAmount =
+          (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        if (!billingAddress) {
+          const deliveryAddress = await UserModel.aggregate([
+            {
+              $match: {
+                _id: mongoose.Types.ObjectId(userId),
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                DeliveryAddress: {
+                  $filter: {
+                    input: "$DeliveryAddress",
+                    cond: {
+                      $eq: ["$$this.Default", true],
+                    },
                   },
                 },
               },
             },
-          },
-        ]);
-        const billingAddress = await UserModel.findOne(
-          {
-            _id: userId,
-            "Address.Default": false,
-          },
-          { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
-        );
-        const cart = await cartModel.findOne(
-          { user: userId },
-          { cart: 1, subtotal: 1 }
-        );
-        const address = deliveryAddress[0].DeliveryAddress[0];
-        const newOrder = new OrderModel({
-          User: userId,
-          orderItems: cart.cart,
-          totalPrice: cart.subtotal,
-          billingAddress: billingAddress.Address,
-          deliveryAddress: address,
-          paymentDetails: "ONLINE",
-          orderStatus: false,
-          deliveryStatus: "Pending",
-        });
-        await newOrder.save().then((order) => {
-          instance.orders
-            .create({
-              amount: order.totalPrice * 100,
-              currency: "INR",
-              receipt: order.id,
-            })
-            .then(async (order) => {
-              await cartModel.updateOne(
-                { user: userId },
-                {
-                  $set: { cart: [], subtotal: 0 },
-                }
-              );
-              res.json({ response: true, order: order });
-            });
-        });
+          ]);
+          const billingAddress = await UserModel.findOne(
+            {
+              _id: userId,
+              "Address.Default": false,
+            },
+            { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
+          );
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const address = deliveryAddress[0].DeliveryAddress[0];
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            subtotal: cart.subtotal,
+            totalPrice: Subtotal,
+            discountAmount: discountAmount,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: address,
+            paymentDetails: "ONLINE",
+            orderStatus: false,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save().then((order) => {
+            instance.orders
+              .create({
+                amount: order.totalPrice * 100,
+                currency: "INR",
+                receipt: order.id,
+              })
+              .then(async (order) => {
+                await cartModel.updateOne(
+                  { user: userId },
+                  {
+                    $set: { cart: [], subtotal: 0 },
+                    $unset: { coupon: "" },
+                  }
+                );
+                res.json({ response: true, order: order });
+              });
+          });
+        } else {
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            subtotal: cart.subtotal,
+            totalPrice: Subtotal,
+            discountAmount: discountAmount,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: billingAddress.Address,
+            paymentDetails: "ONLINE",
+            orderStatus: false,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save().then((order) => {
+            instance.orders
+              .create({
+                amount: order.totalPrice * 100,
+                currency: "INR",
+                receipt: order.id,
+              })
+              .then(async (order) => {
+                await cartModel.updateOne(
+                  { user: userId },
+                  {
+                    $set: { cart: [], subtotal: 0 },
+                    $unset: { coupon: "" },
+                  }
+                );
+                res.json({ response: true, order: order });
+              });
+          });
+        }
       } else {
-        const cart = await cartModel.findOne(
-          { user: userId },
-          { cart: 1, subtotal: 1 }
-        );
-        const newOrder = new OrderModel({
-          User: userId,
-          orderItems: cart.cart,
-          totalPrice: cart.subtotal,
-          billingAddress: billingAddress.Address,
-          deliveryAddress: billingAddress.Address,
-          paymentDetails: "ONLINE",
-          orderStatus: false,
-          deliveryStatus: "Pending",
-        });
-        await newOrder.save().then((order) => {
-          instance.orders
-            .create({
-              amount: order.totalPrice * 100,
-              currency: "INR",
-              receipt: order.id,
-            })
-            .then(async (order) => {
-              await cartModel.updateOne(
-                { user: userId },
-                {
-                  $set: { cart: [], subtotal: 0 },
-                }
-              );
-              res.json({ response: true, order: order });
-            });
-        });
+        if (!billingAddress) {
+          const deliveryAddress = await UserModel.aggregate([
+            {
+              $match: {
+                _id: mongoose.Types.ObjectId(userId),
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                DeliveryAddress: {
+                  $filter: {
+                    input: "$DeliveryAddress",
+                    cond: {
+                      $eq: ["$$this.Default", true],
+                    },
+                  },
+                },
+              },
+            },
+          ]);
+          const billingAddress = await UserModel.findOne(
+            {
+              _id: userId,
+              "Address.Default": false,
+            },
+            { _id: 0, DeliveryAddress: 0, "Address._id": 0 }
+          );
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const address = deliveryAddress[0].DeliveryAddress[0];
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            totalPrice: cart.subtotal,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: address,
+            paymentDetails: "ONLINE",
+            orderStatus: false,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save().then((order) => {
+            instance.orders
+              .create({
+                amount: order.totalPrice * 100,
+                currency: "INR",
+                receipt: order.id,
+              })
+              .then(async (order) => {
+                await cartModel.updateOne(
+                  { user: userId },
+                  {
+                    $set: { cart: [], subtotal: 0 },
+                  }
+                );
+                res.json({ response: true, order: order });
+              });
+          });
+        } else {
+          const cart = await cartModel.findOne(
+            { user: userId },
+            { cart: 1, subtotal: 1 }
+          );
+          const newOrder = new OrderModel({
+            User: userId,
+            orderItems: cart.cart,
+            totalPrice: cart.subtotal,
+            billingAddress: billingAddress.Address,
+            deliveryAddress: billingAddress.Address,
+            paymentDetails: "ONLINE",
+            orderStatus: false,
+            deliveryStatus: "Pending",
+          });
+          await newOrder.save().then((order) => {
+            instance.orders
+              .create({
+                amount: order.totalPrice * 100,
+                currency: "INR",
+                receipt: order.id,
+              })
+              .then(async (order) => {
+                await cartModel.updateOne(
+                  { user: userId },
+                  {
+                    $set: { cart: [], subtotal: 0 },
+                  }
+                );
+                res.json({ response: true, order: order });
+              });
+          });
+        }
       }
     }
   } catch (err) {

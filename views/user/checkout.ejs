@@ -19,7 +19,6 @@
       <section class="checkout spad">
             <div class="container">
                   <div class="checkout__form">
-
                         <div class="row">
                               <div class="col-lg-8 col-md-6">
                                     <div class="d-block">
@@ -61,8 +60,6 @@
                                                 data-bs-toggle="modal" data-bs-target="#ChangeAddress">Select
                                                 Delivery
                                                 address</button>
-
-
                                     </div>
                                     <h6 class="checkout__title mt-5">Delivery Details</h6>
                                     <div id="shipping">
@@ -136,17 +133,20 @@
                                                                         <%= cartSaved.cart[i].total %>
                                                                   </span>
                                                       </li>
-                                                      <!-- <li>02. German chocolate <span>$ 170.0</span></li>
-                                                                  <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                                                  <li>04. Cluten free mini dozen <span>$ 110.0</span>
-                                                                  </li> -->
                                                       <% } %>
                                           </ul>
                                           <ul class="checkout__total__all">
-                                                <li>Subtotal <span>₹ <%= cartSaved.subtotal %></span></li>
-                                                <li>Total <span>₹ <%= cartSaved.subtotal %></span></li>
+                                                <% if (!locals.discountedAmount) { %>
+                                                      <li>Subtotal <span>₹ <%= cartSaved.subtotal %></span>
+                                                      </li>
+                                                      <li>Total <span>₹ <%= cartSaved.subtotal %></span></li>
+                                                      <% } else { %>
+                                                            <li>Subtotal <span>₹ <%= cartSaved.subtotal %></span>
+                                                            </li>
+                                                            <li>Coupon<span>₹ <%= discountedAmount %> </span></li>
+                                                            <li>Total <span>₹ <%= discountAmount %></span></li>
+                                                            <% } %>
                                           </ul>
-                                          <!-- <form onsubmit=" return validate()"> -->
                                           <div class="form-check checkout__input__checkbox"">
                                                 <input class=" form-check-input" type="radio" name="Payment"
                                                 value="COD" id="flexRadioDefault1">
@@ -163,10 +163,11 @@
 
                                           </div>
 
-
-                                          <button type="button" class="site-btn" onclick="validate()">PLACE
+                                          <button type="button" class="site-btn" id="validate">PLACE
                                                 ORDER</button>
-                                          <!-- </form> -->
+                                          <button type="button" class="site-btn" id="validated" onclick="validate()"
+                                                style="display: none;">PLACE
+                                                ORDER</button>
                                     </div>
                               </div>
                         </div>
@@ -363,12 +364,16 @@
                         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                         <script>
                               const textbox = document.getElementById("shipping")
+                              const validat = document.getElementById("validate")
+                              const validated = document.getElementById("validated")
 
                               function doAlert() {
                                     var input = document.querySelector('#Check');
                                     input.addEventListener('change', function () {
                                           if (input.checked) {
                                                 textbox.style.display = "none"
+                                                validat.style.display = "none"
+                                                validated.style.display = "block"
                                                 axios.patch("/billingAddress", {}).then((e) => {
                                                       if (e.data.response) {
                                                             const Toast = Swal.mixin({
@@ -386,6 +391,7 @@
                                                                   icon: 'success',
                                                                   title: 'Delivery Address Updated!'
                                                             })
+
                                                       }
                                                 })
                                           } else {
@@ -418,8 +424,10 @@
                                                       icon: 'success',
                                                       title: 'Delivery Address Updated!'
                                                 })
-                                                location.href = "/checkout"
                                                 textbox.style.display = "none"
+                                                location.href = "/checkout"
+                                                validat.style.display = "none"
+                                                validated.style.display = "block"
                                           }
                                     })
 

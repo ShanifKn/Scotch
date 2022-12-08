@@ -125,8 +125,10 @@
                               <button type="button" onclick="discount()">Apply</button>
                               <datalist id="Coupon">
                                     <% for( let i=0; i < Coupon.length; i++ ) { %>
-                                          <option value="<%=Coupon[i].code%>">
-                                                <% } %>
+                                          <% if (cartProduct.subtotal>= Coupon[i].maximum) { %>
+                                                <option value="<%=Coupon[i].code%>">
+                                                      <% } %>
+                                                            <% } %>
                               </datalist>
                         </form>
                   </div>
@@ -135,6 +137,9 @@
                         <ul>
                               <li>Subtotal <span id="subtotal1">₹
                                           <%= cartProduct.subtotal %>
+                                    </span></li>
+                              <li>Discount <span id="discountBAl">₹
+                                          00
                                     </span></li>
                               <li>Total <span id="discount">₹
                                           <%= cartProduct.subtotal %>
@@ -155,9 +160,32 @@
                         <script>
                               const discount = () => {
                                     const value = document.getElementById("discountBox").value
-                                    alert(value)
+                                    const discountAmount = document.getElementById("discount")
+                                    const discountedAmount = document.getElementById("discountBAl")
                                     axios.patch("/discount", { Value: value }).then((e) => {
-                                          console.log()
+                                          if (e.data.response) {
+                                                discountedAmount.innerHTML = e.data.discountedAmount
+                                                discountAmount.innerHTML = e.data.discountAmount
+                                                const Toast = Swal.mixin({
+                                                      toast: true,
+                                                      position: 'top-end',
+                                                      showConfirmButton: false,
+                                                      timer: 3000,
+                                                      timerProgressBar: true,
+                                                      didOpen: (toast) => {
+                                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                      }
+                                                })
+
+                                                Toast.fire({
+                                                      icon: 'success',
+                                                      title: 'Coupon Applied'
+                                                })
+                                                location.herf = "/cart"
+                                          }
+
                                     })
                               }
+
                         </script>

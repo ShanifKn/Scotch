@@ -1,5 +1,6 @@
 import { couponModel } from "../model/coupon.js";
 import Jwt from "jsonwebtoken";
+import { cartModel } from "../model/cart.js";
 
 const style = "bg-blue-500/13";
 
@@ -28,7 +29,7 @@ const addCoupon = async (req, res) => {
     console.log(err.message);
   }
 };
-// User Side::::::::; 
+// User Side::::::::;
 const discountAdded = async (req, res) => {
   try {
     const token = req.cookies.Jwt;
@@ -37,21 +38,16 @@ const discountAdded = async (req, res) => {
       const userId = decoded.userId;
       let couponCode = req.body.Value.trim();
       const coupon = await couponModel.findOne({ code: couponCode });
-      console.log(coupon);
       const couponId = coupon._id;
-      const findUsed = await couponModel.findOne({
-        _id: couponId,
-        user: userId,
-      });
-      console.log(findUsed);
-      // const couponUsed = await couponModel.findOne({
-      // const couponId = coupon._id;
-      //   _id: couponId,
-      // });
-      // console.log(couponUsed);
-      // if (!couponUsed) {
-      //   const couponUse = await couponModel.findOne({ _id: couponId });
-      // }
+      const couponToCart = await cartModel.updateOne(
+        { user: userId },
+        { $set: { coupon: couponId } }
+      );
+      const Cart = await cartModel.findOne({ user: userId });
+      const discountedAmount = (Cart.subtotal * coupon.percentage) / 100;
+      const discountAmount =
+        Cart.subtotal - (Cart.subtotal * coupon.percentage) / 100;
+      res.json({ response: true, discountAmount, discountedAmount });
     }
   } catch (err) {
     console.log(err.message);
