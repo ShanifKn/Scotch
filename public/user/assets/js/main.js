@@ -173,8 +173,8 @@
 		Quantity change
 	--------------------- */
   var proQty = $(".pro-qty");
-  proQty.prepend('<span class=" dec qtybtn"></span>');
-  proQty.append('<span class=" inc qtybtn"></span>');
+  proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
+  proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
   proQty.on("click", ".qtybtn", function () {
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
@@ -192,8 +192,8 @@
   });
 
   var proQty = $(".pro-qty-2");
-  proQty.prepend('<span class=" dec qtybtn"></span>');
-  proQty.append('<span class="  qtybtn"></span>');
+  proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
+  proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');
   proQty.on("click", ".qtybtn", function () {
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();

@@ -27,7 +27,7 @@
                                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
                                                 <h6 class="dark:text-white">Order Management</h6>
                                           </div>
-                                          <div class="flex-auto px-0 pt-0 pb-2 w-full">
+                                          <div class="flex-auto px-0 pt-0 pb-2 w-full mt-5">
                                                 <div class="p-0 overflow-x-auto px-5 w-full">
                                                       <table id="example"
                                                             class="items-center justify-center w-full mb-0 ml-5 align-top border-collapse dark:border-white/40 text-slate-500"
@@ -36,86 +36,52 @@
                                                                   <tr>
                                                                         <th
                                                                               class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
-                                                                              Order Id</th>
-                                                                        <th
-                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
                                                                               Date</th>
                                                                         <th
                                                                               class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
-                                                                              Payment Method</th>
+                                                                              Total Price</th>
                                                                         <th
                                                                               class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
-                                                                              Price</th>
+                                                                              Profit</th>
                                                                         <th
                                                                               class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
-                                                                              Order Status</th>
-
+                                                                              Order Count</th>
                                                                   </tr>
                                                             </thead>
                                                             <tbody class="border-t ">
-                                                                  <% for( let i=0; i < order.length; i++ ) { %>
-                                                                        <tr>
+                                                                  <tr>
+                                                                        <% saleReport.forEach(report=> { %>
                                                                               <td
                                                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                                                     <h6
                                                                                           class="mb-0 text-sm leading-normal dark:text-white">
-                                                                                          <%= order[i]._id %>
+                                                                                          <%= report._id %>
                                                                                     </h6>
                                                                               </td>
                                                                               <td
                                                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                                                     <p
                                                                                           class="mb-0 text-sm font-semibold leading-normal dark:text-white dark:opacity-60">
-                                                                                          <%= order[i].order_date %>
+                                                                                          <%= report.totalPrice %>
                                                                                     </p>
                                                                               </td>
                                                                               <td
                                                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                                                     <p
                                                                                           class="mb-0 text-sm font-semibold leading-normal dark:text-white dark:opacity-60">
-                                                                                          <%= order[i].paymentDetails %>
+                                                                                          <%= report.totalamount*5/100
+                                                                                                %> %
                                                                                     </p>
                                                                               </td>
                                                                               <td
                                                                                     class="p-2 align-middle  border-b  whitespace-nowrap shadow-transparent">
                                                                                     <span
                                                                                           class="text-xs font-semibold  dark:text-white dark:opacity-60">
-                                                                                          <%= order[i].totalPrice %>
+                                                                                          <%= report.count %>
                                                                                     </span>
                                                                               </td>
-
-
-                                                                              <td
-                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                                                    <div class="input-group mb-3">
-
-                                                                                          <select class="form-select"
-                                                                                                onchange="DeliveryStatus( `<%= order[i]._id %>` )"
-                                                                                                id="inputGroupSelect01">
-                                                                                                <option selected
-                                                                                                      disabled
-                                                                                                      id="SelectedValue">
-                                                                                                      <%=
-                                                                                                            order[i].deliveryStatus%>
-                                                                                                </option>
-                                                                                                <option value="Shipped">
-                                                                                                      Shipped
-                                                                                                </option>
-                                                                                                <option
-                                                                                                      value="Delivered">
-                                                                                                      Delivered
-                                                                                                </option>
-                                                                                                <option value="Cancel">
-                                                                                                      Cancel
-                                                                                                </option>
-                                                                                          </select>
-                                                                                    </div>
-
-
-                                                                              </td>
-                                                                        </tr>
-                                                                        <% } %>
-
+                                                                              <% }) %>
+                                                                  </tr>
                                                             </tbody>
                                                       </table>
                                                 </div>
@@ -132,30 +98,4 @@
             $(document).ready(function () {
                   $('#example').DataTable();
             });
-      </script>
-      <script>
-            const DeliveryStatus = (id) => {
-                  const value = document.getElementById("inputGroupSelect01").value;
-                  alert(value)
-                  axios.patch("/admin/deliveryStatus", { Id: id, Value: value }).then((e) => {
-                        if (e.data.response) {
-                              const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                          toast.addEventListener("mouseenter", Swal.stopTimer);
-                                          toast.addEventListener("mouseleave", Swal.resumeTimer);
-                                    },
-                              });
-                              Toast.fire({
-                                    icon: "success",
-                                    title: `Status Changed to ${status}`,
-                              });
-                              location.href = "/admin/order";
-                        }
-                  })
-            }
       </script>

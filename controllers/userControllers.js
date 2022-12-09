@@ -7,6 +7,7 @@ import { couponModel } from "../model/coupon.js";
 import { UserModel } from "../model/User.js";
 import { sendSms, verifySms } from "../Verification/twilio.js";
 import bcrypt from "bcrypt";
+import { response } from "express";
 
 const index = async (req, res) => {
   try {
@@ -161,6 +162,25 @@ const setPassword = async (req, res) => {
   }
 };
 
+const changepassword = async (req, res) => {
+  try {
+    const Password = req.body.Password;
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      const hasPassword = await bcrypt.hash(Password, 10);
+      await UserModel.updateOne({ _id: userId }, { Password: hasPassword });
+      res.json({ response: true });
+    } else {
+      res.redirect("/login");
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.redirect("/error");
+  }
+};
+
 export {
   Signup,
   validation,
@@ -173,4 +193,5 @@ export {
   resetPassword,
   setPassword,
   otpVerifiy,
+  changepassword,
 };

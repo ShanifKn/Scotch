@@ -1,7 +1,9 @@
 <%- include ('layout/navbar.ejs') %>
+      <script src="/user/assets/js/profile.js"></script>
+
 
       <div
-            class="m-0 font-sans antialiased font-normal dark:bg-slate-900 text-base leading-default bg-gray-50 text-slate-500">
+            class="m-0 font-sans antialiased font-normal dark:bg-slate-900 text-base leading-default bg-gray-50 text-slate-500 ">
 
             <div class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68">
 
@@ -106,7 +108,7 @@
 
                                     </div>
                               </div>
-                              <div class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0 ">
+                              <div class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0 md:pb-16">
                                     <div
                                           class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                                           <div class="flex-auto p-6 pt-0">
@@ -137,18 +139,6 @@
                                                             <i class="mr-2 dark:text-white ni ni-tablet-button"></i>
                                                             Phone
                                                       </div>
-                                                      <!-- <div class="dark:text-white/80">
-                                                            <i class="mr-2 dark:text-white ni ni-hat-3"></i>
-                                                            State
-                                                      </div>
-                                                      <div class="dark:text-white/80">
-                                                            <i class="mr-2 dark:text-white ni ni-hat-3"></i>
-                                                            City
-                                                      </div>
-                                                      <div class="dark:text-white/80">
-                                                            <i class="mr-2 dark:text-white ni ni-hat-3"></i>
-                                                            Phone
-                                                      </div> -->
                                                 </div>
                                                 <button
                                                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-2"
@@ -185,60 +175,26 @@
                               <div class="modal-body">
                                     <div class="mb-3">
                                           <label for="exampleInputPassword1" class="form-label">Password</label>
-                                          <input type="password" class="form-control" id="Password"
-                                                onkeyup="validatePass()">
-                                          <span class="text-danger " id="passMsg"></span>
-
+                                          <input type="password" class="form-control" id="Pass3"
+                                                onkeyup="validatedPass()">
+                                          <span class="text-danger " id="pass3Msg"></span>
                                     </div>
-
                                     <div class="mb-3">
                                           <label for="exampleInputPassword1" class="form-label">Comfirm
                                                 Password</label>
-                                          <input type="password" class="form-control" id="Password2"
-                                                onkeyup="validatePass()">
-                                          <span class="text-danger " id="pass2Msg"></span>
+                                          <input type="password" class="form-control" id="Pass4"
+                                                onkeyup="validatedPass()">
+                                          <span class="text-danger " id="pass4Msg"></span>
 
                                     </div>
                               </div>
                               <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                           data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                                           onclick="changePassword()">Save</button>
                               </div>
                         </div>
                   </div>
             </div>
       </div>
-      <%- include ('layout/footer.ejs') %>
-
-
-            <script>
-                  const pass1 = document.getElementById("Password").value;
-                  const pass2 = document.getElementById("Password2").value;
-                  const pass2Error = document.getElementById("pass2Msg")
-                  const passError = document.getElementById("passMsg")
-
-
-                  function validatePass() {
-                        if (pass !== pass2) {
-                              pass2Error.innerHTML = "Password does not match"
-                              return false;
-                        } if (pass == "" && pass2 == "") {
-                              passError.innerHTML = "Password is required"
-                              pass2Error.innerHTML = "Password is required"
-                              return false;
-                        }
-                        passError.innerHTML = " ";
-                        pass2Error.innerHTML = " ";
-                        return true;
-                  }
-
-
-
-                  const changePassword = () => {
-
-
-
-                  }
-            </script>

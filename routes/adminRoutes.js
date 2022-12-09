@@ -15,6 +15,7 @@ import {
   addSubBanner,
   deletesubBanner,
   editSubBanner,
+  salesReport,
 } from "../controllers/adminControllers.js";
 
 import {
@@ -49,12 +50,13 @@ router.get("/userblock/:id", verifyAdmin, userBlock);
 router.get("/unBlock/:id", verifyAdmin, unBlock);
 router.get("/add-product", verifyAdmin, addProduct);
 router.get("/editProduct/:id", verifyAdmin, editProduct);
-router.get("/category",verifyAdmin, Category);
-router.get("/banner",verifyAdmin, banner);
-router.get("/bannerlist",verifyAdmin, bannerList);
-router.get("/order",verifyAdmin, order);
-router.get("/subbanner",verifyAdmin, subbanner);
-router.get("/coupon",verifyAdmin, coupon);
+router.get("/category", verifyAdmin, Category);
+router.get("/banner", verifyAdmin, banner);
+router.get("/bannerlist", verifyAdmin, bannerList);
+router.get("/order", verifyAdmin, order);
+router.get("/subbanner", verifyAdmin, subbanner);
+router.get("/coupon", verifyAdmin, coupon);
+router.get("/salesreport", salesReport);
 // post::::::::
 router.post("/Userlogin", adminAuth);
 router.post("/addCategory", upload.single("Image"), addCategory);

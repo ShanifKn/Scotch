@@ -19,6 +19,7 @@ import {
   resetPassword,
   setPassword,
   otpVerifiy,
+  changepassword,
 } from "../controllers/userControllers.js";
 import { product, productdetail } from "../controllers/productController.js";
 import { categoryMap } from "../controllers/categoryController.js";
@@ -58,7 +59,7 @@ router.get("/", index);
 router.get("/product", product);
 router.get("/productdetail/:id", productdetail);
 router.get("/cart", verifyToken, cart);
-router.get("/checkout", verifyToken, checkout); 
+router.get("/checkout", verifyToken, checkout);
 router.get("/contact", contact);
 router.get("/signup", Signup);
 router.get("/login", login);
@@ -102,6 +103,7 @@ router.patch("/shippingAddress", shippingAddress);
 router.patch("/reorder", reorder);
 router.patch("/discount", discountAdded);
 router.patch("/setPassword", setPassword);
+router.patch("/ChangePassword", changepassword);
 
 // Error request::::::::::::
 router.get("/error", (req, res) => {

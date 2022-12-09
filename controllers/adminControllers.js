@@ -1,5 +1,6 @@
 import { s3Upload } from "../database/multerS3.js";
 import { bannerModel } from "../model/banner.js";
+import { OrderModel } from "../model/order.js";
 import { subBannerModel } from "../model/subBanner.js";
 import { UserModel } from "../model/User.js";
 let style = "bg-blue-500/13";
@@ -199,6 +200,25 @@ const unBlock = async (req, res) => {
   res.redirect("/admin/user");
 };
 
+const salesReport = async (req, res) => {
+  const todayDate = new Date();
+  const DaysAgo = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  const saleReport = await OrderModel.aggregate([
+    {
+      $match: { createdAt: { $gte: DaysAgo } },
+    },
+    {
+      $group: {
+        _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+        totalPrice: { $sum: "$totalPrice" },
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  res.render("admin/salereport", { saleReport });
+};
+
 export {
   login,
   dashboard,
@@ -215,4 +235,5 @@ export {
   addSubBanner,
   deletesubBanner,
   editSubBanner,
+  salesReport,
 };
