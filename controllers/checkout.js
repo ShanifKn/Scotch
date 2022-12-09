@@ -4,6 +4,8 @@ import { OrderModel } from "../model/order.js";
 import { UserModel } from "../model/User.js";
 import Jwt from "jsonwebtoken";
 import { instance, verfiyRazorPay } from "../database/paymeny.js";
+import { couponModel } from "../model/coupon.js";
+
 
 const checkout = async (req, res) => {
   try {
@@ -245,7 +247,8 @@ const updateEditAddress = async (req, res) => {
   }
 };
 
-// Order COD
+// Place Order "COD"
+
 const orderPlaced = async (req, res) => {
   try {
     const token = req.cookies.Jwt;
@@ -279,6 +282,12 @@ const orderPlaced = async (req, res) => {
           (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
         const discountAmount =
           (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        const couponUsed = await couponModel.updateOne(
+          {
+            _id: cartSaved.coupon._id,
+          },
+          { $push: { user: { id: userId } } }
+        );
 
         if (!billingAddress) {
           const deliveryAddress = await UserModel.aggregate([
@@ -447,6 +456,8 @@ const orderPlaced = async (req, res) => {
   }
 };
 
+// Place Order Razorpay
+
 const onlinePayment = async (req, res) => {
   try {
     const token = req.cookies.Jwt;
@@ -479,6 +490,12 @@ const onlinePayment = async (req, res) => {
           (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
         const discountAmount =
           (cartSaved.subtotal * cartSaved.coupon.percentage) / 100;
+        const couponUsed = await couponModel.updateOne(
+          {
+            _id: cartSaved.coupon._id,
+          },
+          { $push: { user: { id: userId } } }
+        );
         if (!billingAddress) {
           const deliveryAddress = await UserModel.aggregate([
             {
