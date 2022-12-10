@@ -6,7 +6,6 @@ import Jwt from "jsonwebtoken";
 import { instance, verfiyRazorPay } from "../database/paymeny.js";
 import { couponModel } from "../model/coupon.js";
 
-
 const checkout = async (req, res) => {
   try {
     const token = req.cookies.Jwt;
@@ -70,6 +69,7 @@ const checkout = async (req, res) => {
     }
   } catch (err) {
     console.log(err.message);
+    res.redirect("/error");
   }
 };
 

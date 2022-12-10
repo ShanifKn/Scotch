@@ -146,7 +146,7 @@ const reorder = async (req, res) => {
 
 // AdminSide:::::::::
 const order = async (req, res) => {
-  const order = await OrderModel.find({});
+  const order = await OrderModel.find({}).populate("orderItems.product");
   res.render("admin/orders", { order, Orders: style });
 };
 

@@ -1,6 +1,5 @@
 <%- include ('layout/navbar.ejs') %>
       <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
-
             <!-- Navbar -->
             <%- include ('layout/header.ejs') %>
                   <div class="w-full px-6 py-6 mx-auto">
@@ -77,11 +76,11 @@
                                                                                                                   id="form4Example1"
                                                                                                                   class="form-control"
                                                                                                                   name="Category"
+                                                                                                                  required
                                                                                                                   value="<%= banner[i].Category %> " />
                                                                                                             <label class="form-label"
                                                                                                                   for="form4Example1">Category</label>
                                                                                                       </div>
-
                                                                                                       <!-- Email input -->
                                                                                                       <div
                                                                                                             class="form-outline mb-3">
@@ -89,19 +88,20 @@
                                                                                                                   id="form4Example2"
                                                                                                                   class="form-control"
                                                                                                                   name="Title"
+                                                                                                                  required
                                                                                                                   value="<%= banner[i].Title %> " />
                                                                                                             <label class="form-label"
                                                                                                                   for="form4Example2">Title</label>
                                                                                                       </div>
-
-                                                                                                      <!-- Message input -->
                                                                                                       <div
                                                                                                             class="form-outline mb-3">
                                                                                                             <textarea
                                                                                                                   class="form-control"
                                                                                                                   id="form4Example3"
                                                                                                                   name="Message"
+                                                                                                                  required
                                                                                                                   rows="4">
+
                                                                                                                   <%= banner[i].Message
                                                                                                                         %>
                                                                                                             </textarea>
@@ -116,9 +116,6 @@
                                                                                                                   onchange="loadFile(event,`<%= banner[i]._id %>`)"
                                                                                                                   type="file"
                                                                                                                   id="formFile">
-
-
-
                                                                                                             <div
                                                                                                                   style="width: 100%; display: flex;justify-content: space-evenly;">
                                                                                                                   <img id="output<%= banner[i]._id %>"
@@ -202,6 +199,7 @@
                                                                                                             <input type="text"
                                                                                                                   id="form4Example1"
                                                                                                                   class="form-control"
+                                                                                                                  required
                                                                                                                   value="<%= subbanner[i]._id %> " />
                                                                                                             <label class="form-label"
                                                                                                                   for="form4Example1">Id</label>
@@ -214,6 +212,7 @@
                                                                                                                   id="form4Example2"
                                                                                                                   class="form-control"
                                                                                                                   name="Title"
+                                                                                                                  required
                                                                                                                   value="<%= subbanner[i].Title %> " />
                                                                                                             <label class="form-label"
                                                                                                                   for="form4Example2">Title</label>

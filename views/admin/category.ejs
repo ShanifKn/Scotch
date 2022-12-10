@@ -64,13 +64,10 @@
                                                                                     <button
                                                                                           class="btn btn-primary  btn-sm px-3"
                                                                                           data-bs-toggle="modal"
-                                                                                          data-bs-target="#exampleModal<%= category[i].categoryName
-                                                                                          %>">edit</button>
-
-
-                                                                                    <button onclick=""
+                                                                                          data-bs-target="#exampleModal<%= category[i].categoryName %>">edit</button>
+                                                                                    <button
+                                                                                          onclick="deleteCategory(`<%= category[i]._id %>`)"
                                                                                           class="btn btn-danger btn-sm">Delete</button>
-
                                                                               </td>
                                                                         </tr>
 
@@ -101,6 +98,7 @@
                                                                                                             <input type="text"
                                                                                                                   class="form-control"
                                                                                                                   name="CategoryName"
+                                                                                                                  required
                                                                                                                   value="<%= category[i].categoryName
                                                                                                                   %>" />
                                                                                                       </div>
@@ -120,19 +118,11 @@
                                                                                                             </div>
 
                                                                                                       </div>
-
-
-
-
-
                                                                                           </div>
-
-
                                                                                           <div class="modal-footer">
                                                                                                 <button type="button"
                                                                                                       class="btn btn-secondary"
                                                                                                       data-bs-dismiss="modal">Close</button>
-
                                                                                                 <button type="submit"
                                                                                                       class="btn btn-primary">Send
                                                                                                       message</button>
@@ -151,19 +141,35 @@
                         </div>
                         <div>
                         </div>
-
-
-
-
                   </div>
       </main>
 
       <script language="javascript" type="text/javascript">
 
-            var loadFile = function (event ,id) {
-                  var output = document.getElementById('output'+ id);
+            var loadFile = function (event, id) {
+                  var output = document.getElementById('output' + id);
                   output.src = URL.createObjectURL(event.target.files[0]);
-
             };
 
+            const deleteCategory = (id) => {
+                  Swal.fire({
+                        title: 'Do you Sure want to delete the Category?',
+                        showDenyButton: true,
+                        confirmButtonText: 'Delete',
+                        denyButtonText: `Don't save`,
+                  }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                              axios.delete("/admin/deleteCategory", { data: { id: id } }).then((e) => {
+                                    if (e.data.response) {
+                                          Swal.fire('Saved!', '', 'success')
+                                    } else {
+                                          Swal.fire(`Can't delete ,Category is used!`, '', 'info')
+                                    }
+                              })
+                        } else if (result.isDenied) {
+                              Swal.fire(`Can't delete ,Category in used!`, '', 'info')
+                        }
+                  })
+            }
       </script>

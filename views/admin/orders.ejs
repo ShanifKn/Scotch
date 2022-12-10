@@ -10,15 +10,36 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
-</head>
 
+</head>
+<style>
+      tr.hide-table-padding td {
+            padding: 0;
+      }
+
+      .expand-button {
+            position: relative;
+      }
+
+      .accordion-toggle .expand-button:after {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translate(0, -50%);
+            content: '-';
+      }
+
+      .accordion-toggle.collapsed .expand-button:after {
+            content: '+';
+      }
+</style>
 
 <%- include ('layout/navbar.ejs') %>
       <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
 
             <!-- Navbar -->
             <%- include ('layout/header.ejs') %>
-                  <div class="w-full px-6 py-6 mx-auto">
+                  <div class="w-full px-6 py-6 mx-auto mt-5">
                         <div class="flex flex-wrap -mx-3">
                               <div class="flex-none w-full max-w-full px-3">
                                     <div
@@ -27,13 +48,15 @@
                                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
                                                 <h6 class="dark:text-white">Order Management</h6>
                                           </div>
-                                          <div class="flex-auto px-0 pt-0 pb-2 w-full">
+                                          <div class="flex-auto px-5 pt-5 pb-2 w-full">
                                                 <div class="p-0 overflow-x-auto px-5 w-full">
-                                                      <table id="example"
-                                                            class="items-center justify-center w-full mb-0 ml-5 align-top border-collapse dark:border-white/40 text-slate-500"
-                                                            style="width:90% ;padding-bottom: 40vh;">
+                                                      <table class="items-center justify-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500 table table-condensed table-striped"
+                                                            s>
                                                             <thead class="align-bottom">
                                                                   <tr>
+                                                                        <th
+                                                                              class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
+                                                                              Order Status</th>
                                                                         <th
                                                                               class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
                                                                               Order Id</th>
@@ -49,14 +72,22 @@
                                                                         <th
                                                                               class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap">
                                                                               Order Status</th>
-
                                                                   </tr>
                                                             </thead>
                                                             <tbody class="border-t ">
                                                                   <% for( let i=0; i < order.length; i++ ) { %>
-                                                                        <tr>
+                                                                        <tr class="accordion-toggle collapsed"
+                                                                              id="accordion1" data-toggle="collapse"
+                                                                              data-parent="#accordion1"
+                                                                              href="#collapseOne">
                                                                               <td
                                                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                                                    <button
+                                                                                          class="btn bg-green-200">View</button>
+                                                                              </td>
+                                                                              <td
+                                                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+
                                                                                     <h6
                                                                                           class="mb-0 text-sm leading-normal dark:text-white">
                                                                                           <%= order[i]._id %>
@@ -110,11 +141,276 @@
                                                                                                 </option>
                                                                                           </select>
                                                                                     </div>
+                                                                              </td>
+                                                                        </tr>
+                                                                        <tr class="hide-table-padding">
+                                                                              <td></td>
+                                                                              <td colspan="3">
+                                                                                    <div id="collapseOne"
+                                                                                          class="collapse in p-3">
+                                                                                          <div class="container-fluid">
 
+                                                                                                <div class="container">
+                                                                                                      <!-- Title -->
+                                                                                                      <div
+                                                                                                            class="d-flex justify-content-between align-items-center py-3">
+                                                                                                            <h2
+                                                                                                                  class="h5 mb-0">
+                                                                                                                  <a href="#"
+                                                                                                                        class="text-muted"></a>
+                                                                                                                  Order
+                                                                                                                  #<%= order[i]._id
+                                                                                                                        %>
+                                                                                                            </h2>
+                                                                                                      </div>
 
+                                                                                                      <!-- Main content -->
+                                                                                                      <div class="row">
+                                                                                                            <div
+                                                                                                                  class="col-lg-8">
+                                                                                                                  <!-- Details -->
+                                                                                                                  <div
+                                                                                                                        class="card mb-4">
+                                                                                                                        <div
+                                                                                                                              class="card-body">
+                                                                                                                              <div
+                                                                                                                                    class="mb-3 d-flex justify-content-between">
+                                                                                                                                    <div>
+                                                                                                                                          <span
+                                                                                                                                                class="me-3">
+                                                                                                                                                <%= order[i].order_date
+                                                                                                                                                      %>
+                                                                                                                                          </span>
+                                                                                                                                          <span
+                                                                                                                                                class="me-3">#
+                                                                                                                                                <%= order[i]._id
+                                                                                                                                                      %>
+                                                                                                                                          </span>
+                                                                                                                                          <span
+                                                                                                                                                class="me-3 text-success">
+                                                                                                                                                <%= order.paymentDetails
+                                                                                                                                                      %>
+                                                                                                                                          </span>
+
+                                                                                                                                    </div>
+
+                                                                                                                              </div>
+                                                                                                                              <table
+                                                                                                                                    class="table table-borderless">
+                                                                                                                                    <tbody>
+                                                                                                                                          <% for(
+                                                                                                                                                let
+                                                                                                                                                j=0;
+                                                                                                                                                j
+                                                                                                                                                <
+                                                                                                                                                order[i].orderItems.length;
+                                                                                                                                                j++
+                                                                                                                                                )
+                                                                                                                                                {
+                                                                                                                                                %>
+                                                                                                                                                <tr>
+                                                                                                                                                      <td>
+                                                                                                                                                            <div
+                                                                                                                                                                  class="d-flex mb-2">
+                                                                                                                                                                  <div
+                                                                                                                                                                        class="flex-shrink-0">
+                                                                                                                                                                        <img src=" <%= order[i].orderItems[j].product.images[0].Location %> "
+                                                                                                                                                                              alt=""
+                                                                                                                                                                              width="35"
+                                                                                                                                                                              class="img-fluid">
+                                                                                                                                                                  </div>
+                                                                                                                                                                  <div
+                                                                                                                                                                        class="flex-lg-grow-1 ms-3">
+                                                                                                                                                                        <h6
+                                                                                                                                                                              class="small mb-0">
+                                                                                                                                                                              <a href="#"
+                                                                                                                                                                                    class="text-reset">
+                                                                                                                                                                                    <%=order[i].orderItems[j].product.Product_title
+                                                                                                                                                                                          %>
+                                                                                                                                                                              </a>
+                                                                                                                                                                        </h6>
+                                                                                                                                                                        <span
+                                                                                                                                                                              class="small">Color:
+                                                                                                                                                                              <%=order[i].orderItems[j].product.color
+                                                                                                                                                                                    %>
+                                                                                                                                                                        </span>
+                                                                                                                                                                  </div>
+                                                                                                                                                            </div>
+                                                                                                                                                      </td>
+                                                                                                                                                      <td>
+                                                                                                                                                            <%= order[i].orderItems[j].quantity
+                                                                                                                                                                  %>
+                                                                                                                                                      </td>
+                                                                                                                                                      <td
+                                                                                                                                                            class="text-end">
+                                                                                                                                                            ₹
+                                                                                                                                                            <%= order[i].orderItems[j].total
+                                                                                                                                                                  %>
+                                                                                                                                                      </td>
+                                                                                                                                                </tr>
+                                                                                                                                                <% }
+                                                                                                                                                      %>
+                                                                                                                                    </tbody>
+                                                                                                                                    <tfoot>
+                                                                                                                                          <tr>
+                                                                                                                                                <td
+                                                                                                                                                      colspan="2">
+                                                                                                                                                      Subtotal
+                                                                                                                                                </td>
+                                                                                                                                                <td
+                                                                                                                                                      class="text-end">
+                                                                                                                                                      ₹
+                                                                                                                                                      <%= order[i].totalPrice
+                                                                                                                                                            %>
+                                                                                                                                                </td>
+                                                                                                                                          </tr>
+                                                                                                                                          <tr
+                                                                                                                                                class="fw-bold">
+                                                                                                                                                <td
+                                                                                                                                                      colspan="2">
+                                                                                                                                                      TOTAL
+                                                                                                                                                </td>
+                                                                                                                                                <td
+                                                                                                                                                      class="text-end">
+                                                                                                                                                      ₹
+                                                                                                                                                      <%= order[i].totalPrice
+                                                                                                                                                            %>
+                                                                                                                                                </td>
+                                                                                                                                          </tr>
+                                                                                                                                    </tfoot>
+                                                                                                                              </table>
+                                                                                                                        </div>
+                                                                                                                  </div>
+                                                                                                                  <!-- Payment -->
+                                                                                                                  <div
+                                                                                                                        class="card mb-4">
+                                                                                                                        <div
+                                                                                                                              class="card-body">
+                                                                                                                              <div
+                                                                                                                                    class="row">
+                                                                                                                                    <div
+                                                                                                                                          class="col-lg-6">
+                                                                                                                                          <h3
+                                                                                                                                                class="h6">
+                                                                                                                                                Payment
+                                                                                                                                                Method
+                                                                                                                                          </h3>
+                                                                                                                                          <p>Visa
+                                                                                                                                                -
+                                                                                                                                                <%= order[i].paymentDetails
+                                                                                                                                                      %>
+                                                                                                                                                      <br>
+                                                                                                                                                      Total:
+                                                                                                                                                      ₹
+                                                                                                                                                      <%= order[i].totalPrice
+                                                                                                                                                            %>
+                                                                                                                                                            <% if (order[i].paymentDetails=="COD"
+                                                                                                                                                                  )
+                                                                                                                                                                  {
+                                                                                                                                                                  %>
+                                                                                                                                                                  <span
+                                                                                                                                                                        class="badge bg-success rounded-pill ml-2">Cash
+                                                                                                                                                                        On
+                                                                                                                                                                        Delivery</span>
+                                                                                                                                          </p>
+                                                                                                                                          <% } else
+                                                                                                                                                {
+                                                                                                                                                %>
+                                                                                                                                                <span
+                                                                                                                                                      class="badge bg-success rounded-pill ml-2">Paid</span>
+                                                                                                                                                </p>
+                                                                                                                                                <% }
+                                                                                                                                                      %>
+                                                                                                                                    </div>
+                                                                                                                                    <div
+                                                                                                                                          class="col-lg-6">
+                                                                                                                                          <h3
+                                                                                                                                                class="h6">
+                                                                                                                                                Billing
+                                                                                                                                                address
+                                                                                                                                          </h3>
+                                                                                                                                          <address>
+                                                                                                                                                <strong>
+                                                                                                                                                      <%= order[i].billingAddress[0].Firstname
+                                                                                                                                                            %>
+                                                                                                                                                            <%= order[i].billingAddress[0].Lastname
+                                                                                                                                                                  %>
+                                                                                                                                                </strong><br>
+                                                                                                                                                <%= order[i].billingAddress[0].address
+                                                                                                                                                      %>
+                                                                                                                                                      <br>
+                                                                                                                                                      <%= order[i].billingAddress[0].city
+                                                                                                                                                            %>
+                                                                                                                                                            ,
+                                                                                                                                                            <%= order[i].billingAddress[0].pincode
+                                                                                                                                                                  %>
+                                                                                                                                                                  <br>
+                                                                                                                                                                  <abbr
+                                                                                                                                                                        title="Phone">Phone:</abbr>
+                                                                                                                                                                  <%= order[i].billingAddress[0].phone
+                                                                                                                                                                        %>
+                                                                                                                                                                        <br>
+                                                                                                                                                                        <abbr
+                                                                                                                                                                              title="Phone">Email:</abbr>
+                                                                                                                                                                        <%= order[i].billingAddress[0].email
+                                                                                                                                                                              %>
+                                                                                                                                          </address>
+                                                                                                                                    </div>
+                                                                                                                              </div>
+                                                                                                                        </div>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                  class="col-lg-4">
+                                                                                                                  <div
+                                                                                                                        class="card mb-4">
+                                                                                                                        <!-- Shipping information -->
+                                                                                                                        <div
+                                                                                                                              class="card-body">
+                                                                                                                              <hr>
+                                                                                                                              <h3
+                                                                                                                                    class="h6">
+                                                                                                                                    Shipping
+                                                                                                                                    Address
+                                                                                                                              </h3>
+                                                                                                                              <address>
+                                                                                                                                    <strong>
+                                                                                                                                          <%= order[i].deliveryAddress[0].Firstname
+                                                                                                                                                %>
+                                                                                                                                                <%= order[i].deliveryAddress[0].Lastname
+                                                                                                                                                      %>
+                                                                                                                                    </strong><br>
+                                                                                                                                    <%= order[i].deliveryAddress[0].address
+                                                                                                                                          %>
+                                                                                                                                          <br>
+                                                                                                                                          <%= order[i].deliveryAddress[0].city
+                                                                                                                                                %>
+                                                                                                                                                ,
+                                                                                                                                                <%= order[i].deliveryAddress[0].pincode
+                                                                                                                                                      %>
+                                                                                                                                                      <br>
+                                                                                                                                                      <abbr
+                                                                                                                                                            title="Phone">Phone:</abbr>
+                                                                                                                                                      <%= order[i].deliveryAddress[0].phone
+                                                                                                                                                            %>
+                                                                                                                                                            <br>
+                                                                                                                                                            <abbr
+                                                                                                                                                                  title="Phone">Email:</abbr>
+                                                                                                                                                            <%= order[i].deliveryAddress[0].email
+                                                                                                                                                                  %>
+                                                                                                                              </address>
+                                                                                                                        </div>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </div>
+
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
                                                                               </td>
                                                                         </tr>
                                                                         <% } %>
+
 
                                                             </tbody>
                                                       </table>

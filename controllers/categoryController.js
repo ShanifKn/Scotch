@@ -63,4 +63,18 @@ const categoryMap = (req, res) => {
     });
 };
 
-export { addCategory, Category, editCategory, categoryMap };
+// admin Side delet category
+
+const deleteCategory = async (req, res) => {
+  const id = req.body.id;
+  const usedProduct = await productModel.findOne({ Category: id });
+  if (!usedProduct) {
+    await categoryModel.findOneAndDelete({ Category: id });
+    console.log("Successfully deleted");
+    res.json({ response: true });
+  } else {
+    res.json({ response: false });
+  }
+};
+
+export { addCategory, Category, editCategory, categoryMap, deleteCategory };

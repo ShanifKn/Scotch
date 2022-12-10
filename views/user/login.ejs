@@ -6,75 +6,76 @@
       </head>
 
       <section class=" relative flex items-center min-h-screen p-0 overflow-hidden bg-center bg-cover">
-            <div class="container z-1 ">
-                  <div
-                        class="flex flex-col w-full max-w-full px-3 mx-auto lg:mx-0 shrink-0 md:flex-0 md:w-7/12 lg:w-5/12 xl:w-4/12">
-                        <!-- Row -->
-                        <div
-                              class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none lg:py4 dark:bg-gray-950 rounded-2xl bg-clip-border  ">
-                              <div
-                                    class="w-full lg:w-1/2 bg-white p-4 rounded-3xl lg:rounded-3xl-none shadow-lg p-3 mb-5 bg-body rounded">
-                                    <h3 class="pt-4 text-2xl text-center">Welcome Back!</h3>
+            <div class="container ">
+                  <div class="">
+                        <div class="flex justify-center px-10 mt-8 ">
+                              <!-- Row -->
+                              <div class=" w-60 xl:w-3/4 lg:w-10/12 flex justify-center  ">
+                                    <div
+                                          class="w-full lg:w-1/2 bg-white p-4 rounded-3xl lg:rounded-3xl-none shadow-lg p-3 mb-5 bg-body rounded">
+                                          <h3 class="pt-4 text-2xl text-center">Welcome Back!</h3>
 
-                                    <% if ( expressFlash.length> 0 ) { %>
-                                          <div class="p-4   text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                                                role="alert">
-                                                <span class="font-medium">
-                                                      <%= expressFlash %>
-                                                </span>
-                                          </div>
-                                          <% } %>
-
-                                                <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="./Userlogin"
-                                                      method="post">
-                                                      <div class="mb-4">
-                                                            <label class="block mb-2 text-sm font-bold text-gray-700"
-                                                                  for="username">
-                                                                  Email
-                                                            </label>
-                                                            <input class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                                  id="emailU" type="text" placeholder="Email"
-                                                                  autocomplete="off" onkeyup="validateEmail()"
-                                                                  name="Email" /> <span class="text-danger"
-                                                                  id="emailMsg"></span>
-                                                      </div>
-                                                      <div class="mb-4">
-                                                            <label class="block mb-2 text-sm font-bold text-gray-700"
-                                                                  for="password">
-                                                                  Password
-                                                            </label>
-                                                            <input class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                                  id="password" type="password"
-                                                                  placeholder="******************" name="Password"
-                                                                  onkeyup="validatePass()" />
-                                                            <span class="text-danger" id="passMsg"></span>
-
-                                                      </div>
-                                                      <div class="flex items-center justify-between mb-4">
-                                                            <a href="#"
-                                                                  class="text-sm font-medium text-slate-900 hover:underline hover:text-amber-400"
-                                                                  data-bs-toggle="modal"
-                                                                  data-bs-target="#exampleModal">Forgot
-                                                                  password?</a>
-                                                      </div>
-                                                      <div class="mb-2 text-center">
-                                                            <button type="submit" onclick=" return validate() "
-                                                                  class="w-full text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
-                                                                  in</button>
-                                                            <span class="text-danger " id="submitMsg"></span>
-                                                      </div>
-                                                </form>
-                                                <hr class="mb-6 border-t" />
-                                                <div class="text-center">
-                                                      <p class="text-sm font-medium text-slate-900">
-                                                            Don’t have an account yet? <a href="./signup"
-                                                                  class="font-medium text-slate-600 hover:underline hover:text-amber-400">Sign
-                                                                  up</a>
-                                                      </p>
+                                          <% if ( expressFlash.length> 0 ) { %>
+                                                <div class="p-4   text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                                      role="alert">
+                                                      <span class="font-medium">
+                                                            <%= expressFlash %>
+                                                      </span>
                                                 </div>
+                                                <% } %>
+
+                                                      <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded"
+                                                            action="./Userlogin" method="post">
+                                                            <div class="mb-4">
+                                                                  <label class="block mb-2 text-sm font-bold text-gray-700"
+                                                                        for="username">
+                                                                        Email
+                                                                  </label>
+                                                                  <input class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                                                        id="emailU" type="text" placeholder="Email"
+                                                                        autocomplete="off" onkeyup="validateEmail()"
+                                                                        name="Email" /> <span class="text-danger"
+                                                                        id="emailMsg"></span>
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                  <label class="block mb-2 text-sm font-bold text-gray-700"
+                                                                        for="password">
+                                                                        Password
+                                                                  </label>
+                                                                  <input class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                                                        id="password" type="password"
+                                                                        placeholder="******************" name="Password"
+                                                                        onkeyup="validatePass()" />
+                                                                  <span class="text-danger" id="passMsg"></span>
+
+                                                            </div>
+                                                            <div class="flex items-center justify-between mb-4">
+                                                                  <a href="#"
+                                                                        class="text-sm font-medium text-slate-900 hover:underline hover:text-amber-400"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal">Forgot
+                                                                        password?</a>
+                                                            </div>
+                                                            <div class="mb-2 text-center">
+                                                                  <button type="submit" onclick=" return validate() "
+                                                                        class="w-full text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
+                                                                        in</button>
+                                                                  <span class="text-danger " id="submitMsg"></span>
+                                                            </div>
+                                                      </form>
+                                                      <hr class="mb-6 border-t" />
+                                                      <div class="text-center">
+                                                            <p class="text-sm font-medium text-slate-900">
+                                                                  Don’t have an account yet? <a href="./signup"
+                                                                        class="font-medium text-slate-600 hover:underline hover:text-amber-400">Sign
+                                                                        up</a>
+                                                            </p>
+                                                      </div>
+                                    </div>
                               </div>
                         </div>
                   </div>
+
                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">

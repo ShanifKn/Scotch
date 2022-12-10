@@ -216,7 +216,7 @@ const salesReport = async (req, res) => {
       },
     },
   ]);
-  res.render("admin/salereport", { saleReport });
+  res.render("admin/salereport", { saleReport, SalesReport: style });
 };
 
 export {

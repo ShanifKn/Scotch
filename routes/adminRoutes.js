@@ -31,6 +31,7 @@ import { verifyAdmin } from "../middleware/authVerification.js";
 import {
   addCategory,
   Category,
+  deleteCategory,
   editCategory,
 } from "../controllers/categoryController.js";
 import { upload } from "../middleware/muter.js";
@@ -75,5 +76,6 @@ router.delete("/deleteproduct", deleteProduct);
 router.delete("/deleteBanner", deleteBanner);
 router.delete("/deletesubBanner", deletesubBanner);
 router.patch("/deliveryStatus", deliveryStatus);
+router.delete("/deleteCategory", deleteCategory);
 
 export default router;

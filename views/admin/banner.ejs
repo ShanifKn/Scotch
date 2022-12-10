@@ -10,7 +10,7 @@
                                           <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                                                 Category
                                           </label>
-                                          <input type="text" name="Category" id="name"
+                                          <input type="text" name="Category" id="name" required
                                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
                                     </div>
@@ -18,14 +18,14 @@
                                           <label for="text" class="mb-3 block text-base font-medium text-[#07074D]">
                                                 Title
                                           </label>
-                                          <input type="text" name="Title" id="name"
+                                          <input type="text" name="Title" id="name" required
                                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     </div>
                                     <div class="mb-3">
                                           <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
                                                 Message
                                           </label>
-                                          <textarea rows="4" name="Message" id="message"
+                                          <textarea rows="4" name="Message" id="message" required
                                                 class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
                                     </div>
                                     <div class="mb-3 w-96">
@@ -46,7 +46,7 @@
                                           ease-in-out
                                           m-0
                                           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                type="file" id="formFile" name="Image">
+                                                required type="file" id="formFile" name="Image">
                                     </div>
                                     <div>
                                           <button type="submit"

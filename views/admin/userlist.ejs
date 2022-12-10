@@ -25,7 +25,7 @@
                                           </div>
                                           <div class="flex-auto px-0 pt-0 pb-2 p-5">
                                                 <div class="p-0 overflow-x-auto">
-                                                      <table id="example"
+                                                      <table id="example" style="width:90%; padding-bottom: 45vh;"
                                                             class="items-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500 ">
                                                             <thead class="align-bottom">
                                                                   <tr>
@@ -198,12 +198,14 @@
                                           <div class="modal-footer">
                                                 <% if ( user[i].Active==true) { %>
 
-                                                      <a href="/admin/userblock/<%= user[i]._id %> "><button type="submit" value="Submit"
+                                                      <a href="/admin/userblock/<%= user[i]._id %> "><button
+                                                                  type="submit" value="Submit"
                                                                   class="btn btn-outline-primary me-1 flex-grow-1">Block</button></a>
 
                                                       <% } else { %>
 
-                                                            <a href="/admin/unblock/<%= user[i]._id %> "> <button type="submit" value="Submit"
+                                                            <a href="/admin/unblock/<%= user[i]._id %> "> <button
+                                                                        type="submit" value="Submit"
                                                                         class="btn btn-outline-primary me-1 flex-grow-1">Unblock</button></a>
 
 
