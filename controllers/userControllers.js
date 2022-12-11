@@ -58,7 +58,6 @@ const index = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err.message);
     res.redirect("/login");
   }
 };
@@ -88,14 +87,26 @@ const cart = async (req, res) => {
     }
   } catch (err) {
     req.flash("Msg", " login for access");
-    console.log(err.message);
     res.redirect("/login");
   }
 };
 
-const userProfile = (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/profile");
+const userProfile = async (req, res) => {
+  try {
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      res.locals.user = userId;
+      const user = await UserModel.findOne({ _id: userId });
+      console.log(user);
+      res.render("user/profile", { user });
+    } else {
+      res.redirect("/login");
+    }
+  } catch (err) {
+    res.redirect("/error");
+  }
 };
 
 const contact = (req, res) => {
@@ -108,17 +119,21 @@ const Signup = (req, res) => {
 };
 
 const login = (req, res) => {
-  res.locals.user = req.session.user;
-  res.render("user/login", { expressFlash: req.flash("Msg") });
+  const token = req.cookies.Jwt;
+  if (token) {
+    const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const userId = decoded.userId;
+    res.locals.user = userId;
+    res.redirect("/");
+  } else {
+    res.locals.user = req.session.user;
+    res.render("user/login", { expressFlash: req.flash("Msg") });
+  }
 };
 
 const validation = (req, res) => {
   const phone = req.session.newUser.Phone;
   res.render("user/otp", { phone, expressFlash: req.flash("Msg") });
-};
-
-const Sample = (req, res) => {
-  res.render("user/Smaple");
 };
 
 const resetPassword = async (req, res) => {
@@ -181,13 +196,17 @@ const changepassword = async (req, res) => {
   }
 };
 
+const error = (req, res) => {
+  res.render("admin/404error");
+};
+
 export {
   Signup,
   validation,
-  Sample,
   login,
   index,
   cart,
+  error,
   contact,
   userProfile,
   resetPassword,

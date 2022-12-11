@@ -64,7 +64,7 @@ const userRegistration = async (email, name, phone, password) => {
         resolve(token);
       })
       .catch((err) => {
-        console.log(err.message);
+        res.redirect("/error");
       });
   });
 };
@@ -96,7 +96,7 @@ const Signin = (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      res.redirect("/error");
     });
 };
 
@@ -118,18 +118,18 @@ const adminAuth = (req, res) => {
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "1h" }
         );
-        res.cookie("Jwt", token, { httpOnly: true });
-
+        console.log(token);
+        res.cookie("Awt", token, { httpOnly: true });
         res.redirect("/admin/");
       }
     })
     .catch((err) => {
-      console.log(err);
+      res.redirect("/admin/error404");
     });
 };
 
 const adminLogout = (req, res) => {
-  res.cookie("Jwt", "", { maxAge: 1 });
+  res.cookie("Awt", "", { maxAge: 1 });
   res.redirect("/admin/login");
 };
 

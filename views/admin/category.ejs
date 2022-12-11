@@ -156,20 +156,25 @@
                         title: 'Do you Sure want to delete the Category?',
                         showDenyButton: true,
                         confirmButtonText: 'Delete',
-                        denyButtonText: `Don't save`,
+                        denyButtonText: `Cancel`,
                   }).then((result) => {
                         /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
                               axios.delete("/admin/deleteCategory", { data: { id: id } }).then((e) => {
                                     if (e.data.response) {
-                                          Swal.fire('Saved!', '', 'success')
-                                    } else {
                                           Swal.fire(`Can't delete ,Category is used!`, '', 'info')
+                                    } else {
+                                          Swal.fire({
+                                                position: 'top-end',
+                                                icon: 'success',
+                                                title: 'Category deleted successfully',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                          })
+                                          
                                     }
                               })
-                        } else if (result.isDenied) {
-                              Swal.fire(`Can't delete ,Category in used!`, '', 'info')
-                        }
+                        }     
                   })
             }
       </script>

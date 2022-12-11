@@ -69,11 +69,11 @@ const deleteCategory = async (req, res) => {
   const id = req.body.id;
   const usedProduct = await productModel.findOne({ Category: id });
   if (!usedProduct) {
+    console.log("Html");
     await categoryModel.findOneAndDelete({ Category: id });
-    console.log("Successfully deleted");
-    res.json({ response: true });
-  } else {
     res.json({ response: false });
+  } else {
+    res.json({ response: true });
   }
 };
 

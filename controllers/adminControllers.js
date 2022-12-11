@@ -3,21 +3,55 @@ import { bannerModel } from "../model/banner.js";
 import { OrderModel } from "../model/order.js";
 import { subBannerModel } from "../model/subBanner.js";
 import { UserModel } from "../model/User.js";
+import { couponModel } from "../model/coupon.js";
+import { productModel } from "../model/product.js";
+import { categoryModel } from "../model/category.js";
+import Jwt from "jsonwebtoken";
+
 let style = "bg-blue-500/13";
 
-const dashboard = (req, res) => {
-  res.render("admin/dashboard", {
-    Dashboard: style,
-    expressFlash: req.flash("Msg"),
-  });
+const dashboard = async (req, res) => {
+  try {
+    // Dashboard Title:::::::
+    const totalSales = await OrderModel.aggregate([
+      { $match: { deliveryStatus: "Delivered" } },
+      {
+        $group: { _id: "", totalPrice: { $sum: "$totalPrice" } },
+      },
+      { $project: { _id: 0, totalPrice: "$totalPrice" } },
+    ]);
+    const order = await couponModel.find().count();
+    const product = await productModel.find().count();
+    const user = await UserModel.find().count();
+    const totalSalesAmount = Math.round(totalSales[0].totalPrice);
+    // Dashboard table:::::::;
+    const productList = await productModel.find().limit(4);
+    const category = await categoryModel.find();
+    const orderList = await OrderModel.find();
+
+    res.render("admin/dashboard", {
+      totalSalesAmount,
+      user,
+      category,
+      order,
+      orderList,
+      product,
+      productList,
+      Dashboard: style,
+      expressFlash: req.flash("Msg"),
+    });
+  } catch (err) {
+    res.redirect("/admin/error404");
+  }
 };
 
 const login = (req, res) => {
-  res.render("admin/login", { expressFlash: req.flash("Msg") });
-};
-
-const adminProfile = (req, res) => {
-  res.render("admin/profile");
+  const token = req.cookies.Awt;
+  if (token) {
+    res.redirect("/admin");
+  } else {
+    res.render("admin/login", { expressFlash: req.flash("Msg") });
+  }
 };
 
 const userView = async (req, res) => {
@@ -27,22 +61,26 @@ const userView = async (req, res) => {
     })
     .catch((err) => {
       if (err) {
-        console.log(err.message);
+        res.redirect("/admin/error404");
       }
     });
 };
 
 // Banner::::::::::::::::::::::::::::::::::::::::
 const bannerList = (req, res) => {
-  let banner = bannerModel.find().then(async (banner) => {
-    let subbanner = await subBannerModel.find();
-    res.render("admin/viewBanner", {
-      banner,
-      subbanner,
-      Banner: style,
-      expressFlash: req.flash("Msg"),
+  try {
+    let banner = bannerModel.find().then(async (banner) => {
+      let subbanner = await subBannerModel.find();
+      res.render("admin/viewBanner", {
+        banner,
+        subbanner,
+        Banner: style,
+        expressFlash: req.flash("Msg"),
+      });
     });
-  });
+  } catch (err) {
+    res.redirect("/admin/error404");
+  }
 };
 
 const banner = (req, res) => {
@@ -65,46 +103,50 @@ const addBanner = async (req, res) => {
       res.redirect("/admin/bannerlist");
     });
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/admin/error404");
   }
 };
 
 const editBanner = async (req, res) => {
-  const id = req.params.id;
-  const { Category, Title, Message } = req.body;
-  const Image = req.file;
-  if (!Image) {
-    const updateBanner = {
-      Category: Category,
-      Title: Title,
-      Message: Message,
-    };
-    await bannerModel
-      .findByIdAndUpdate(id, updateBanner)
-      .then(() => {
-        req.flash("Msg", "Banner update");
-        res.redirect("/admin/bannerlist");
-      })
-      .catch((err) => {
-        req.flash("Msg", `${err.message}`);
-        res.redirect("/admin/bannerlist");
-      });
-  } else {
-    try {
-      const result = await s3Upload(Image);
+  try {
+    const id = req.params.id;
+    const { Category, Title, Message } = req.body;
+    const Image = req.file;
+    if (!Image) {
       const updateBanner = {
         Category: Category,
         Title: Title,
         Message: Message,
-        Image: result.Location,
       };
-      await bannerModel.findByIdAndUpdate(id, updateBanner).then(() => {
-        req.flash("Msg", "Banner update");
-        res.redirect("/admin/bannerlist");
-      });
-    } catch (err) {
-      console.log(err.message);
+      await bannerModel
+        .findByIdAndUpdate(id, updateBanner)
+        .then(() => {
+          req.flash("Msg", "Banner update");
+          res.redirect("/admin/bannerlist");
+        })
+        .catch((err) => {
+          req.flash("Msg", `${err.message}`);
+          res.redirect("/admin/bannerlist");
+        });
+    } else {
+      try {
+        const result = await s3Upload(Image);
+        const updateBanner = {
+          Category: Category,
+          Title: Title,
+          Message: Message,
+          Image: result.Location,
+        };
+        await bannerModel.findByIdAndUpdate(id, updateBanner).then(() => {
+          req.flash("Msg", "Banner update");
+          res.redirect("/admin/bannerlist");
+        });
+      } catch (err) {
+        console.log(err.message);
+      }
     }
+  } catch (err) {
+    res.redirect("/admin/error404");
   }
 };
 
@@ -127,14 +169,18 @@ const addSubBanner = async (req, res) => {
       res.redirect("/admin/bannerlist");
     });
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/admin/error404");
   }
 };
 const deletesubBanner = async (req, res) => {
-  const id = req.body.id;
-  await subBannerModel.findByIdAndDelete(id).then(() => {
-    res.json({ response: true });
-  });
+  try {
+    const id = req.body.id;
+    await subBannerModel.findByIdAndDelete(id).then(() => {
+      res.json({ response: true });
+    });
+  } catch (err) {
+    res.redirect("/admin/error404");
+  }
 };
 
 const editSubBanner = async (req, res) => {
@@ -171,7 +217,7 @@ const editSubBanner = async (req, res) => {
         res.redirect("/admin/bannerlist");
       });
     } catch (err) {
-      console.log(err.message);
+      res.redirect("/admin/error404");
     }
   }
 };
@@ -185,38 +231,54 @@ const deleteBanner = async (req, res) => {
 
 // User Block::::::::::::::::::::::::::::::::::::::::
 const userBlock = async (req, res) => {
-  const user = req.params.id;
-  await UserModel.findByIdAndUpdate(user, {
-    Active: true,
-  });
-  res.redirect("/admin/user");
+  try {
+    const user = req.params.id;
+    await UserModel.findByIdAndUpdate(user, {
+      Active: true,
+    });
+    res.redirect("/admin/user");
+  } catch (err) {
+    res.redirect("/admin/error404");
+  }
 };
 
 const unBlock = async (req, res) => {
-  const user = req.params.id;
-  await UserModel.findByIdAndUpdate(user, {
-    Active: false,
-  });
-  res.redirect("/admin/user");
+  try {
+    const user = req.params.id;
+    await UserModel.findByIdAndUpdate(user, {
+      Active: false,
+    });
+    res.redirect("/admin/user");
+  } catch (err) {
+    res.redirect("/admin/error404");
+  }
 };
 
 const salesReport = async (req, res) => {
-  const todayDate = new Date();
-  const DaysAgo = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000);
+  try {
+    const todayDate = new Date();
+    const DaysAgo = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const saleReport = await OrderModel.aggregate([
-    {
-      $match: { createdAt: { $gte: DaysAgo } },
-    },
-    {
-      $group: {
-        _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-        totalPrice: { $sum: "$totalPrice" },
-        count: { $sum: 1 },
+    const saleReport = await OrderModel.aggregate([
+      {
+        $match: { createdAt: { $gte: DaysAgo } },
       },
-    },
-  ]);
-  res.render("admin/salereport", { saleReport, SalesReport: style });
+      {
+        $group: {
+          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+          totalPrice: { $sum: "$totalPrice" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    res.render("admin/salereport", { saleReport, SalesReport: style });
+  } catch (err) {
+    res.redirect("/admin/error404");
+  }
+};
+
+const error404 = (req, res) => {
+  res.render("admin/error404");
 };
 
 export {
@@ -225,7 +287,6 @@ export {
   userView,
   userBlock,
   unBlock,
-  adminProfile,
   banner,
   addBanner,
   bannerList,
@@ -236,4 +297,5 @@ export {
   deletesubBanner,
   editSubBanner,
   salesReport,
+  error404,
 };

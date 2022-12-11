@@ -5,7 +5,6 @@ import {
   userView,
   userBlock,
   unBlock,
-  adminProfile,
   banner,
   addBanner,
   bannerList,
@@ -16,6 +15,7 @@ import {
   deletesubBanner,
   editSubBanner,
   salesReport,
+  error404,
 } from "../controllers/adminControllers.js";
 
 import {
@@ -45,7 +45,6 @@ router.get("/", verifyAdmin, dashboard);
 router.get("/login", login);
 router.get("/logout", verifyAdmin, adminLogout);
 router.get("/product", verifyAdmin, viewProduct);
-router.get("/profile", verifyAdmin, adminProfile);
 router.get("/user", verifyAdmin, userView);
 router.get("/userblock/:id", verifyAdmin, userBlock);
 router.get("/unBlock/:id", verifyAdmin, unBlock);
@@ -58,24 +57,36 @@ router.get("/order", verifyAdmin, order);
 router.get("/subbanner", verifyAdmin, subbanner);
 router.get("/coupon", verifyAdmin, coupon);
 router.get("/salesreport", salesReport);
+router.get("/error404", error404);
+
 // post::::::::
 router.post("/Userlogin", adminAuth);
-router.post("/addCategory", upload.single("Image"), addCategory);
-router.post("/addCategory", addCategory);
-router.post("/add", upload.array("img", 4), add_Product);
-router.post("/edit/:id", upload.array("img", 4), updateProduct);
-router.post("/editcategory/:id", upload.single("img"), editCategory);
-router.post("/addBannar", upload.single("Image"), addBanner);
-router.post("/editBanner/:id", upload.single("Image"), editBanner);
-router.post("/addsubannar", upload.single("Image"), addSubBanner);
-router.post("/editSubBanner/:id", upload.single("Image"), editSubBanner);
-router.post("/addcoupon", addCoupon);
+router.post("/addCategory", verifyAdmin, upload.single("Image"), addCategory);
+router.post("/addCategory", verifyAdmin, addCategory);
+router.post("/add", verifyAdmin, upload.array("img", 4), add_Product);
+router.post("/edit/:id", verifyAdmin, upload.array("img", 4), updateProduct);
+router.post(
+  "/editcategory/:id",
+  verifyAdmin,
+  upload.single("img"),
+  editCategory
+);
+router.post("/addBannar", verifyAdmin, upload.single("Image"), addBanner);
+router.post("/editBanner/:id", verifyAdmin, upload.single("Image"), editBanner);
+router.post("/addsubannar", verifyAdmin, upload.single("Image"), addSubBanner);
+router.post(
+  "/editSubBanner/:id",
+  verifyAdmin,
+  upload.single("Image"),
+  editSubBanner
+);
+router.post("/addcoupon", verifyAdmin, addCoupon);
 
 // Delete & patch
-router.delete("/deleteproduct", deleteProduct);
-router.delete("/deleteBanner", deleteBanner);
-router.delete("/deletesubBanner", deletesubBanner);
-router.patch("/deliveryStatus", deliveryStatus);
-router.delete("/deleteCategory", deleteCategory);
+router.delete("/deleteproduct", verifyAdmin, deleteProduct);
+router.delete("/deleteBanner", verifyAdmin, deleteBanner);
+router.delete("/deletesubBanner", verifyAdmin, deletesubBanner);
+router.patch("/deliveryStatus", verifyAdmin, deliveryStatus);
+router.delete("/deleteCategory", verifyAdmin, deleteCategory);
 
 export default router;

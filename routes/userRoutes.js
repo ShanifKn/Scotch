@@ -20,6 +20,7 @@ import {
   setPassword,
   otpVerifiy,
   changepassword,
+  error,
 } from "../controllers/userControllers.js";
 import { product, productdetail } from "../controllers/productController.js";
 import { categoryMap } from "../controllers/categoryController.js";
@@ -66,7 +67,7 @@ router.get("/login", login);
 router.get("/otp", validation);
 router.get("/resendOtp", verifyToken, Resend);
 router.get("/Userlogout", userLogout);
-router.get("/userCategory", categoryMap);
+router.get("/userCategory", verifyToken, categoryMap);
 router.get("/wishlist", verifyToken, wishlist);
 router.get("/profile", verifyToken, userProfile);
 router.get("/editAddress", verifyToken, editAddress);
@@ -78,35 +79,34 @@ router.get("/singleOrder/:id", singleOrder);
 router.post("/signup", register);
 router.post("/Userlogin", Signin);
 router.post("/otp", otpVerfication);
-router.post("/addToCart", addToWishlist);
-router.post("/addCart", addtoCart);
-router.post("/updateprofile", updateProfile);
-router.post("/deliveryAddress", deliveryAddress);
-router.post("/updateEditAddress", updateEditAddress);
-router.post("/order", orderPlaced);
-router.post("/onlineOrder", onlinePayment);
-router.post("/verfiyPayment", verfiyPayment);
-router.post("/resetPassword", resetPassword);
-router.post("/otpVerif", otpVerifiy);
+router.post("/addToCart", verifyToken, addToWishlist);
+router.post("/addCart", verifyToken, addtoCart);
+router.post("/updateprofile", verifyToken, updateProfile);
+router.post("/deliveryAddress", verifyToken, deliveryAddress);
+router.post("/updateEditAddress", verifyToken, updateEditAddress);
+router.post("/order", verifyToken, orderPlaced);
+router.post("/onlineOrder", verifyToken, onlinePayment);
+router.post("/verfiyPayment", verifyToken, verfiyPayment);
+router.post("/resetPassword", verifyToken, verifyToken, resetPassword);
+router.post("/otpVerif", verifyToken, otpVerifiy);
 // delete request::::::::::::
-router.delete("/deleteCartProduct", deleteCartProduct);
-router.delete("/deletewishlist", deleteProductwishlist);
-router.delete("/deleteOrderItem", deleteOrderItem);
+router.delete("/deleteCartProduct", verifyToken, deleteCartProduct);
+router.delete("/deletewishlist", verifyToken, deleteProductwishlist);
+router.delete("/deleteOrderItem", verifyToken, deleteOrderItem);
 
 // patch request::::::::::::
-router.patch("/quantityDec", quantityDec);
-router.patch("/quantityInc", quantityInc);
-router.patch("/updateDefault", updateDefault);
-router.patch("/updateAdd", updateNil);
-router.patch("/billingAddress", billingAddress);
-router.patch("/shippingAddress", shippingAddress);
-router.patch("/reorder", reorder);
-router.patch("/discount", discountAdded);
-router.patch("/setPassword", setPassword);
-router.patch("/ChangePassword", changepassword);
+router.patch("/quantityDec", verifyToken, quantityDec);
+router.patch("/quantityInc", verifyToken, quantityInc);
+router.patch("/updateDefault", verifyToken, updateDefault);
+router.patch("/updateAdd", verifyToken, updateNil);
+router.patch("/billingAddress", verifyToken, billingAddress);
+router.patch("/shippingAddress", verifyToken, shippingAddress);
+router.patch("/reorder", verifyToken, reorder);
+router.patch("/discount", verifyToken, discountAdded);
+router.patch("/setPassword", verifyToken, setPassword);
+router.patch("/ChangePassword", verifyToken, changepassword);
 
 // Error request::::::::::::
-router.get("/error", (req, res) => {
-  res.render("admin/404");
-});
+router.get("/error", error);
+
 export default router;

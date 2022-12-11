@@ -23,7 +23,7 @@ const verifyToken = async (req, res, next) => {
 
 const verifyAdmin = async (req, res, next) => {
   try {
-    const token = req.cookies.Jwt;
+    const token = req.cookies.Awt;
     if (!token) {
       req.flash("Msg", "LogIn with  Credential");
       res.redirect("/admin/login");

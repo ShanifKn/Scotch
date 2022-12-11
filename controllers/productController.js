@@ -111,6 +111,9 @@ const editProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
+  try{}catch(err){
+    res.redirect("/")
+  }
   const id = req.params.id;
   const UpdatedProduct = {
     Product_title: req.body.ProductName,
@@ -128,13 +131,6 @@ const updateProduct = async (req, res) => {
   };
   const newImg = req.files;
   if (req.files.length) {
-    // delete from buget
-    // productModel.findById(id).then((product) => {
-    //   const image = product.images.Location;
-    //   s3DeleteMany(image, (error) => {
-    //     console.log(error.message);
-    //   });
-    // });
     const result = await s3UploadMany(newImg)
       .then((result) => {
         UpdatedProduct.images = result;

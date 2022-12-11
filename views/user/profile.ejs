@@ -35,7 +35,7 @@
                                                                               class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">First
                                                                               name</label>
                                                                         <input type="text" name="Firstname"
-                                                                              value="Jesse"
+                                                                              value="   <%= user.Address[0].Firstname %>"
                                                                               class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                                   </div>
                                                             </div>
@@ -45,7 +45,8 @@
                                                                         <label for="lastname"
                                                                               class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Last
                                                                               name</label>
-                                                                        <input type="text" name="Lastname" value="Lucky"
+                                                                        <input type="text" name="Lastname"
+                                                                              value="<%= user.Address[0].Lastname %>"
                                                                               class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                                   </div>
                                                             </div>
@@ -63,7 +64,7 @@
                                                                         <label for="address"
                                                                               class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Address</label>
                                                                         <input type="text" name="address"
-                                                                              value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                                                                              value="<%= user.Address[0].address %>"
                                                                               class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                                   </div>
                                                             </div>
@@ -72,7 +73,8 @@
                                                                   <div class="mb-4">
                                                                         <label for="city"
                                                                               class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">City</label>
-                                                                        <input type="text" name="city" value="New York"
+                                                                        <input type="text" name="city"
+                                                                              value="   <%= user.Address[0].city %>"
                                                                               class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                                   </div>
                                                             </div>
@@ -81,8 +83,8 @@
                                                                   <div class="mb-4">
                                                                         <label for="state"
                                                                               class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">State</label>
-                                                                        <input type="text" name="country"
-                                                                              value="United States"
+                                                                        <input type="text" name="state"
+                                                                              value="   <%= user.Address[0].state %>"
                                                                               class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                                   </div>
                                                             </div>
@@ -92,7 +94,8 @@
                                                                         <label for="postal code"
                                                                               class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Postal
                                                                               code</label>
-                                                                        <input type="text" name="pincode" value="437300"
+                                                                        <input type="text" name="pincode"
+                                                                              value="   <%= user.Address[0].pincode %>"
                                                                               class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                                   </div>
                                                             </div>
@@ -115,47 +118,52 @@
 
                                                 <div class="mt-6 ">
                                                       <h5 class="dark:text-white mb-2 ">
-                                                            Mark Davis
-
+                                                            <%= user.Address[0].Firstname %>
+                                                                  <%= user.Address[0].Lastname %>
                                                       </h5>
                                                       <div
                                                             class="mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
                                                             <i class="mr-2 dark:text-white ni ni-email-83"></i>
-                                                            shanif@gmail.Com
+                                                            <%= user.Address[0].email %>
                                                       </div>
                                                       <div
                                                             class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
                                                             <i class="mr-2 dark:text-white ni ni-pin-3"></i>
-                                                            Solution Manager - Creative Tim Officer
-                                                      </div>
-                                                      <div
-                                                            class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
-                                                            <i class="mr-2 dark:text-white ni ni-pin-3"></i>
-                                                            State
-                                                      </div>
+                                                            <%= user.Address[0].address %>,
 
+                                                      </div>
+                                                      <div
+                                                            class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
+                                                            <i class="mr-2 dark:text-white ni ni-pin-3"></i>
+                                                            <%= user.Address[0].state %>,
+
+                                                      </div>
+                                                      <div
+                                                            class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
+                                                            <i class="mr-2 dark:text-white ni ni-pin-3"></i>
+                                                            <%= user.Address[0].city %>,
+                                                                  <%= user.Address[0].pincode %>
+                                                      </div>
                                                       <div
                                                             class=" mb-2 font-semibold leading-relaxed text-base dark:text-white/80 text-slate-700">
                                                             <i class="mr-2 dark:text-white ni ni-tablet-button"></i>
-                                                            Phone
+                                                            <%= user.Address[0].phone %>
                                                       </div>
                                                 </div>
-                                                <button
-                                                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-2"
-                                                      data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                      Change Password
-                                                </button>
-                                                <br>
-                                                <a href="/myorders">
-                                                      <button
-                                                            class="bg-danger hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full mt-2">
-                                                            Orders
-                                                      </button>
-                                                </a>
-
                                           </div>
                                     </div>
-
+                                    <button
+                                          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-2"
+                                          data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          Change Password
+                                    </button>
+                                    <br>
+                                    <a href="/myorders">
+                                          <button
+                                                class="bg-danger hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full mt-2">
+                                                Orders
+                                          </button>
+                                    </a>
                               </div>
 
                         </div>

@@ -87,7 +87,7 @@ if(document.querySelector("#chart-line")){
     data: {
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       datasets: [{
-        label: "Mobile apps",
+        label: "Sales",
         tension: 0.4,
         borderWidth: 0,
         pointRadius: 0,
