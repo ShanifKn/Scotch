@@ -26,7 +26,7 @@ const addCoupon = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/admin/error404");
   }
 };
 // User Side::::::::;
@@ -50,7 +50,7 @@ const discountAdded = async (req, res) => {
       res.json({ response: true, discountAmount, discountedAmount });
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 

@@ -26,7 +26,7 @@ const Category = async (req, res) => {
       res.render("admin/category", { category, Category: style });
     })
     .catch((err) => {
-      console.log(err.message);
+      res.redirect("/admin/error404");
     });
 };
 
@@ -36,8 +36,6 @@ const editCategory = async (req, res) => {
   const category = {
     categoryName: req.body.CategoryName,
   };
-  console.log(req.file);
-
   if (img !== undefined) {
     const result = await s3Upload(img);
     category.categoryImage = result.Location;
@@ -66,14 +64,17 @@ const categoryMap = (req, res) => {
 // admin Side delet category
 
 const deleteCategory = async (req, res) => {
-  const id = req.body.id;
-  const usedProduct = await productModel.findOne({ Category: id });
-  if (!usedProduct) {
-    console.log("Html");
-    await categoryModel.findOneAndDelete({ Category: id });
-    res.json({ response: false });
-  } else {
-    res.json({ response: true });
+  try {
+    const id = req.body.id;
+    const usedProduct = await productModel.findOne({ Category: id });
+    if (!usedProduct) {
+      await categoryModel.findOneAndDelete({ Category: id });
+      res.json({ response: false });
+    } else {
+      res.json({ response: true });
+    }
+  } catch (err) {
+    res.redirect("/admin/error404");
   }
 };
 

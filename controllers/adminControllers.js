@@ -20,15 +20,20 @@ const dashboard = async (req, res) => {
       },
       { $project: { _id: 0, totalPrice: "$totalPrice" } },
     ]);
+    let totalSalesAmount;
+    if (totalSales.length == 0) {
+      totalSalesAmount = 0;
+    } else {
+      totalSalesAmount = Math.round(totalSales[0].totalPrice);
+    }
+
     const order = await couponModel.find().count();
     const product = await productModel.find().count();
     const user = await UserModel.find().count();
-    const totalSalesAmount = Math.round(totalSales[0].totalPrice);
     // Dashboard table:::::::;
     const productList = await productModel.find().limit(4);
     const category = await categoryModel.find();
     const orderList = await OrderModel.find();
-
     res.render("admin/dashboard", {
       totalSalesAmount,
       user,
@@ -46,12 +51,7 @@ const dashboard = async (req, res) => {
 };
 
 const login = (req, res) => {
-  const token = req.cookies.Awt;
-  if (token) {
-    res.redirect("/admin");
-  } else {
-    res.render("admin/login", { expressFlash: req.flash("Msg") });
-  }
+  res.render("admin/login", { expressFlash: req.flash("Msg") });
 };
 
 const userView = async (req, res) => {
@@ -142,7 +142,7 @@ const editBanner = async (req, res) => {
           res.redirect("/admin/bannerlist");
         });
       } catch (err) {
-        console.log(err.message);
+        res.redirect("/admin/error404");
       }
     }
   } catch (err) {
@@ -159,7 +159,6 @@ const addSubBanner = async (req, res) => {
   const file = req.file;
   try {
     const result = await s3Upload(file);
-    console.log(result);
     const newBanner = new subBannerModel({
       Title: req.body.Category,
       Image: result.Location,

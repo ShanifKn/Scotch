@@ -31,13 +31,12 @@ const updateProfile = async (req, res) => {
           },
         }
       );
-      console.log("sucessfully");
       res.redirect("/profile");
     } else {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
@@ -56,13 +55,12 @@ const deliveryAddress = async (req, res) => {
           },
         }
       );
-      console.log("sucessfully");
       res.redirect("/checkout");
     } else {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 

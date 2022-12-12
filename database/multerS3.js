@@ -36,7 +36,6 @@ const s3DeleteMany = async (files) => {
   const s3 = new aws.S3({ region: process.env.AWS_REGIION });
 
   const params = files.map((file) => {
-    console.log(file);
     return {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: file.Key,

@@ -20,7 +20,7 @@ const myOrders = async (req, res) => {
       res.render("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
@@ -40,7 +40,7 @@ const singleOrder = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
@@ -55,53 +55,96 @@ const orderPlace = (req, res) => {
       res.render("user/orderComfrom");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
 const deleteOrderItem = async (req, res) => {
   try {
-    const productId = req.body.id;
     const orderId = req.body.orderId;
-    const price = await OrderModel.aggregate([
-      {
-        $match: {
-          _id: mongoose.Types.ObjectId(orderId),
+    const orders = await OrderModel.findOne({ _id: orderId });
+    const discount = orders.discountAmount;
+    if (!discount) {
+      const productId = req.body.id;
+      const price = await OrderModel.aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(orderId),
+          },
         },
-      },
-      {
-        $project: {
-          orderItems: {
-            $filter: {
-              input: "$orderItems",
-              cond: {
-                $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+        {
+          $project: {
+            subtotal: 1,
+            orderItems: {
+              $filter: {
+                input: "$orderItems",
+                cond: {
+                  $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+                },
               },
             },
           },
         },
-      },
-    ]);
-    const onePrice = price[0].orderItems[0].total;
-    const deleteOrder = await OrderModel.updateOne(
-      {
-        _id: orderId,
-        "orderItems.product": productId,
-      },
-      {
-        $set: {
-          "orderItems.$.active": false,
+      ]);
+      const onePrice = price[0].orderItems[0].total;
+      const deleteOrder = await OrderModel.updateOne(
+        {
+          _id: orderId,
+          "orderItems.product": productId,
         },
-        $inc: { totalPrice: -onePrice },
-      }
-    ).then(() => {
-      res.json({ response: true });
-    });
+        {
+          $set: {
+            "orderItems.$.active": false,
+          },
+          $inc: { totalPrice: -onePrice },
+        }
+      ).then(() => {
+        res.json({ response: true });
+      });
+    } else {
+      const productId = req.body.id;
+      const price = await OrderModel.aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(orderId),
+          },
+        },
+        {
+          $project: {
+            subtotal: 1,
+            orderItems: {
+              $filter: {
+                input: "$orderItems",
+                cond: {
+                  $eq: ["$$this.product", mongoose.Types.ObjectId(productId)],
+                },
+              },
+            },
+          },
+        },
+      ]);
+      const onePrice = price[0].orderItems[0].total;
+      const deleteOrder = await OrderModel.updateOne(
+        {
+          _id: orderId,
+          "orderItems.product": productId,
+        },
+        {
+          $set: {
+            "orderItems.$.active": false,
+          },
+          $inc: { subtotal: -onePrice },
+        }
+      ).then(() => {
+        res.json({ response: true });
+      });
+    }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
+// redorder::::::::::
 const reorder = async (req, res) => {
   try {
     const productId = req.body.id;
@@ -140,7 +183,7 @@ const reorder = async (req, res) => {
     );
     res.json({ response: true });
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 

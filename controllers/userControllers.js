@@ -99,7 +99,6 @@ const userProfile = async (req, res) => {
       const userId = decoded.userId;
       res.locals.user = userId;
       const user = await UserModel.findOne({ _id: userId });
-      console.log(user);
       res.render("user/profile", { user });
     } else {
       res.redirect("/login");
@@ -160,7 +159,6 @@ const otpVerifiy = async (req, res) => {
       }
     });
   } catch (err) {
-    console.log(err.message);
     res.redirect("/error");
   }
 };
@@ -191,13 +189,12 @@ const changepassword = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
     res.redirect("/error");
   }
 };
 
 const error = (req, res) => {
-  res.render("admin/404error");
+  res.render("admin/404");
 };
 
 export {

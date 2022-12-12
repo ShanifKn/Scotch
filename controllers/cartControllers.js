@@ -62,7 +62,6 @@ const addToWishlist = async (req, res) => {
     }
   } catch (err) {
     res.redirect("/error");
-    console.log(err.message);
   }
 };
 // delete from wishlist
@@ -90,7 +89,6 @@ const deleteProductwishlist = async (req, res) => {
     }
   } catch (err) {
     res.redirect("/error");
-    console.log(err.message);
   }
 };
 
@@ -156,7 +154,6 @@ const addtoCart = async (req, res) => {
     }
   } catch (err) {
     res.redirect("/error");
-    console.log(err.message);
   }
 };
 // remove from cart::::::::
@@ -189,7 +186,6 @@ const deleteCartProduct = async (req, res) => {
     }
   } catch {
     res.redirect("/error");
-    console.log(err.message);
   }
 };
 
@@ -310,7 +306,7 @@ const quantityInc = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 

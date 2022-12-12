@@ -68,7 +68,6 @@ const checkout = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
     res.redirect("/error");
   }
 };
@@ -126,7 +125,7 @@ const updateNil = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
@@ -155,7 +154,7 @@ const billingAddress = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
@@ -175,7 +174,7 @@ const shippingAddress = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
@@ -212,38 +211,48 @@ const editAddress = async (req, res) => {
       res.redirect("/login");
     }
   } catch (err) {
-    console.log(err.message);
+    res.redirect("/error");
   }
 };
 
 const updateEditAddress = async (req, res) => {
-  const token = req.cookies.Jwt;
-  if (token) {
-    const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const userId = decoded.userId;
+  try {
+    const token = req.cookies.Jwt;
+    if (token) {
+      const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      const userId = decoded.userId;
+      const {
+        firstname,
+        lastname,
+        address,
+        city,
+        state,
+        pincode,
+        phone,
+        email,
+      } = req.body;
 
-    const { firstname, lastname, address, city, state, pincode, phone, email } =
-      req.body;
-
-    const id = req.body.id;
-    await UserModel.updateOne(
-      { _id: userId, "DeliveryAddress._id": id },
-      {
-        $set: {
-          "DeliveryAddress.$.Firstname": firstname,
-          "DeliveryAddress.$.Lastname": lastname,
-          "DeliveryAddress.$.address": address,
-          "DeliveryAddress.$.city": city,
-          "DeliveryAddress.$.state": state,
-          "DeliveryAddress.$.pincode": pincode,
-          "DeliveryAddress.$.phone": phone,
-          "DeliveryAddress.$.email": email,
-        },
-      }
-    );
-    console.log("success");
-    req.flash("Msg", " Address Updated ");
-    res.redirect("/checkout");
+      const id = req.body.id;
+      await UserModel.updateOne(
+        { _id: userId, "DeliveryAddress._id": id },
+        {
+          $set: {
+            "DeliveryAddress.$.Firstname": firstname,
+            "DeliveryAddress.$.Lastname": lastname,
+            "DeliveryAddress.$.address": address,
+            "DeliveryAddress.$.city": city,
+            "DeliveryAddress.$.state": state,
+            "DeliveryAddress.$.pincode": pincode,
+            "DeliveryAddress.$.phone": phone,
+            "DeliveryAddress.$.email": email,
+          },
+        }
+      );
+      req.flash("Msg", " Address Updated ");
+      res.redirect("/checkout");
+    }
+  } catch (err) {
+    res.redirect("/error");
   }
 };
 
@@ -452,7 +461,6 @@ const orderPlaced = async (req, res) => {
     }
   } catch (err) {
     res.redirect("/error");
-    console.log(err.message);
   }
 };
 
@@ -692,7 +700,6 @@ const onlinePayment = async (req, res) => {
       }
     }
   } catch (err) {
-    console.log(err.messages);
     res.redirect("/error");
   }
 };
@@ -709,7 +716,7 @@ const verfiyPayment = async (req, res) => {
       res.json({ response: true });
     })
     .catch((err) => {
-      console.log(err.message);
+      res.redirect("/error");
     });
 };
 

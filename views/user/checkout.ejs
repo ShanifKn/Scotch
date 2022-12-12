@@ -424,7 +424,6 @@
                                                       title: "Delivery Address Updated!",
                                                 });
                                                 textbox.style.display = "none";
-                                                location.href = "/checkout";
                                                 validat.style.display = "none";
                                                 validated.style.display = "block";
                                           }
@@ -457,7 +456,6 @@
                               const editAddress = (id) => {
                                     axios.get("/editAddress", { params: { id: id } }).then((e) => {
                                           if (e.data.response) {
-                                                console.log();
                                                 document.getElementById("Firstname").value =
                                                       e.data.Address[0].DeliveryAddress[0].Firstname;
                                                 document.getElementById("Lastname").value =

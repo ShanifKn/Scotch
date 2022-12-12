@@ -7,41 +7,45 @@ const { sign, verify } = Jwt;
 
 // User Authentication
 const register = async (req, res) => {
-  const email = req.body.Email;
-  const phone = req.body.Phone;
-  req.session.newUser = req.body;
-  console.log(req.body);
-  let user = UserModel.findOne({ Email: email }).then((user) => {
-    if (user) {
-      console.log("user already exists");
-      req.flash("Msg", "Email already exist!");
-      res.redirect("/signup");
-    } else {
-      sendSms(phone);
-      res.redirect("/otp");
-    }
-  });
+  try {
+    const email = req.body.Email;
+    const phone = req.body.Phone;
+    req.session.newUser = req.body;
+    let user = UserModel.findOne({ Email: email }).then((user) => {
+      if (user) {
+        req.flash("Msg", "Email already exist!");
+        res.redirect("/signup");
+      } else {
+        sendSms(phone);
+        res.redirect("/otp");
+      }
+    });
+  } catch (err) {
+    res.redirect("/error");
+  }
 };
 
 const otpVerfication = (req, res) => {
-  const otp = req.body.OTP;
-  const email = req.session.newUser.Email;
-  const password = req.session.newUser.Password;
-  const name = req.session.newUser.Name;
-  const phone = req.session.newUser.Phone;
-  verifySms(phone, otp).then((verification_check) => {
-    if (verification_check.status === "approved") {
-      userRegistration(email, name, phone, password)
-        .then((token) => {
+  try {
+    const otp = req.body.OTP;
+    const email = req.session.newUser.Email;
+    const password = req.session.newUser.Password;
+    const name = req.session.newUser.Name;
+    const phone = req.session.newUser.Phone;
+    verifySms(phone, otp).then((verification_check) => {
+      if (verification_check.status === "approved") {
+        userRegistration(email, name, phone, password).then((token) => {
           res.cookie("Jwt", token, { httpOnly: true });
           res.redirect("/login");
-        })
-        .catch((err) => {});
-    } else {
-      req.flash("Msg", "Invalid OTP!");
-      res.redirect("/otp");
-    }
-  });
+        });
+      } else {
+        req.flash("Msg", "Invalid OTP!");
+        res.redirect("/otp");
+      }
+    });
+  } catch (err) {
+    res.redirect("/error");
+  }
 };
 
 const userRegistration = async (email, name, phone, password) => {
@@ -118,7 +122,7 @@ const adminAuth = (req, res) => {
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "1h" }
         );
-        console.log(token);
+
         res.cookie("Awt", token, { httpOnly: true });
         res.redirect("/admin/");
       }

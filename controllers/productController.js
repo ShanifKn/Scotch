@@ -20,21 +20,18 @@ const viewProduct = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      res.redirect("/admin/error404");
     });
 };
 
 const addProduct = async (req, res) => {
   try {
-    const category = await categoryModel
-      .find({})
-      .then((category) => {
-        res.render("admin/add-product", {
-          category,
-          expressFlash: req.flash("Msg"),
-        });
-      })
-      .catch((err) => console.log(err));
+    const category = await categoryModel.find({}).then((category) => {
+      res.render("admin/add-product", {
+        category,
+        expressFlash: req.flash("Msg"),
+      });
+    });
   } catch (err) {
     res.redirect("/error");
   }
@@ -106,13 +103,14 @@ const editProduct = async (req, res) => {
         });
       });
   } catch (err) {
-    console.log(err);
+    res.redirect("/admin/error404");
   }
 };
 
 const updateProduct = async (req, res) => {
-  try{}catch(err){
-    res.redirect("/")
+  try {
+  } catch (err) {
+    res.redirect("/");
   }
   const id = req.params.id;
   const UpdatedProduct = {
