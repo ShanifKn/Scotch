@@ -7,7 +7,6 @@ import { couponModel } from "../model/coupon.js";
 import { UserModel } from "../model/User.js";
 import { sendSms, verifySms } from "../Verification/twilio.js";
 import bcrypt from "bcrypt";
-import { response } from "express";
 
 const index = async (req, res) => {
   try {
@@ -118,16 +117,8 @@ const Signup = (req, res) => {
 };
 
 const login = (req, res) => {
-  const token = req.cookies.Jwt;
-  if (token) {
-    const decoded = Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const userId = decoded.userId;
-    res.locals.user = userId;
-    res.redirect("/");
-  } else {
-    res.locals.user = req.session.user;
-    res.render("user/login", { expressFlash: req.flash("Msg") });
-  }
+  res.locals.user = req.session.user;
+  res.render("user/login", { expressFlash: req.flash("Msg") });
 };
 
 const validation = (req, res) => {

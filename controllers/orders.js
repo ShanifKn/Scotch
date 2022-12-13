@@ -133,7 +133,7 @@ const deleteOrderItem = async (req, res) => {
           $set: {
             "orderItems.$.active": false,
           },
-          $inc: { subtotal: -onePrice },
+          $inc: {  totalPrice: -onePrice },
         }
       ).then(() => {
         res.json({ response: true });

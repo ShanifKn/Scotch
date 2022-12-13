@@ -417,7 +417,6 @@
       <script>
             const DeliveryStatus = (id) => {
                   const value = document.getElementById("inputGroupSelect01").value;
-                  alert(value)
                   axios.patch("/admin/deliveryStatus", { Id: id, Value: value }).then((e) => {
                         if (e.data.response) {
                               const Toast = Swal.mixin({
