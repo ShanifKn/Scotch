@@ -25,98 +25,113 @@
                   <div class="checkout__form">
                         <div class="row">
                               <div class="col-lg-8 col-md-6">
-                                    <div class="d-block">
-                                          <h6 class="checkout__title">Billing Address</h6>
+                                    <% if (Address[0].Address.length==0) { %>
 
-                                          <h3 class="fs-bold mt-3">
-                                                <%= Address[0].Address[0].Firstname %>
-                                                      <%= Address[0].Address[0].Lastname %>
-                                          </h3>
-                                          <span>
-                                                <%= Address[0].Address[0].address %>,
-                                          </span><br>
-                                          <span>Country/State <%= Address[0].Address[0].city %>,
-                                          </span><br>
-                                          <span>
-                                                <%= Address[0].Address[0].pincode %>,
-                                          </span><br>
-                                          <span>
-                                                <%= Address[0].Address[0].email %>
-                                          </span><br>
-                                          <span>
-                                                <%= Address[0].Address[0].phone %>
-                                          </span>
-                                    </div>
+                                          <a href="/profile">ADD Your BilLing Address </a>
 
-                                    <div class="mt-4 mb-3"><input type="checkbox" class="" id="Check">
-                                          <label for="same-as">Same as
-                                                billing</label>
+                                          <% } else { %>
+                                                <div class="d-block">
 
-                                          <span class="text-black ms-5" style="opacity:70%;"> <svg
-                                                      xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                      fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 18 18">
-                                                      <path fill-rule="evenodd"
-                                                            d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z" />
-                                                      <path fill-rule="evenodd"
-                                                            d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z" />
-                                                </svg></span>
-                                          <button type="button" class="btn btn-link" class="btn btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#ChangeAddress">Select
-                                                Delivery
-                                                address</button>
-                                    </div>
-                                    <h6 class="checkout__title mt-5">Delivery Details</h6>
-                                    <div id="shipping">
-                                          <form action="/deliveryAddress" method="post">
-                                                <div class="row mt-2">
-                                                      <div class="col-lg-6">
-                                                            <div class="checkout__input ">
-                                                                  <p>Fist Name<span>*</span></p>
-                                                                  <input type="text" name="Firstname" required>
-                                                            </div>
+                                                      <h6 class="checkout__title">Billing Address</h6>
+
+                                                      <h3 class="fs-bold mt-3">
+                                                            <%= Address[0].Address[0].Firstname %>
+                                                                  <%= Address[0].Address[0].Lastname %>
+                                                      </h3>
+                                                      <span>
+                                                            <%= Address[0].Address[0].address %>,
+                                                      </span><br>
+                                                      <span>Country/State <%= Address[0].Address[0].city %>,
+                                                      </span><br>
+                                                      <span>
+                                                            <%= Address[0].Address[0].pincode %>,
+                                                      </span><br>
+                                                      <span>
+                                                            <%= Address[0].Address[0].email %>
+                                                      </span><br>
+                                                      <span>
+                                                            <%= Address[0].Address[0].phone %>
+                                                      </span>
+                                                </div>
+
+
+                                                <div class="mt-4 mb-3"><input type="checkbox" class="" id="Check">
+                                                      <label for="same-as">Same as
+                                                            billing</label>
+
+                                                      <span class="text-black ms-5" style="opacity:70%;"> <svg
+                                                                  xmlns="http://www.w3.org/2000/svg" width="18"
+                                                                  height="18" fill="currentColor"
+                                                                  class="bi bi-vector-pen" viewBox="0 0 18 18">
+                                                                  <path fill-rule="evenodd"
+                                                                        d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z" />
+                                                                  <path fill-rule="evenodd"
+                                                                        d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z" />
+                                                            </svg></span>
+                                                      <button type="button" class="btn btn-link" class="btn btn-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#ChangeAddress">Select
+                                                            Delivery
+                                                            address</button>
+                                                </div>
+                                                <% } %>
+
+                                                      <h6 class="checkout__title mt-5">Delivery Details</h6>
+                                                      <div id="shipping">
+                                                            <form action="/deliveryAddress" method="post">
+                                                                  <div class="row mt-2">
+                                                                        <div class="col-lg-6">
+                                                                              <div class="checkout__input ">
+                                                                                    <p>Fist Name<span>*</span></p>
+                                                                                    <input type="text" name="Firstname"
+                                                                                          required>
+                                                                              </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                              <div class="checkout__input">
+                                                                                    <p>Last Name<span>*</span></p>
+                                                                                    <input type="text" name="Lastname"
+                                                                                          required>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                                  <div class="checkout__input">
+                                                                        <p>Address<span>*</span></p>
+
+                                                                        <input type="text" name="address" required>
+                                                                  </div>
+                                                                  <div class="checkout__input">
+                                                                        <p>Town/City<span>*</span></p>
+                                                                        <input type="text" name="city" required>
+                                                                  </div>
+                                                                  <div class="checkout__input">
+                                                                        <p>Country/State<span>*</span></p>
+                                                                        <input type="text" name="state" required>
+                                                                  </div>
+                                                                  <div class="checkout__input">
+                                                                        <p>Postcode / ZIP<span>*</span></p>
+                                                                        <input type="text" name="pincode" required>
+                                                                  </div>
+                                                                  <div class="row">
+                                                                        <div class="col-lg-6">
+                                                                              <div class="checkout__input">
+                                                                                    <p>Email<span>*</span></p>
+                                                                                    <input type="text" name="email"
+                                                                                          required>
+                                                                              </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                              <div class="checkout__input">
+                                                                                    <p>Phone<span>*</span></p>
+                                                                                    <input type="text" name="phone"
+                                                                                          required>
+                                                                              </div>
+                                                                        </div>
+
+                                                                  </div>
+                                                                  <button type="submit" class="site-btn">Update</button>
+                                                            </form>
                                                       </div>
-                                                      <div class="col-lg-6">
-                                                            <div class="checkout__input">
-                                                                  <p>Last Name<span>*</span></p>
-                                                                  <input type="text" name="Lastname" required>
-                                                            </div>
-                                                      </div>
-                                                </div>
-                                                <div class="checkout__input">
-                                                      <p>Address<span>*</span></p>
-
-                                                      <input type="text" name="address" required>
-                                                </div>
-                                                <div class="checkout__input">
-                                                      <p>Town/City<span>*</span></p>
-                                                      <input type="text" name="city" required>
-                                                </div>
-                                                <div class="checkout__input">
-                                                      <p>Country/State<span>*</span></p>
-                                                      <input type="text" name="state" required>
-                                                </div>
-                                                <div class="checkout__input">
-                                                      <p>Postcode / ZIP<span>*</span></p>
-                                                      <input type="text" name="pincode" required>
-                                                </div>
-                                                <div class="row">
-                                                      <div class="col-lg-6">
-                                                            <div class="checkout__input">
-                                                                  <p>Email<span>*</span></p>
-                                                                  <input type="text" name="email" required>
-                                                            </div>
-                                                      </div>
-                                                      <div class="col-lg-6">
-                                                            <div class="checkout__input">
-                                                                  <p>Phone<span>*</span></p>
-                                                                  <input type="text" name="phone" required>
-                                                            </div>
-                                                      </div>
-
-                                                </div>
-                                                <button type="submit" class="site-btn">Update</button>
-                                          </form>
-                                    </div>
 
 
                               </div>
