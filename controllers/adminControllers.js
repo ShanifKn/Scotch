@@ -32,8 +32,8 @@ const dashboard = async (req, res) => {
     const user = await UserModel.find().count();
     // Dashboard table:::::::;
     const productList = await productModel.find().limit(4);
-    const category = await categoryModel.find();
-    const orderList = await OrderModel.find();
+    const category = await categoryModel.find().limit(4);
+    const orderList = await OrderModel.find().limit(4);
     res.render("admin/dashboard", {
       totalSalesAmount,
       user,

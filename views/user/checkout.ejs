@@ -495,7 +495,7 @@
                               const validate = () => {
                                     const payment = document.getElementsByName("Payment");
                                     // const Online = document.getElementById("flexRadioOnline");
-                                    for (i = 0; i < payment.length; i++) {
+                                    for (i = 0; i < payment.length; i++) { 
                                           if (payment[i].checked)
                                                 if (payment[i].value == "COD") {
                                                       axios.post("/order", {}).then((e) => {
