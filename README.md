@@ -1,13 +1,13 @@
-Shopping MERN Website
+##Shopping MERN Website
 
 A full-featured online shopping platform built using the MERN stack. This website provides customers with an easy-to-use and seamless shopping experience, while also providing the owner with a comprehensive back-end panel to manage the business.
-Features
 
-    User-friendly interface for browsing and purchasing products
-    Secure and fast payment integrations
-    Intuitive back-end panel for managing products, orders, customers, and more
-    Fast loading times and optimized for performance
-    Mobile-responsive design for shopping on any device
+##Features
+    *User-friendly interface for browsing and purchasing products
+    *Secure and fast payment integrations
+    *Intuitive back-end panel for managing products, orders, customers, and more
+    *Fast loading times and optimized for performance
+    *Mobile-responsive design for shopping on any device
 
 Technologies Used
 
