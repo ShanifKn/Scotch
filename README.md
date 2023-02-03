@@ -23,7 +23,7 @@ Clone the repository to your local machine:
 
 Navigate to the project directory:
 
-    cd shopping-mern-website
+    cd Scotch
 
 Install dependencies:
 
